@@ -1,4 +1,11 @@
 :root {
+  --white: #fefdf8;
+  --blue: #8ECAE6;
+  --drak-blue: #023047;
+  --black: #001219;
+  --yellow: #FFB703;
+  --orange: #FB8500;
+  --red: #ae2012;
   --background: #ffffff;
   --foreground: #171717;
 }

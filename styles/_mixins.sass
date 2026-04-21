@@ -1,0 +1,27 @@
+@mixin font-styles($color, $size, $weight: 400, $height: 100%)
+  color: $color
+  font-size: $size
+  font-weight: $weight
+  line-height: $height
+
+@mixin transitionMixin
+  transition: all 0.35s
+
+@mixin transitionMixinLong
+  transition: all 0.8s
+
+@mixin laptop
+  @media (max-width: 1919px)
+    @content
+
+@mixin tablet
+  @media (max-width: 1199px)
+    @content
+
+@mixin mobile
+  @media (max-width: 767px)
+    @content
+
+@mixin hover
+  @media (hover: hover) and (pointer: fine)
+    @content

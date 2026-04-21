@@ -1,0 +1,178 @@
+.layout
+  display: flex
+  flex-direction: column
+  gap: 36px
+
+.icon
+  width: 70px
+  height: 70px
+  min-width: 70px
+  min-height: 70px
+
+.widget
+  display: flex
+  padding: 20px
+  border: 4px $light-blue solid
+  border-radius: 16px
+  gap: 24px
+  flex-direction: column
+  position: relative
+
+.widget__update
+  position: absolute
+  top: 20px
+  right: 20px
+
+.widget__mainBlock
+  display: flex
+  flex-direction: column
+  gap: 20px
+
+.widget__city
+  grid-column: span 2
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 10px
+  @include font-styles($black, 24px, 400, 28px)
+
+  svg
+    width: 25px
+    height: 25px
+    min-width: 25px
+    min-height: 25px
+
+.widget__block
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 8px
+
+.widget__main
+  display: grid
+  grid-auto-columns: min-content 1fr
+  align-items: center
+  gap: 20px
+
+.widget__actual
+  @include font-styles($gray, 22px)
+
+.widget__condition
+  @include font-styles($black, 28px)
+
+.widget__temp
+  @include font-styles($black, 100px, 500)
+
+.widget__alerts
+  display: flex
+  flex-direction: row
+  gap: 20px
+
+.widget__infoBlock
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+  gap: 20px
+
+.alert
+  display: grid
+  grid-template-rows: min-content 0fr
+  overflow: hidden
+  @include transitionMixin
+  outline: 2px solid $orange
+  border-radius: 8px
+  height: fit-content
+  cursor: pointer
+
+.alert_open
+  grid-template-rows: min-content 1fr
+
+  .alert__description
+    padding: 10px
+
+  .alert__title
+    &::after
+      transform: translateY(-50%) rotate(40deg)
+
+    &::before
+      transform: translateY(-50%) rotate(-40deg)
+
+.alert__description
+  overflow: hidden
+  @include transitionMixin
+  display: flex
+  flex-direction: column
+  gap: 10px
+  padding: 0 10px
+  @include font-styles($black, 20px, 400, 22px)
+
+.alert__period
+  color: $black
+
+.alert__title
+  cursor: pointer
+  @include font-styles($black, 22px)
+  @include transitionMixin
+  display: flex
+  flex-direction: row
+  gap: 10px
+  align-items: center
+  position: relative
+  padding: 5px 10px
+
+  svg
+    width: 40px
+    height: 40px
+    min-width: 40px
+    min-height: 40px
+
+  &::before, &::after
+    content: ''
+    background: $black
+    width: 21px
+    height: 3px
+    position: absolute
+    top: 50%
+    border-radius: 2px
+    @include transitionMixin
+
+  &::after
+    transform: translateY(-50%) rotate(-40deg)
+    right: 10px
+
+  &::before
+    transform: translateY(-50%) rotate(40deg)
+    right: 25px
+
+@include hover
+  .alert__title:hover
+    color: $dark-blue
+
+    &::before, &::after
+      background: $dark-blue
+
+.sun
+  border: 4px $light-blue solid
+  border-radius: 16px
+  height: fit-content
+  padding: 16px
+
+.sun__percent
+  fill: $orange
+  opacity: 0.3
+  @include font-styles($orange, 60px, 600)
+
+.sun__main
+  width: 100%
+
+.sun__strokeGray
+  stroke: $light-gray
+
+.sun__strokeYellow
+  stroke: $yellow
+
+.sun__text
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  padding: 0 10px
+  @include font-styles($black, 28px)

@@ -1,6 +1,6 @@
 export interface Weather {
     address: string
-    alerts: Alerts[]
+    alerts: Alert[]
     currentConditions: Current
     days: Day[]
     description: string
@@ -11,15 +11,17 @@ export interface Weather {
     timezone: string
 }
 
-interface Alerts {
+export interface Alert {
     description: string
     ends: string
+    onset: string
     event: string
     headline: string
     language: string
+    id: string
 }
 
-interface Current {
+export interface Current {
     datetime: string
     temp: number
     feelslike: number
@@ -45,7 +47,7 @@ interface Current {
     moonphase: number
 }
 
-interface Day {
+export interface Day {
     cloudcover: number
     conditions: string
     datetime:string
@@ -80,7 +82,7 @@ interface Day {
     hours: Hour[]
 }
 
-interface Hour {
+export interface Hour {
     cloudcover: number
     conditions: string
     datetime: string

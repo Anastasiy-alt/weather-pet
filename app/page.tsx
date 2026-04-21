@@ -1,13 +1,10 @@
-import styles from "./page.module.css";
-import Button from "@/components/ui/button";
 import WeatherWidget from "@/components/weather/widget";
-
+import stl from './globals.module.sass'
 
 export default async function Home() {
 
   return (
-    <main className={styles.page}>
-      <Button text='Update' variant='btn'/>
+    <main className={stl.layout}>
       <WeatherWidget />
     </main>
   );

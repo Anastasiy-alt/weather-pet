@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
     sassOptions: {
-        additionalData: `@use "@/styles/_variables" as *;`,
+        additionalData: `@use "@/styles/_variables" as *;\n@use "@/styles/_mixins" as *;\n`,
     },
     turbopack: {
         rules: {

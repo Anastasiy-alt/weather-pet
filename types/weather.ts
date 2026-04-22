@@ -27,6 +27,7 @@ export interface Current {
     feelslike: number
     humidity: number
     dew: number
+    precip: number
     precipprob: number
     snow: number
     snowdepth: number

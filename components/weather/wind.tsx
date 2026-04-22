@@ -12,7 +12,6 @@ export default function Wind({dir, speed, gust}: WindProps) {
 
     function getWindDirection(deg: number): string {
         const index = Math.round(deg / 22.5) % 16
-        console.log(dirs[index])
         return dirs[index]
     }
 
@@ -27,12 +26,12 @@ export default function Wind({dir, speed, gust}: WindProps) {
     return (
         <div className={stl.wind}>
             <div className={stl.wind__round}>
-
-                {dirs.map((item, i) => (
-                    <div className={stl.wind__deco} key={i}
-                         style={{'--i': i, '--total': dirs.length} as React.CSSProperties}/>
-                ))}
-
+                <div className={stl.wind__decoBlock}>
+                    {dirs.map((item, i) => (
+                        <div className={stl.wind__deco} key={i}
+                             style={{'--i': i, '--total': dirs.length} as React.CSSProperties}/>
+                    ))}
+                </div>
                 <LocationIcon className={stl.wind__arrow} style={{'--dir': dir + 'deg'} as React.CSSProperties}/>
             </div>
             <div className={stl.wind__dir}>

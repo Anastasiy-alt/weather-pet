@@ -81,7 +81,7 @@ export default function SunArc({sunrise, sunset, sunriseEpoch, sunsetEpoch}: Sun
                     strokeDashoffset={dashOffset}
                 />
                 <g transform={`translate(${sunX - 12}, ${sunY - 12})`}>
-                    <circle cx={12} cy={12} r="2" strokeWidth="5" className={stl.sun__strokeYellow}/>
+                    <circle cx={12} cy={12} r="5" strokeWidth="2" fill="" className={stl.sun__strokeYellow}/>
                 </g>
                 <text x={135} y={90} className={stl.sun__percent} textAnchor="middle" fontWeight={500}>
                     {Math.round(animatedProgress * 100)}%

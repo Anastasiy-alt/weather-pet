@@ -4,11 +4,19 @@
   font-weight: $weight
   line-height: $height
 
-@mixin transitionMixin
-  transition: all 0.35s
+@mixin transitionMixin($keys...)
+  $values: if(length($keys) == 0, all, $keys)
+  $result: ()
+  @each $key in $values
+    $result: append($result, $key 0.35s ease, comma)
+  transition: $result
 
-@mixin transitionMixinLong
-  transition: all 0.8s
+@mixin transitionMixinLong($keys...)
+  $values: if(length($keys) == 0, all, $keys)
+  $result: ()
+  @each $key in $values
+    $result: append($result, $key 1s ease, comma)
+  transition: $result
 
 @mixin laptop
   @media (max-width: 1919px)

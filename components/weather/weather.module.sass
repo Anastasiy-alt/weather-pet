@@ -1,7 +1,8 @@
 .layout
-  display: flex
-  flex-direction: column
-  gap: 36px
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+  grid-template-rows: min-content 330px
+  gap: 30px
 
 .icon
   width: 70px
@@ -17,6 +18,7 @@
   gap: 24px
   flex-direction: column
   position: relative
+  grid-column: span 3
 
 .widget__update
   position: absolute
@@ -68,17 +70,11 @@
   flex-direction: row
   gap: 20px
 
-.widget__infoBlock
-  display: grid
-  grid-template-columns: repeat(3, 1fr)
-  gap: 20px
-  height: 330px
-
 .alert
   display: grid
   grid-template-rows: min-content 0fr
   overflow: hidden
-  @include transitionMixin
+  @include transitionMixin()
   outline: 2px solid $orange
   border-radius: 8px
   height: fit-content
@@ -99,7 +95,7 @@
 
 .alert__description
   overflow: hidden
-  @include transitionMixin
+  @include transitionMixin()
   display: flex
   flex-direction: column
   gap: 10px
@@ -112,7 +108,7 @@
 .alert__title
   cursor: pointer
   @include font-styles($black, 22px)
-  @include transitionMixin
+  @include transitionMixin()
   display: flex
   flex-direction: row
   gap: 10px
@@ -134,7 +130,7 @@
     position: absolute
     top: 50%
     border-radius: 2px
-    @include transitionMixin
+    @include transitionMixin()
 
   &::after
     transform: translateY(-50%) rotate(-40deg)
@@ -159,25 +155,32 @@
 
 .sun__percent
   fill: $orange
-  opacity: 0.3
+  opacity: 0.2
+  @include transitionMixin(opacity)
   @include font-styles($orange, 60px, 600)
 
 .sun__main
   width: 100%
   height: auto
+  overflow: visible
 
 .sun__strokeGray
   stroke: $light-gray
 
 .sun__strokeYellow
   stroke: $yellow
+  @include transitionMixin(stroke, stroke-width)
+
+  &[fill=""]
+    fill: $yellow
+
 
 .sun__text
   display: flex
   flex-direction: row
   justify-content: space-between
   padding: 15px 0 10px
-  @include font-styles($black, 28px, 400, 30px)
+  @include font-styles($black, 28px, 500, 30px)
 
 .sun__day
   display: flex
@@ -207,6 +210,11 @@
   height: 290px
   aspect-ratio: 1 / 1
 
+.wind__decoBlock
+  @include transitionMixinLong()
+  width: 100%
+  height: 100%
+
 
 .wind__arrow
   position: absolute
@@ -214,6 +222,9 @@
   left: 50%
   width: 150px
   height: 150px
+  overflow: visible
+  stroke: transparent
+  @include transitionMixin()
   transform: translate(-50%, -50%) rotate(calc(-45deg + var(--dir)))
 
 .wind__deco
@@ -238,7 +249,103 @@
   gap: 10px
   align-items: center
   margin: auto
-  @include font-styles($black, 28px, 400, 30px)
+  @include font-styles($black, 28px, 500, 30px)
 
 .wind__dirGust
   @include font-styles($gray, 24px, 400, 30px)
+
+.precip
+  border: 4px $light-blue solid
+  border-radius: 16px
+  height: 100%
+  padding: 16px
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+
+.precip__title
+  @include font-styles($black, 36px)
+  text-align: center
+  display: flex
+  flex-direction: row
+  gap: 5px
+  justify-content: center
+
+.precip__grid
+  display: grid
+  grid-template-columns: repeat(2, 1fr)
+  gap: 15px
+
+.precip__item
+  padding: 8px
+  outline: 2px solid $light-gray
+  border-radius: 8px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  gap: 3px
+
+.precip__itemTitle
+  text-align: center
+  @include font-styles($gray, 24px, 400, 30px)
+
+.precip__itemValue
+  text-align: center
+  @include font-styles($black, 28px, 500, 30px)
+
+  span
+    @include font-styles($gray, 24px, 400, 30px)
+
+.precip__types
+  display: flex
+  flex-direction: row
+  gap: 15px
+
+.precip__type
+  display: flex
+  flex-direction: row
+  gap: 5px
+  border-radius: 40px
+  outline-offset: -1px
+  outline: 2px solid $blue
+  width: fit-content
+  align-items: center
+  padding: 6px 12px 6px 8px
+  @include transitionMixin()
+  @include font-styles($black, 24px, 500)
+
+  svg
+    width: 40px
+    height: 40px
+    max-width: 40px
+    max-height: 40px
+    min-width: 40px
+    min-height: 40px
+
+    path
+      @include transitionMixin()
+
+@include hover
+  .precip__type:hover
+    background: $blue
+    color: $white
+
+    svg path
+      fill: $white
+
+      &[stroke]
+        stroke: $white
+  .sun__main:hover
+    .sun__percent
+      opacity: 0.3
+
+    circle.sun__strokeYellow
+      stroke: $orange
+      stroke-width: 3px
+  .wind__round:hover
+    .wind__decoBlock
+      transform: rotate(90deg)
+
+    .wind__arrow
+      stroke: $orange
+      stroke-width: 1px

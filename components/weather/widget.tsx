@@ -12,6 +12,7 @@ import Alert from "@/components/weather/alert";
 import Button from "@/components/ui/button";
 import LocationIcon from '@/assets/icons/location.svg'
 import SunArc from '@/components/weather/sun-arc'
+import Wind from "@/components/weather/wind";
 
 export default function MainWeatherCard() {
     const {coords, loading: geoLoading} = useGeolocation();
@@ -31,7 +32,7 @@ export default function MainWeatherCard() {
 
 
     if (geoLoading) return <p>Определяем местоположение...</p>;
-    console.log(weather)
+    console.log('WEATHER: ', weather)
     console.log('LOCATION: ', location)
     return (
         <>
@@ -66,8 +67,13 @@ export default function MainWeatherCard() {
                     }
                 </article>
                 <div className={stl.widget__infoBlock}>
-                    <SunArc sunrise={weather.currentConditions.sunrise} sunset={weather.currentConditions.sunset}/>
-
+                    <SunArc sunrise={weather.currentConditions.sunrise}
+                            sunsetEpoch={weather.currentConditions.sunsetEpoch}
+                            sunriseEpoch={weather.currentConditions.sunriseEpoch}
+                            sunset={weather.currentConditions.sunset}/>
+                    <Wind dir={weather.currentConditions.winddir}
+                          gust={weather.currentConditions.windgust}
+                          speed={weather.currentConditions.windspeed}/>
                 </div>
             </section>
             }</>

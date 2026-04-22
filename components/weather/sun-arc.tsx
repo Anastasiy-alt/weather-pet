@@ -6,9 +6,11 @@ import {useEffect, useState} from 'react'
 interface SunArcProps {
     sunrise: string
     sunset: string
+    sunriseEpoch: number
+    sunsetEpoch: number
 }
 
-export default function SunArc({sunrise, sunset}: SunArcProps) {
+export default function SunArc({sunrise, sunset, sunriseEpoch, sunsetEpoch}: SunArcProps) {
     function toMin(t: string) {
         const [h, m] = t.split(':').map(Number)
         return h * 60 + m
@@ -16,6 +18,12 @@ export default function SunArc({sunrise, sunset}: SunArcProps) {
 
     const srMin = toMin(sunrise)
     const ssMin = toMin(sunset)
+    const totalSec = sunsetEpoch - sunriseEpoch
+    const sunDay = {
+        hours: Math.floor(totalSec / 3600),
+        minutes: Math.floor((totalSec % 3600) / 60)
+    }
+
     const now = new Date()
     const nowMin = now.getHours() * 60 + now.getMinutes()
     const progress = Math.min(1, Math.max(0, (nowMin - srMin) / (ssMin - srMin)))
@@ -73,14 +81,16 @@ export default function SunArc({sunrise, sunset}: SunArcProps) {
                     strokeDashoffset={dashOffset}
                 />
                 <g transform={`translate(${sunX - 12}, ${sunY - 12})`}>
-                    <circle cx={12} cy={12} r={1} strokeWidth="5" className={stl.sun__strokeYellow}/>
+                    <circle cx={12} cy={12} r="2" strokeWidth="5" className={stl.sun__strokeYellow}/>
                 </g>
-                <text x={135} y={90} className={stl.sun__percent} fill="#BA7517" textAnchor="middle" fontWeight={500}>
+                <text x={135} y={90} className={stl.sun__percent} textAnchor="middle" fontWeight={500}>
                     {Math.round(animatedProgress * 100)}%
                 </text>
             </svg>
             <div className={stl.sun__text}>
                 <p>{sunrise.slice(0, 5)}</p>
+                <p className={stl.sun__day}><span>Световой день</span><span>{sunDay.hours} ч {sunDay.minutes} мин</span>
+                </p>
                 <p>{sunset.slice(0, 5)}</p>
             </div>
         </div>

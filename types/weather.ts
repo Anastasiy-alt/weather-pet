@@ -43,7 +43,9 @@ export interface Current {
     conditions: string
     icon: string
     sunrise: string
+    sunriseEpoch: number
     sunset: string
+    sunsetEpoch: number
     moonphase: number
 }
 

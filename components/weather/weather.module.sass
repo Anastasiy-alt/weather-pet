@@ -72,6 +72,7 @@
   display: grid
   grid-template-columns: repeat(3, 1fr)
   gap: 20px
+  height: 330px
 
 .alert
   display: grid
@@ -153,7 +154,7 @@
 .sun
   border: 4px $light-blue solid
   border-radius: 16px
-  height: fit-content
+  height: 100%
   padding: 16px
 
 .sun__percent
@@ -163,6 +164,7 @@
 
 .sun__main
   width: 100%
+  height: auto
 
 .sun__strokeGray
   stroke: $light-gray
@@ -174,5 +176,69 @@
   display: flex
   flex-direction: row
   justify-content: space-between
-  padding: 0 10px
-  @include font-styles($black, 28px)
+  padding: 15px 0 10px
+  @include font-styles($black, 28px, 400, 30px)
+
+.sun__day
+  display: flex
+  flex-direction: column
+  margin-top: -30px
+  align-items: center
+
+  span:first-child
+    @include font-styles($gray, 24px, 400, 30px)
+
+
+.wind
+  border: 4px $light-blue solid
+  border-radius: 16px
+  height: 100%
+  padding: 16px
+  display: flex
+  flex-direction: row
+  gap: 20px
+
+.wind__round
+  position: relative
+  border-radius: 100%
+  outline-offset: -8px
+  outline: 4px solid $light-gray
+  width: auto
+  height: 290px
+  aspect-ratio: 1 / 1
+
+
+.wind__arrow
+  position: absolute
+  top: 50%
+  left: 50%
+  width: 150px
+  height: 150px
+  transform: translate(-50%, -50%) rotate(calc(-45deg + var(--dir)))
+
+.wind__deco
+  width: 6px
+  height: 20px
+  border-radius: 3px
+  background: $dark-blue
+  outline: 2px solid $light-gray
+  position: absolute
+  top: 50%
+  left: 49%
+  transform-origin: top
+  transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-145px)
+
+.wind__dirTitle
+  margin-bottom: 10px
+  @include font-styles($black, 36px)
+
+.wind__dir
+  display: flex
+  flex-direction: column
+  gap: 10px
+  align-items: center
+  margin: auto
+  @include font-styles($black, 28px, 400, 30px)
+
+.wind__dirGust
+  @include font-styles($gray, 24px, 400, 30px)

@@ -1,13 +1,13 @@
 .btn
-  padding: 8px 16px
+  padding: 10px 20px
   border: none
   background: $blue
   outline: none
   width: fit-content
   cursor: pointer
-  transition: .35s all ease-in
+  @include transitionMixin()
   border-radius: 8px
-  @include font-styles($white, 24px, 500)
+  @include font-styles($white, 28px, 600, 30px)
   &:hover
     background: $dark-blue
     color: $white

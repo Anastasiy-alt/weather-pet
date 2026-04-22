@@ -60,8 +60,8 @@ export default function Precip({
             <div className={stl.precip__types}>
                 {
                     preciptype.map((item) => (
-                        <div className={stl.precip__type}>
-                            <WeatherIcon key={item} name={item}/>
+                        <div className={stl.precip__type} key={item}>
+                            <WeatherIcon name={item}/>
                             {preciptypeTranslate[item]}
                         </div>
                     ))

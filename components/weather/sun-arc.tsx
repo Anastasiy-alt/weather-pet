@@ -23,11 +23,9 @@ export default function SunArc({sunrise, sunset, sunriseEpoch, sunsetEpoch}: Sun
         hours: Math.floor(totalSec / 3600),
         minutes: Math.floor((totalSec % 3600) / 60)
     }
-
     const now = new Date()
     const nowMin = now.getHours() * 60 + now.getMinutes()
     const progress = Math.min(1, Math.max(0, (nowMin - srMin) / (ssMin - srMin)))
-
     const [animatedProgress, setAnimatedProgress] = useState(0)
 
     useEffect(() => {

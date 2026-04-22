@@ -1,4 +1,4 @@
-import styles from './ui.module.sass'
+import stl from './ui.module.sass'
 import Link from 'next/link'
 import {MouseEventHandler} from "react";
 
@@ -7,11 +7,11 @@ export default function Button({link, text, variant = 'btn', action, classCustom
         <>
             {
                 variant === 'btn' ?
-                    (<button className={`${styles.btn} ${classCustom}`} onClick={action}>
+                    (<button className={`${stl.btn} ${classCustom}`} onClick={action}>
                         {text}
                     </button>)
                     :
-                    (<Link href={String(link)} className={`${styles.btn} ${classCustom}`}>
+                    (<Link href={String(link)} className={`${stl.btn} ${classCustom}`}>
                         {text}
                     </Link>)
             }

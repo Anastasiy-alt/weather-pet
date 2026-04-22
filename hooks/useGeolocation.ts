@@ -23,7 +23,6 @@ type Coords = { lat: number; lon: number };
 
 export function useGeolocation() {
     const [coords, setCoords] = useState<Coords | null>(null);
-    const [loading, setLoading] = useState(true);
     const [error, setError]   = useState<string | null>(null);
 
     useEffect(() => {
@@ -38,7 +37,6 @@ export function useGeolocation() {
                     lat: position.coords.latitude,
                     lon: position.coords.longitude,
                 });
-                setLoading(false);
             },
             (_err) => {
                 useFallback();
@@ -49,9 +47,8 @@ export function useGeolocation() {
     function useFallback() {
         const city = FALLBACK_CITIES[Math.floor(Math.random() * FALLBACK_CITIES.length)];
         setCoords({ lat: city.lat, lon: city.lon });
-        setLoading(false);
         setError("Геолокация недоступна, показываем случайный город");
     }
 
-    return { coords, loading, error };
+    return { coords, error };
 }

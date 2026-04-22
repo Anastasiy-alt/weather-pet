@@ -11,3 +11,20 @@
   &:hover
     background: $dark-blue
     color: $white
+
+.loader
+  position: fixed
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+.loader__icon
+  width: 150px
+  height: 150px
+  animation: ease loadAnim 2.5s infinite
+
+@keyframes loadAnim
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)

@@ -25,13 +25,14 @@
   position: absolute
   top: 170px
   left: 0
-  width: auto
-  margin: 0 8px
+  width: 100%
+  padding: 0 8px
   color: $black
   opacity: 0
   height: calc(100% - 186px)
   display: flex
   align-items: center
+  justify-content: center
   transform: translateY(5px)
   text-align: center
   @include font-styles($black, 24px, 400, 28px)
@@ -269,6 +270,41 @@
       border-right: 8px solid $blue
       background: transparent
 
+@include tablet
+  .uv
+    order: 3
+  .cloud
+    order: 5
+  .visible
+    order: 7
+  .moon
+    order: 8
+  .humidity
+    order: 9
+  .temp
+    order: 10
+  .card__title
+    @include font-styles($black, 24px, 500, 28px)
+  .card__subtitle
+    @include font-styles($gray, 20px, 400, 24px)
+  .card__tag
+    @include font-styles($black, 20px, 400, 24px)
+
+@include mobile
+  .card
+    width: 100%
+  .uv
+    order: 5
+  .cloud
+    order: 6
+  .visible
+    order: 7
+  .moon
+    order: 8
+  .humidity
+    order: 9
+  .temp
+    order: 10
 @include hover
   .moon:hover
     .card__tag

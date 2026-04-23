@@ -3,6 +3,7 @@
   grid-template-columns: repeat(6, 1fr)
   grid-template-rows: min-content 330px 1fr
   gap: 24px
+  z-index: 1
 
 .card
   padding: 16px
@@ -81,6 +82,7 @@
   width: 100%
   height: auto
   overflow: visible
+  max-height: 230px
 
 .sun__strokeGray
   stroke: $light-gray
@@ -122,12 +124,13 @@
   outline: 4px solid $light-gray
   width: auto
   height: 290px
-  aspect-ratio: 1 / 1
+  aspect-ratio: 1/1
 
 .wind__decoBlock
   @include transitionMixinLong()
   width: 100%
   height: 100%
+  aspect-ratio: 1 / 1
 
 
 .wind__arrow
@@ -167,6 +170,7 @@
   @include font-styles($black, 28px, 500, 30px)
 
 .wind__dirGust
+  text-align: center
   @include font-styles($gray, 24px, 400, 30px)
 
 .precip
@@ -235,6 +239,110 @@
 
     path
       @include transitionMixin()
+
+
+@include laptop
+  .layout
+    grid-template-columns: repeat(4, 1fr)
+    grid-template-rows: min-content 1fr 300px 300px
+  .card
+    grid-column: span 2
+  .widget
+    grid-column: span 4
+
+  .sun__text
+    max-width: 520px
+    margin: 0 auto
+  .wind
+    justify-content: center
+    gap: 20px
+  .wind__dir
+    margin: auto 0
+  .wind__round
+    height: 240px
+    width: 240px
+  .wind__arrow
+    width: 100px
+    height: 100px
+  .wind__deco
+    transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-120px)
+
+@include tablet
+  .layout
+    grid-template-columns: repeat(3, 1fr)
+    grid-template-rows: min-content 1fr
+    gap: 16px
+  .card
+    grid-column: span 2
+  .widget
+    grid-column: span 3
+    order: 1
+  .sun
+    order: 2
+  .precip
+    order: 4
+    gap: 5px
+  .wind
+    order: 6
+  .precip__title, .wind__dirTitle
+    @include font-styles($black, 28px)
+
+  .widget__update
+    position: relative
+    top: 0
+    right: 0
+
+  .wind__dir
+    @include font-styles($black, 24px, 500)
+
+  .wind__dirGust
+    @include font-styles($gray, 20px)
+
+  .widget__condition
+    @include font-styles($black, 28px)
+
+  .widget__city
+    @include font-styles($black, 20px, 400, 24px)
+
+  .widget__temp
+    @include font-styles($black, 80px, 500)
+
+  .widget__actual
+    @include font-styles($gray, 20px)
+@include mobile
+  .layout, .widget__main, .widget__block, .wind
+    display: flex
+    flex-direction: column
+    align-items: center
+    width: 100%
+  .widget__main
+    gap: 10px
+  .precip
+    order: 3
+  .wind
+    order: 4
+  .widget__condition, .widget__actual
+    text-align: center
+  .sun__day
+    order: 1
+    width: 100%
+    margin-top: 0
+  .sun__text
+    padding: 0
+    flex-wrap: wrap
+
+  .wind__round
+    height: 150px
+    width: 150px
+  .wind__arrow
+    width: 50px
+    height: 50px
+
+  .wind__deco
+    width: 4px
+    height: 12px
+    border-width: 1px
+    transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-75px)
 
 @include hover
   .precip__type:hover

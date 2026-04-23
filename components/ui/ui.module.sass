@@ -8,9 +8,6 @@
   @include transitionMixin()
   border-radius: 8px
   @include font-styles($white, 28px, 600, 30px)
-  &:hover
-    background: $dark-blue
-    color: $white
 
 .loader
   position: fixed
@@ -22,6 +19,15 @@
   width: 150px
   height: 150px
   animation: ease loadAnim 2.5s infinite
+
+@include tablet
+  .btn
+    @include font-styles($white, 22px, 600, 24px)
+
+@include hover
+  .btn:hover
+    background: $dark-blue
+    color: $white
 
 @keyframes loadAnim
   0%

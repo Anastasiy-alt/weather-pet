@@ -1,0 +1,407 @@
+.card
+  border: 4px $light-blue solid
+  border-radius: 16px
+  height: 100%
+  padding: 16px 8px
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 15px
+  position: relative
+  @include transitionMixin()
+
+.card__title
+  width: 100%
+  text-align: center
+  @include font-styles($black, 28px, 500, 30px)
+  @include transitionMixin()
+
+.card__subtitle
+  text-align: center
+  @include font-styles($gray, 24px, 400, 28px)
+  @include transitionMixin()
+
+.card__tag
+  position: absolute
+  top: 170px
+  left: 0
+  width: auto
+  margin: 0 8px
+  color: $black
+  opacity: 0
+  height: calc(100% - 186px)
+  display: flex
+  align-items: center
+  transform: translateY(5px)
+  text-align: center
+  @include font-styles($black, 24px, 400, 28px)
+  @include transitionMixin()
+
+
+.moon__icon
+  height: 150px
+  width: 150px
+  border-radius: 100%
+  background: $yellow
+  position: relative
+  overflow: hidden
+  @include transitionMixinLong()
+
+  &::after
+    content: ''
+    width: 150px
+    height: 150px
+    background: $blue
+    border-radius: 100%
+    position: absolute
+    top: 0
+    right: var(--i)
+
+.cloud__block
+  position: relative
+  height: fit-content
+
+.cloud__subtitle
+  @include transitionMixin()
+  opacity: 0
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  transform: translateY(5px)
+
+.cloud__icon
+  width: 150px
+  height: 150px
+  display: block
+  @include transitionMixin()
+
+  path[fill='transparent']
+    @include transitionMixin()
+
+.cloud__title
+  position: relative
+
+  span
+    @include transitionMixin()
+
+.cloud__hiddenTitle
+  bottom: 22px
+  left: 50%
+  transform: translate(-50%, 0)
+  position: absolute
+  @include transitionMixin()
+  opacity: 0
+  @include font-styles($black, 48px, 500, 50px)
+
+.uv__icon
+  width: 150px
+  height: 150px
+  @include transitionMixin()
+
+  circle
+    fill: $yellow
+    opacity: var(--i)
+
+.uv__tag
+  position: absolute
+  top: 170px
+  left: 0
+  width: auto
+  margin: 0 16px
+  color: $black
+  opacity: 0
+  height: calc(100% - 186px)
+  display: flex
+  align-items: center
+  transform: translateY(5px)
+
+.visible__block
+  width: 170px
+  height: 150px
+  display: flex
+  flex-direction: row
+  gap: 8px
+  align-items: flex-end
+  justify-content: center
+  position: relative
+  overflow: hidden
+
+  &::after, &::before
+    content: ''
+    transform: translate(-50%, -50%)
+    filter: blur(8px)
+    opacity: var(--fog)
+    border-radius: 100%
+    background: $white
+    position: absolute
+    z-index: 2
+
+  &::after
+    width: 130px
+    height: 90px
+    top: 70%
+    left: 40%
+
+  &::before
+    width: 90px
+    height: 75px
+    top: 35%
+    left: 70%
+
+.visible__item
+  background: $blue
+  border-radius: 8px 8px 0 0
+  width: 35px
+  position: relative
+
+  &::before
+    content: ''
+    width: 45px
+    height: 115%
+    background: $light-blue
+    opacity: 0
+    position: absolute
+    bottom: 0
+    z-index: -1
+    border-radius: 8px 8px 0 0
+    @include transitionMixin()
+    transform: translateY(100%)
+
+  &:nth-child(1)
+    height: 70%
+
+    &::before
+      left: 95px
+
+  &:nth-child(2)
+    height: 85%
+
+    &::before
+      left: -30px
+
+    &::after
+      content: ''
+      width: 45px
+      height: 110%
+      background: $light-blue
+      opacity: 0
+      position: absolute
+      bottom: 0
+      z-index: -1
+      left: 20px
+      border-radius: 8px 8px 0 0
+      transform: translateY(100%)
+      @include transitionMixin()
+
+  &:nth-child(3)
+    height: 55%
+
+    &::before
+      left: -105px
+
+.visible__title
+  white-space: nowrap
+
+.humidity__block
+  width: 150px
+  height: 150px
+
+.humidity__icon
+  transform-origin: center top
+
+.humidity::before
+  content: ''
+  height: 100%
+  width: 100%
+  position: absolute
+  top: 0
+  left: 0
+  border-radius: 11px
+  background: $light-blue
+  z-index: -1
+  @include transitionMixin()
+  opacity: 0
+
+.temp__icon
+  width: 150px
+  height: 150px
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-evenly
+
+.temp__arrow
+  width: 8px
+  height: 80px
+  position: relative
+  border-radius: 4px
+  @include transitionMixin()
+
+  &::before
+    content: ''
+    position: absolute
+    left: 50%
+    width: 30px
+    height: 30px
+    border-radius: 4px
+    transform: translateX(-50%) rotate(45deg)
+
+  &_up
+    background: $orange
+
+    &::before
+      top: -16px
+      border-bottom: none
+      border-right: none
+      border-top: 8px solid $orange
+      border-left: 8px solid $orange
+      background: transparent
+
+  &_down
+    background: $blue
+
+    &::before
+      bottom: -16px
+      border-top: none
+      border-left: none
+      border-bottom: 8px solid $blue
+      border-right: 8px solid $blue
+      background: transparent
+
+@include hover
+  .moon:hover
+    .card__tag
+      opacity: 1
+      transform: translateY(0)
+
+    .card__title
+      opacity: 0
+
+    .moon__icon
+      transform: rotate(360deg)
+
+  .cloud:hover
+    .card__tag
+      opacity: 1
+      transform: translateY(0)
+
+    .cloud__title
+      opacity: 0
+
+    .cloud__hiddenTitle
+      opacity: 1
+      transition-delay: 0.2s
+
+    .cloud__icon
+      transform: scale(1.1)
+
+      path[fill='transparent']
+        fill: $light-blue
+
+  .uv:hover
+    border-color: var(--c)
+
+    .card__subtitle, .card__title
+      opacity: 0
+
+    .card__tag
+      opacity: 1
+      transform: translateY(0)
+
+    .uv__icon
+      animation: sunAnim forwards 1s
+  .visible:hover
+    .card__subtitle, .card__title
+      opacity: 0
+
+    .card__tag
+      opacity: 1
+      transform: translateY(0)
+
+    .visible__item
+      &::before, &::after
+        opacity: 0.6
+        transform: translateY(0)
+  .humidity:hover
+    .humidity__icon
+      animation: dropRing 1s forwards ease-in
+
+    .card__subtitle, .card__title
+      opacity: 0
+
+    .card__tag
+      opacity: 1
+      transform: translateY(0)
+
+    &::before
+      opacity: var(--i)
+
+  .temp:hover
+    .card__subtitle, .card__title
+      opacity: 0
+
+    .card__tag
+      opacity: 1
+      transform: translateY(0)
+
+    .temp__arrow
+      &_up
+        animation: tempUp forwards 1s
+
+      &_down
+        animation: tempDown forwards 1s
+
+@keyframes sunAnim
+  0%
+    transform: scale(1)
+  30%
+    transform: scale(1.2)
+  50%
+    transform: scale(0.9)
+  75%
+    transform: scale(1.1)
+  100%
+    transform: scale(1)
+
+@keyframes dropRing
+  0%
+    transform: rotate(0deg)
+  15%
+    transform: rotate(10deg)
+  30%
+    transform: rotate(-10deg)
+  45%
+    transform: rotate(7deg)
+  60%
+    transform: rotate(-7deg)
+  75%
+    transform: rotate(4deg)
+  90%
+    transform: rotate(-4deg)
+  100%
+    transform: rotate(0deg)
+
+@keyframes tempUp
+  0%
+    transform: translateY(0)
+  30%
+    transform: translateY(10px)
+  50%
+    transform: translateY(-5px)
+  75%
+    transform: translateY(5px)
+  100%
+    transform: translateY(0)
+
+@keyframes tempDown
+  0%
+    transform: translateY(0)
+  30%
+    transform: translateY(-10px)
+  50%
+    transform: translateY(5px)
+  75%
+    transform: translateY(-5px)
+  100%
+    transform: translateY(0)

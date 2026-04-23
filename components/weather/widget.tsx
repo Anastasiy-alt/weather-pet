@@ -12,6 +12,12 @@ import SunArc from '@/components/weather/sun-arc'
 import Wind from "@/components/weather/wind";
 import Precip from "@/components/weather/precip";
 import Loader from "@/components/ui/loader";
+import MoonPhase from "@/components/weather/smallCards/moonPhase";
+import Cloudy from "@/components/weather/smallCards/cloudy";
+import UVindex from "@/components/weather/smallCards/uv";
+import Visible from "@/components/weather/smallCards/visible";
+import Humidity from "@/components/weather/smallCards/humidity";
+import TempRange from "@/components/weather/smallCards/temp";
 
 export default function MainWeatherCard() {
     const {coords, error} = useGeolocation();
@@ -49,18 +55,21 @@ export default function MainWeatherCard() {
                             sunriseEpoch={weather.currentConditions.sunriseEpoch}
                             sunset={weather.currentConditions.sunset}/>
                     <Precip precip={weather.currentConditions.precip}
-                            cloudcover={weather.currentConditions.cloudcover}
                             precipprob={weather.currentConditions.precipprob}
                             snow={weather.currentConditions.snow}
                             snowdepth={weather.currentConditions.snowdepth}
-                            preciptype={weather.currentConditions.preciptype}
-                            humidity={weather.currentConditions.humidity}
-                            visibility={weather.currentConditions.visibility}/>
+                            preciptype={weather.currentConditions.preciptype}/>
                     <Wind dir={weather.currentConditions.winddir}
                           gust={weather.currentConditions.windgust}
                           speed={weather.currentConditions.windspeed}/>
+                    <UVindex uv={weather.currentConditions.uvindex}/>
+                    <Cloudy percent={weather.currentConditions.cloudcover}/>
+                    <Visible vis={weather.currentConditions.visibility}/>
+                    <MoonPhase phase={weather.currentConditions.moonphase}/>
+                    <Humidity percent={weather.currentConditions.humidity}/>
+                    <TempRange tempmax={weather.days[0].tempmax} tempmin={weather.days[0].tempmin}/>
                 </section> :
-               <Loader />
+                <Loader/>
             }</>
     );
 }

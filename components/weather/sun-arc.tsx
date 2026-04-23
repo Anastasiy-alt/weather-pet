@@ -59,7 +59,7 @@ export default function SunArc({sunrise, sunset, sunriseEpoch, sunsetEpoch}: Sun
     const [sunX, sunY] = pt(sunA)
 
     return (
-        <div className={stl.sun}>
+        <div className={`${stl.sun} ${stl.card}`}>
             <svg className={stl.sun__main} viewBox="0 0 270 120" width="100%" height="100%">
                 <path
                     className={stl.sun__strokeGray}

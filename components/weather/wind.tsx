@@ -16,7 +16,7 @@ export default function Wind({dir, speed, gust}: WindProps) {
     }
 
     function convertSpeed(speed: number) {
-        return speed * (1000 / 3600)
+        return Math.round(speed * (1000 / 3600))
     }
 
     const dirString = getWindDirection(dir)
@@ -24,7 +24,7 @@ export default function Wind({dir, speed, gust}: WindProps) {
     const gustMeters = convertSpeed(gust ? gust : speed)
 
     return (
-        <div className={stl.wind}>
+        <div className={`${stl.wind} ${stl.card}`}>
             <div className={stl.wind__round}>
                 <div className={stl.wind__decoBlock}>
                     {dirs.map((item, i) => (

@@ -1,9 +1,9 @@
 import stl from './weather.module.sass'
 import Button from "@/components/ui/button";
 import LocationIcon from "@/assets/icons/location.svg";
-import WeatherIcon from "@/components/weather/icon";
+import WeatherIcon from "@/components/weather/ui/icon";
 import {Alert as AlertType} from "@/types";
-import Alert from "@/components/weather/alert";
+import Alert from "@/components/weather/ui/alert";
 
 interface MainProps {
     city: string

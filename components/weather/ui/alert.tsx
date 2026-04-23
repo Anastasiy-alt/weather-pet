@@ -1,5 +1,5 @@
 import {Alert} from "@/types";
-import stl from './weather.module.sass'
+import stl from './ui.module.sass'
 import {useRef} from "react";
 import AlertIcon from '@/assets/icons/alert.svg'
 

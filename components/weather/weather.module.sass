@@ -2,7 +2,7 @@
   display: grid
   grid-template-columns: repeat(6, 1fr)
   grid-template-rows: min-content 330px 1fr
-  gap: 24px
+  gap: 20px
   z-index: 1
 
 .card
@@ -22,23 +22,13 @@
   position: relative
   grid-column: span 6
 
-.widget__update
-  position: absolute
-  top: 20px
-  right: 20px
-
-.widget__mainBlock
-  display: flex
-  flex-direction: column
-  gap: 20px
-
 .widget__city
-  grid-column: span 2
+  grid-column: span 3
   display: flex
   flex-direction: row
   align-items: center
   gap: 10px
-  @include font-label()
+  @include font-label($black)
 
   svg
     width: 25px
@@ -52,25 +42,37 @@
   align-items: center
   gap: 8px
 
+.widget__icon_mob
+  display: none
+
 .widget__main
   display: grid
-  grid-auto-columns: min-content 1fr
+  grid-template-rows: min-content 1fr min-content
+  grid-template-columns: min-content min-content 1fr min-content
   align-items: center
-  gap: 20px
+  gap: 8px
+  width: 100%
 
 .widget__actual
+  grid-column: span 2
   @include font-label($gray)
 
 .widget__condition
-  @include font-heading()
+  grid-column: span 2
+  @include font-heading($black)
 
 .widget__temp
+  grid-row: span 2
   @include font-styles($black, 100px, 500)
 
 .widget__alerts
   display: flex
   flex-direction: row
   gap: 20px
+
+.sun
+  display: flex
+  flex-direction: column
 
 .sun__percent
   fill: $orange
@@ -82,7 +84,9 @@
   width: 100%
   height: auto
   overflow: visible
-  max-height: 230px
+  max-height: 100%
+  flex: 1 1 0
+  min-height: 0
 
 .sun__strokeGray
   stroke: $light-gray
@@ -100,13 +104,15 @@
   flex-direction: row
   justify-content: space-between
   padding: 10px 8px
-  @include font-value()
+  width: 100%
+  @include font-value($black)
 
 .sun__day
   display: flex
   flex-direction: column
   margin-top: -30px
   align-items: center
+  justify-content: flex-end
 
   span:first-child
     @include font-label($gray, 400, 30px)
@@ -159,7 +165,7 @@
 
 .wind__dirTitle
   margin-bottom: 10px
-  @include font-heading()
+  @include font-heading($black)
 
 .wind__dir
   display: flex
@@ -167,7 +173,8 @@
   gap: 10px
   align-items: center
   margin: auto
-  @include font-value()
+  text-align: center
+  @include font-value($black)
 
 .wind__dirGust
   text-align: center
@@ -179,7 +186,7 @@
   justify-content: space-between
 
 .precip__title
-  @include font-heading()
+  @include font-heading($black)
   text-align: center
   display: flex
   flex-direction: row
@@ -206,7 +213,7 @@
 
 .precip__itemValue
   text-align: center
-  @include font-value()
+  @include font-value($black)
 
   span
     @include font-label($gray, 400, 30px)
@@ -244,15 +251,16 @@
 @include laptop
   .layout
     grid-template-columns: repeat(4, 1fr)
-    grid-template-rows: min-content 1fr 300px 300px
+    grid-template-rows: min-content 300px
+    gap: 16px
   .card
     grid-column: span 2
   .widget
     grid-column: span 4
-
   .sun__text
-    max-width: 520px
+    max-width: 460px
     margin: 0 auto
+    padding: 10px 0
   .wind
     justify-content: center
     gap: 20px
@@ -270,38 +278,72 @@
 @include tablet
   .layout
     grid-template-columns: repeat(3, 1fr)
-    grid-template-rows: min-content 1fr
-    gap: 16px
+    grid-template-rows: min-content 250px 250px 250px 250px
   .card
     grid-column: span 2
+
+    *
+      user-select: none
   .widget
     grid-column: span 3
     order: 1
   .sun
     order: 2
   .precip
-    order: 4
+    order: 5
     gap: 5px
   .wind
     order: 6
+  .widget__main
+    grid-template-rows: min-content min-content 1fr min-content
+    grid-template-columns: min-content min-content 1fr
   .widget__update
-    position: relative
-    top: 0
-    right: 0
+    order: -1
+    grid-column: span 2
+
+  .widget__condition
+    grid-column: span 1
+
   .widget__temp
     @include font-styles($black, 80px, 500)
+  .wind__round
+    height: 200px
+    width: 200px
+  .wind__arrow
+    width: 70px
+    height: 70px
+  .wind__deco
+    transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-100px)
+  .wind__dir br
+    display: none
+
 @include mobile
-  .layout, .widget__main, .widget__block, .wind, .sun
+  .card
+    padding: 16px 8px
+  .layout, .widget__block, .wind, .sun
     display: flex
     flex-direction: column
     align-items: center
     width: 100%
-  .widget__main
-    gap: 10px
+  .widget__icon_desk
+    display: none
+  .widget__icon_mob
+    display: block
+  .widget
+    width: 100%
   .precip
     order: 3
   .wind
     order: 4
+  .widget__temp
+    display: flex
+    flex-direction: row
+    gap: 8px
+    align-items: center
+    @include font-styles($black, 70px, 500)
+  .widget__main
+    display: flex
+    flex-direction: column
   .widget__condition, .widget__actual
     text-align: center
   .sun__day
@@ -312,21 +354,29 @@
     padding: 0
     flex-wrap: wrap
     width: 100%
-    max-width: 440px
-
+    max-width: 430px
+  .wind
+    flex-direction: row
+    justify-content: space-between
   .wind__round
-    height: 150px
-    width: 150px
+    height: 100px
+    width: 100px
   .wind__arrow
-    width: 50px
-    height: 50px
+    width: 40px
+    height: 40px
   .sun__main
     max-height: 200px
+    flex: none
+  .wind
+    gap: 8px
+  .wind__dir
+    margin: 0
+    width: 100%
   .wind__deco
-    width: 4px
+    width: 3px
     height: 12px
     border-width: 1px
-    transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-75px)
+    transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-50px)
 
 @include hover
   .precip__type:hover

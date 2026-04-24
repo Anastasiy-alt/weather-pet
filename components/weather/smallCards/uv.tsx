@@ -22,7 +22,7 @@ export default function UVindex({uv}: { uv: number }) {
     }
     return (
         <div className={`${stl.uv} ${stl.card}`} style={{'--c': level.color} as React.CSSProperties}>
-            <Sun className={stl.uv__icon} style={{'--i': uv / 10} as React.CSSProperties}/>
+            <Sun className={`${stl.uv__icon} ${stl.card__icon}`} style={{'--i': uv / 10} as React.CSSProperties}/>
             <p className={stl.card__title}>УФ-индекс {uv}</p>
             <p className={stl.card__subtitle}>{level.label}</p>
             <p className={stl.card__tag}>{level.description}</p>

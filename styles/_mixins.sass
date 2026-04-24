@@ -1,43 +1,55 @@
-@use '@/styles/_variables' as *
-
 @mixin font-styles($color, $size, $weight: 400, $height: 100%)
   color: $color
   font-size: $size
   font-weight: $weight
   line-height: $height
 
-@mixin font-heading($color: $black)
+@mixin font-heading($color)
   @include font-styles($color, 36px)
+  +laptop
+    font-size: 32px
   +tablet
-    font-size: 28px
+    font-size: 26px
 
-@mixin font-value($color: $black, $weight: 500)
+@mixin font-value($color, $weight: 500)
   @include font-styles($color, 28px, $weight, 30px)
+  +laptop
+    font-size: 26px
+    line-height: 100%
   +tablet
-    font-size: 24px
+    font-size: 22px
 
-@mixin font-label($color: $black, $weight: 400, $lh: 28px)
+@mixin font-label($color, $weight: 400, $lh: 28px)
   @include font-styles($color, 24px, $weight, $lh)
+  +laptop
+    font-size: 22px
+    line-height: 100%
   +tablet
     font-size: 20px
 
 @mixin transitionMixin($keys...)
-  $result: ()
-  @if length($keys) == 0
+  $result: ''
+  @each $key in $keys
+    @if $result != ''
+      $result: #{$result}, #{$key} 0.35s ease
+    @else
+      $result: #{$key} 0.35s ease
+  @if $result == ''
     transition: all 0.35s ease
   @else
-    @each $key in $keys
-      $result: append($result, $key 0.35s ease, comma)
-    transition: $result
+    transition: #{$result}
 
 @mixin transitionMixinLong($keys...)
-  $result: ()
-  @if length($keys) == 0
+  $result: ''
+  @each $key in $keys
+    @if $result != ''
+      $result: #{$result}, #{$key} 1s ease
+    @else
+      $result: #{$key} 1s ease
+  @if $result == ''
     transition: all 1s ease
   @else
-    @each $key in $keys
-      $result: append($result, $key 1s ease, comma)
-    transition: $result
+    transition: #{$result}
 
 @mixin laptop
   @media (max-width: 1919px)

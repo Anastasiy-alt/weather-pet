@@ -19,7 +19,7 @@ export default function Visible({vis}: { vis: number }) {
     const level = getVisibilityLevel(vis)
     return (
         <div className={`${stl.visible} ${stl.card}`}>
-            <div className={stl.visible__block} style={{'--fog': level.fog} as React.CSSProperties}>
+            <div className={`${stl.visible__block} ${stl.card__icon}`} style={{'--fog': level.fog} as React.CSSProperties}>
                 <div className={stl.visible__item}></div>
                 <div className={stl.visible__item}></div>
                 <div className={stl.visible__item}></div>

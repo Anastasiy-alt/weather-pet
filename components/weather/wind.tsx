@@ -36,8 +36,7 @@ export default function Wind({dir, speed, gust}: WindProps) {
             </div>
             <div className={stl.wind__dir}>
                 <p className={stl.wind__dirTitle}>Ветер</p>
-                <p>{dirString}</p>
-                <p>{speedMeters}м/с</p>
+                <p>{dirString} <br/>{speedMeters}м/с</p>
                 {gustMeters &&
                     <p className={stl.wind__dirGust}>Порывы до {gustMeters}м/с</p>}
             </div>

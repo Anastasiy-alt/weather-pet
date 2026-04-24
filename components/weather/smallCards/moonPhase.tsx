@@ -69,7 +69,7 @@ export default function MoonPhase({phase}: { phase: number }) {
 
     return (
         <div className={`${stl.moon} ${stl.card}`}>
-            <div className={stl.moon__icon} style={{'--i': `${moonOffset}%`} as React.CSSProperties}>
+            <div className={`${stl.moon__icon} ${stl.card__icon}`} style={{'--i': `${moonOffset}%`} as React.CSSProperties}>
             </div>
             <p className={stl.card__title}>{currentPhase.name}</p>
             <p className={stl.card__tag}>{currentPhase.description}</p>

@@ -26,10 +26,10 @@ export default function Cloudy({percent}: { percent: number }) {
         <div className={`${stl.cloud} ${stl.card}`}>
             <div className={stl.cloud__block}>
                 <Cloud className={stl.cloud__icon}/>
-                <p className={stl.cloud__hiddenTitle}>{percent}%</p>
+                <p className={stl.cloud__hiddenTitle}>{Math.round(percent)}%</p>
             </div>
             <p className={`${stl.cloud__title} ${stl.card__title}`}>
-                Облачность <br/> {percent}%
+                Облачность <br/> {Math.round(percent)}%
             </p>
             <p className={stl.card__tag}>{description}</p>
         </div>

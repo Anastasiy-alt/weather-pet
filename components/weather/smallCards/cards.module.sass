@@ -13,12 +13,12 @@
 .card__title
   width: 100%
   text-align: center
-  @include font-styles($black, 28px, 500, 30px)
+  @include font-value()
   @include transitionMixin()
 
 .card__subtitle
   text-align: center
-  @include font-styles($gray, 24px, 400, 28px)
+  @include font-label($gray)
   @include transitionMixin()
 
 .card__tag
@@ -35,7 +35,7 @@
   justify-content: center
   transform: translateY(5px)
   text-align: center
-  @include font-styles($black, 24px, 400, 28px)
+  @include font-label()
   @include transitionMixin()
 
 
@@ -283,12 +283,6 @@
     order: 9
   .temp
     order: 10
-  .card__title
-    @include font-styles($black, 24px, 500, 28px)
-  .card__subtitle
-    @include font-styles($gray, 20px, 400, 24px)
-  .card__tag
-    @include font-styles($black, 20px, 400, 24px)
 
 @include mobile
   .card

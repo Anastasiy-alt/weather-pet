@@ -38,7 +38,7 @@
   flex-direction: row
   align-items: center
   gap: 10px
-  @include font-styles($black, 24px, 400, 28px)
+  @include font-label()
 
   svg
     width: 25px
@@ -59,10 +59,10 @@
   gap: 20px
 
 .widget__actual
-  @include font-styles($gray, 24px)
+  @include font-label($gray)
 
 .widget__condition
-  @include font-styles($black, 36px)
+  @include font-heading()
 
 .widget__temp
   @include font-styles($black, 100px, 500)
@@ -100,7 +100,7 @@
   flex-direction: row
   justify-content: space-between
   padding: 10px 8px
-  @include font-styles($black, 28px, 500, 30px)
+  @include font-value()
 
 .sun__day
   display: flex
@@ -109,7 +109,7 @@
   align-items: center
 
   span:first-child
-    @include font-styles($gray, 24px, 400, 30px)
+    @include font-label($gray, 400, 30px)
 
 
 .wind
@@ -159,7 +159,7 @@
 
 .wind__dirTitle
   margin-bottom: 10px
-  @include font-styles($black, 36px)
+  @include font-heading()
 
 .wind__dir
   display: flex
@@ -167,11 +167,11 @@
   gap: 10px
   align-items: center
   margin: auto
-  @include font-styles($black, 28px, 500, 30px)
+  @include font-value()
 
 .wind__dirGust
   text-align: center
-  @include font-styles($gray, 24px, 400, 30px)
+  @include font-label($gray, 400, 30px)
 
 .precip
   display: flex
@@ -179,7 +179,7 @@
   justify-content: space-between
 
 .precip__title
-  @include font-styles($black, 36px)
+  @include font-heading()
   text-align: center
   display: flex
   flex-direction: row
@@ -202,14 +202,14 @@
 
 .precip__itemTitle
   text-align: center
-  @include font-styles($gray, 24px, 400, 30px)
+  @include font-label($gray, 400, 30px)
 
 .precip__itemValue
   text-align: center
-  @include font-styles($black, 28px, 500, 30px)
+  @include font-value()
 
   span
-    @include font-styles($gray, 24px, 400, 30px)
+    @include font-label($gray, 400, 30px)
 
 .precip__types
   display: flex
@@ -227,7 +227,7 @@
   align-items: center
   padding: 6px 12px 6px 8px
   @include transitionMixin()
-  @include font-styles($black, 24px, 500)
+  @include font-label($black, 500)
 
   svg
     width: 40px
@@ -284,33 +284,14 @@
     gap: 5px
   .wind
     order: 6
-  .precip__title, .wind__dirTitle
-    @include font-styles($black, 28px)
-
   .widget__update
     position: relative
     top: 0
     right: 0
-
-  .wind__dir
-    @include font-styles($black, 24px, 500)
-
-  .wind__dirGust
-    @include font-styles($gray, 20px)
-
-  .widget__condition
-    @include font-styles($black, 28px)
-
-  .widget__city
-    @include font-styles($black, 20px, 400, 24px)
-
   .widget__temp
     @include font-styles($black, 80px, 500)
-
-  .widget__actual
-    @include font-styles($gray, 20px)
 @include mobile
-  .layout, .widget__main, .widget__block, .wind
+  .layout, .widget__main, .widget__block, .wind, .sun
     display: flex
     flex-direction: column
     align-items: center
@@ -330,6 +311,8 @@
   .sun__text
     padding: 0
     flex-wrap: wrap
+    width: 100%
+    max-width: 440px
 
   .wind__round
     height: 150px
@@ -337,7 +320,8 @@
   .wind__arrow
     width: 50px
     height: 50px
-
+  .sun__main
+    max-height: 200px
   .wind__deco
     width: 4px
     height: 12px

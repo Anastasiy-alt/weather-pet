@@ -20,7 +20,7 @@ export default function TempRange({tempmax, tempmin}: TempCardProps) {
                 <span>Минимум {tempmin}°</span>
             </p>
             <p className={stl.card__tag}>
-                Разница температур за день составляет {tempmax - tempmin}°
+                Разница температур за день составляет {(tempmax - tempmin).toFixed(1)}°
             </p>
         </div>
     )

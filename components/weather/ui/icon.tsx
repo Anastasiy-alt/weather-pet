@@ -47,8 +47,8 @@ const icons = {
     'ice': Ice
 }
 
-export default function WeatherIcon({name} : {name: string}) {
+export default function WeatherIcon({name, classCustom = ''} : {name: string, classCustom: string}) {
     const Icon = icons[name as keyof typeof icons]
     if (!Icon) return null
-    return <Icon className={stl.icon}  />
+    return <Icon className={`${stl.icon} ${classCustom}`}  />
 }

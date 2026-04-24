@@ -13,7 +13,7 @@
 .card__title
   width: 100%
   text-align: center
-  @include font-value()
+  @include font-value($black)
   @include transitionMixin()
 
 .card__subtitle
@@ -35,13 +35,14 @@
   justify-content: center
   transform: translateY(5px)
   text-align: center
-  @include font-label()
+  @include font-label($black)
   @include transitionMixin()
 
-
-.moon__icon
+.card__icon
   height: 150px
   width: 150px
+
+.moon__icon
   border-radius: 100%
   background: $yellow
   position: relative
@@ -50,8 +51,8 @@
 
   &::after
     content: ''
-    width: 150px
-    height: 150px
+    width: 100%
+    height: 100%
     background: $blue
     border-radius: 100%
     position: absolute
@@ -72,8 +73,6 @@
   transform: translateY(5px)
 
 .cloud__icon
-  width: 150px
-  height: 150px
   display: block
   @include transitionMixin()
 
@@ -96,8 +95,6 @@
   @include font-styles($black, 48px, 500, 50px)
 
 .uv__icon
-  width: 150px
-  height: 150px
   @include transitionMixin()
 
   circle
@@ -119,7 +116,6 @@
 
 .visible__block
   width: 170px
-  height: 150px
   display: flex
   flex-direction: row
   gap: 8px
@@ -158,7 +154,7 @@
 
   &::before
     content: ''
-    width: 45px
+    width: 110%
     height: 115%
     background: $light-blue
     opacity: 0
@@ -183,7 +179,7 @@
 
     &::after
       content: ''
-      width: 45px
+      width: 110%
       height: 110%
       background: $light-blue
       opacity: 0
@@ -200,13 +196,6 @@
 
     &::before
       left: -105px
-
-.visible__title
-  white-space: nowrap
-
-.humidity__block
-  width: 150px
-  height: 150px
 
 .humidity__icon
   transform-origin: center top
@@ -225,8 +214,6 @@
   opacity: 0
 
 .temp__icon
-  width: 150px
-  height: 150px
   display: flex
   flex-direction: row
   align-items: center
@@ -271,10 +258,22 @@
       background: transparent
 
 @include tablet
+  .card__icon
+    width: 130px
+    height: 130px
+  .visible__block
+    width: 170px
+  .card__title
+    margin-top: auto
+  .card
+    gap: 8px
+
+    *
+      user-select: none
   .uv
     order: 3
   .cloud
-    order: 5
+    order: 4
   .visible
     order: 7
   .moon
@@ -283,10 +282,50 @@
     order: 9
   .temp
     order: 10
+  .cloud__hiddenTitle
+    @include font-styles($black, 40px, 500, 40px)
+  .temp__arrow
+    height: 70px
+    width: 6px
+  .temp__arrow_up::before, .temp__arrow_down::before
+    border-width: 6px
+  .visible__item
+    width: 25px
+
+    &:nth-child(3)::before
+      left: -90px
+
+    &:nth-child(1)::before
+      left: 85px
 
 @include mobile
+  .card__icon
+    width: 100px
+    height: 100px
+  .card__tag
+    height: fit-content
+    top: 50%
+    left: auto
+    right: 0
+    width: calc(100% - 120px)
+    transform: translateY(-40%)
   .card
     width: 100%
+    display: grid
+    grid-template-columns: 100px 1fr
+    grid-template-rows: 1fr 1fr
+
+    &:not(:has(.card__subtitle))
+      .card__title
+        grid-row: span 2
+        align-self: center
+        margin-top: 0
+  .card__title
+    align-self: flex-end
+  .card__subtitle
+    align-self: flex-start
+  .card__icon
+    grid-row: span 2
   .uv
     order: 5
   .cloud
@@ -299,11 +338,35 @@
     order: 9
   .temp
     order: 10
+  .temp__arrow
+    height: 50px
+  .temp__arrow_up::before, .temp__arrow_down::before
+    border-width: 6px
+  .visible__item
+    width: 20px
+
+    &:nth-child(3)::before
+      left: -60px
+
+    &:nth-child(2)::before
+      left: -20px
+
+    &:nth-child(1)::before
+      left: 55px
+  .visible__block
+    gap: 4px
+
+  .cloud__hiddenTitle
+    bottom: 15px
+    @include font-styles($black, 30px, 500, 30px)
+
 @include hover
   .moon:hover
     .card__tag
       opacity: 1
       transform: translateY(0)
+      @include mobile
+        transform: translateY(-50%)
 
     .card__title
       opacity: 0
@@ -315,6 +378,8 @@
     .card__tag
       opacity: 1
       transform: translateY(0)
+      @include mobile
+        transform: translateY(-50%)
 
     .cloud__title
       opacity: 0
@@ -338,6 +403,8 @@
     .card__tag
       opacity: 1
       transform: translateY(0)
+      @include mobile
+        transform: translateY(-50%)
 
     .uv__icon
       animation: sunAnim forwards 1s
@@ -348,6 +415,8 @@
     .card__tag
       opacity: 1
       transform: translateY(0)
+      @include mobile
+        transform: translateY(-50%)
 
     .visible__item
       &::before, &::after
@@ -363,6 +432,8 @@
     .card__tag
       opacity: 1
       transform: translateY(0)
+      @include mobile
+        transform: translateY(-50%)
 
     &::before
       opacity: var(--i)
@@ -374,6 +445,8 @@
     .card__tag
       opacity: 1
       transform: translateY(0)
+      @include mobile
+        transform: translateY(-50%)
 
     .temp__arrow
       &_up

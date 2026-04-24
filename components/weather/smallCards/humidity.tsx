@@ -49,14 +49,13 @@ export default function Humidity({percent}: { percent: number }) {
     function getHumidityLevel(humidity: number) {
         return HUMIDITY_LEVELS.find(l => humidity <= l.max) ?? HUMIDITY_LEVELS[HUMIDITY_LEVELS.length - 1]
     }
+
     const level = getHumidityLevel(percent)
 
     return (
         <div className={`${stl.card} ${stl.humidity}`} style={{'--i': percent / 100} as React.CSSProperties}>
-            <div className={stl.humidity__block}>
-                <Water className={stl.humidity__icon}/>
-            </div>
-            <p className={stl.card__title}>Влажность {Math.round(percent)}%</p>
+            <Water className={`${stl.humidity__icon} ${stl.card__icon}`}/>
+            <p className={`${stl.card__title} ${stl.humidity__title}`}>Влажность {Math.round(percent)}%</p>
             <p className={stl.card__subtitle}>{level.label}</p>
             <p className={stl.card__tag}>{level.description}</p>
         </div>

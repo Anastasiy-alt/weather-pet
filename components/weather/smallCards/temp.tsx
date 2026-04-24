@@ -8,19 +8,19 @@ interface TempCardProps {
 export default function TempRange({tempmax, tempmin}: TempCardProps) {
     return (
         <div className={`${stl.temp} ${stl.card}`}>
-            <div className={stl.temp__icon}>
+            <div className={`${stl.temp__icon} ${stl.card__icon}`}>
                 <div className={`${stl.temp__arrow} ${stl.temp__arrow_up}`}>
                 </div>
                 <div className={`${stl.temp__arrow} ${stl.temp__arrow_down}`}>
                 </div>
             </div>
             <p className={stl.card__title}>
-                <span>Максимум {tempmax}°</span>
+                Максимум {tempmax}°
                 <br/>
-                <span>Минимум {tempmin}°</span>
+                Минимум {tempmin}°
             </p>
             <p className={stl.card__tag}>
-                Разница температур за день составляет {(tempmax - tempmin).toFixed(1)}°
+                Разница температур {(tempmax - tempmin).toFixed(1)}°
             </p>
         </div>
     )

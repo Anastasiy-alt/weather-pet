@@ -24,7 +24,7 @@ export default function Cloudy({percent}: { percent: number }) {
     const description: string = getCloudDescription(percent) ?? ''
     return (
         <div className={`${stl.cloud} ${stl.card}`}>
-            <div className={stl.cloud__block}>
+            <div className={`${stl.cloud__block} ${stl.card__icon}`}>
                 <Cloud className={stl.cloud__icon}/>
                 <p className={stl.cloud__hiddenTitle}>{Math.round(percent)}%</p>
             </div>

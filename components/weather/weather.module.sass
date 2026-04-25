@@ -246,8 +246,10 @@
 
     path
       @include transitionMixin()
-
-
+.widget__alerts_mobile
+  display: none
+.widget__alertBtn
+  display: none
 @include laptop
   .layout
     grid-template-columns: repeat(4, 1fr)
@@ -276,17 +278,35 @@
     transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-120px)
 
 @include tablet
+  .widget__alerts_desk
+    display: none
+  .widget__alertBtn
+    display: flex
+    flex-direction: row
+    align-items: center
+    gap: 5px
+    @include font-label($orange)
+    svg
+      width: 40px
+      height: 40px
+      min-width: 40px
+      min-height: 40px
+  .widget__alerts_mobile
+    display: flex
+    flex-direction: column
+    padding: 2px
   .layout
     grid-template-columns: repeat(3, 1fr)
     grid-template-rows: min-content 250px 250px 250px 250px
   .card
     grid-column: span 2
-
+    border-width: 2px
     *
       user-select: none
   .widget
     grid-column: span 3
     order: 1
+    border-width: 2px
   .sun
     order: 2
   .precip

@@ -1,9 +1,9 @@
 import type {Metadata} from "next";
 import {Golos_Text} from 'next/font/google'
 import '@/styles/_base.sass'
-import stl from "@/app/globals.module.sass";
+import HeaderApp from "@/components/header";
+import stl from './globals.module.sass'
 import WeatherInit from "@/components/weather/init";
-
 const golos = Golos_Text({
     subsets: ['latin', 'cyrillic'],
     variable: '--font-golos',
@@ -15,16 +15,17 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
+                                       children,
+                                   }: Readonly<{
+    children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={golos.variable}>
-            <body className={golos.className}>
-                <WeatherInit />
-            <main className={stl.layout}>{children}</main>
-            </body>
+        <html lang="ru" className={golos.variable}>
+        <body className={golos.className}>
+        <WeatherInit />
+        <HeaderApp/>
+        <main className={stl.layout}>{children}</main>
+        </body>
         </html>
     );
 }

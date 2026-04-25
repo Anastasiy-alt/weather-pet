@@ -1,0 +1,72 @@
+.header
+  display: flex
+  flex-direction: row
+  margin: 10px auto
+  padding: 0 16px
+  max-width: 1720px
+  justify-content: space-between
+  align-items: center
+  border-bottom: 2px solid $light-gray
+
+.header__icon svg
+  width: 70px
+  height: 70px
+  min-height: 70px
+  min-width: 70px
+
+.header__nav
+  display: flex
+  flex-direction: row
+  gap: 20px
+  align-items: center
+
+.header__link
+  @include font-styles($blue, 28px, 500)
+  @include transitionMixin()
+  text-decoration: none
+  text-transform: uppercase
+  position: relative
+
+  &::after
+    content: ''
+    width: 0
+    height: 3px
+    background-color: $blue
+    position: absolute
+    bottom: -5px
+    right: 0
+    @include transitionMixin()
+
+@include laptop
+  .header
+    max-width: 100%
+    margin: 10px 80px
+
+@include tablet
+  .header__icon svg
+    width: 45px
+    height: 45px
+    min-height: 45px
+    min-width: 45px
+  .header
+    margin: 10px 60px
+    padding: 0
+  .header__link
+    font-size: 20px
+
+@include mobile
+  .header__nav
+    gap: 10px
+  .header
+    margin: 10px 15px
+  .header__link
+    font-size: 16px
+
+@include hover
+  .header__link:hover
+    color: $dark-blue
+    &::after
+      width: 100%
+      left: 0
+      right: auto
+      background-color: $dark-blue

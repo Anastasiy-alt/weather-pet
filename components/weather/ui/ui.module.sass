@@ -75,6 +75,15 @@
     transform: translateY(-50%) rotate(40deg)
     right: 25px
 
+@include tablet
+  .alert__title
+    &::before, &::after
+      content: none
+  .alert
+    grid-template-rows: min-content 1fr
+    .alert__description
+      padding: 8px 10px
+
 @include hover
   .alert__title:hover
     color: $dark-blue

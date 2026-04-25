@@ -1,0 +1,106 @@
+.day
+  padding: 16px
+  border: 4px $light-blue solid
+  border-radius: 16px
+  display: flex
+  flex-direction: column
+  gap: 16px
+  text-decoration: none
+  @include transitionMixin()
+  *
+    //outline: 1px solid $gray
+
+.day__top
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+
+.day__block
+  display: flex
+  flex-direction: column
+  min-width: 180px
+  gap: 8px
+
+.day__blockTitle
+  @include font-heading($black)
+  font-weight: 500
+  display: flex
+  flex-direction: row
+  gap: 8px
+  align-items: center
+  &_up
+    text-transform: uppercase
+
+.day__blockSubtitle
+  @include font-value($gray, 400)
+
+.day__hr
+  background-color: $light-gray
+  border-radius: 2px
+  height: 2px
+.day__temp
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 8px
+  width: 100%
+.day__icon
+  width: 30px
+  height: 30px
+  min-width: 30px
+  min-height: 30px
+  &_wind
+    transform: rotate(var(--dir))
+.day__tempHover
+  position: relative
+  width: 100%
+  overflow: hidden
+.day__tempTitle
+  @include font-value($black, 400)
+  @include transitionMixin()
+.day__tempSubtitle
+  @include font-value($gray, 400)
+  @include transitionMixin()
+  position: absolute
+  top: -110%
+  left: 0
+.tempRange
+  display: grid
+  grid-template-columns: 100px 1fr 100px
+  align-items: center
+  gap: 12px
+
+.tempRange__text
+  @include font-value($black)
+  &_right
+    text-align: right
+.tempRange__fill
+  position: relative
+  height: 8px
+  background: $light-gray
+  border-radius: 4px
+
+.tempRange__track
+  position: absolute
+  top: 0
+  height: 100%
+  border-radius: 4px
+
+@include hover
+  .day:hover
+    border-color: $blue
+    .day__tempTitle
+      transform: translateY(110%)
+    .day__tempSubtitle
+      top: 0
+
+@include tablet
+  .day
+    border-width: 2px
+
+@include mobile
+  .day
+    padding: 16px 8px
+
+

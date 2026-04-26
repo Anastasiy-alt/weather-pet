@@ -1,8 +1,10 @@
-export default function Day() {
+import OneDayWidget from "@/components/day/widget";
 
-    return(
-        <>
-        One day
-        </>
-    )
+export default async function OneDayPage({
+                                             params,
+                                         }: {
+    params: Promise<{ slug: string }>
+}) {
+    const {slug} = await params
+    return <OneDayWidget slug={slug}/>
 }

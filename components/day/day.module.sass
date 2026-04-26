@@ -1,0 +1,48 @@
+.page
+  display: flex
+  flex-direction: column
+  gap: 20px
+  margin-top: 10px
+
+.location
+  @include font-label($gray)
+  display: flex
+  flex-direction: row
+  gap: 8px
+  align-items: center
+  svg
+    width: 20px
+    height: 20px
+
+.chart
+  width: 100%
+  height: 300px
+  max-width: 100%
+  overflow: auto
+  *
+    outline: none !important
+
+  &::-webkit-scrollbar
+    background: $light-gray
+    height: 4px
+    border-radius: 4px
+
+  &::-webkit-scrollbar-thumb
+    background: $light-blue
+    border-radius: 4px
+
+.chart__icon
+  width: 32px
+  height: 32px
+  min-width: 32px
+  min-height: 32px
+
+.chart__time
+  @include font-styles($gray, 16px)
+  fill: $gray
+
+.chart__tempText
+  @include font-styles($gray, 18px, 500)
+
+.chart__circle
+  @include transitionMixin()

@@ -7,6 +7,7 @@ import Alert from "@/components/weather/ui/alert";
 import Modal from "@/components/ui/modal";
 import AlertIcon from '@/assets/icons/alert.svg'
 import {useState} from "react";
+import Location from "@/components/ui/location";
 
 interface MainProps {
     city: string
@@ -22,18 +23,11 @@ interface MainProps {
 export default function Main({city, temp, icon, conditions, feelslike, datetime, alerts, update}: MainProps) {
     const [open, setOpen] = useState(false);
 
-    function openModal() {
-        setOpen(true);
-    }
-
     return (
 
         <article className={stl.widget}>
             <div className={stl.widget__main}>
-                <p className={stl.widget__city}>
-                    <LocationIcon/>
-                    {city}
-                </p>
+                <Location classCustom={stl.widget__city} city={city} />
                 <Button classCustom={stl.widget__update}
                         text='Обновить'
                         variant='btn'

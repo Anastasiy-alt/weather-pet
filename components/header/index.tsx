@@ -39,6 +39,7 @@ export default function HeaderApp() {
             </Link>
             <nav className={stl.header__nav}>
                 <Link className={stl.header__link} href="/about">О проекте</Link>
+                <Link className={stl.header__link} href="/where-i-am">Где я?</Link>
                 <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
             </nav>
         </header>

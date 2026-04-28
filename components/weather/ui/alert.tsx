@@ -1,10 +1,10 @@
-import {Alert} from "@/types";
+import {Alert as AlertType} from "@/types";
 import stl from './ui.module.sass'
 import {useRef} from "react";
 import AlertIcon from '@/assets/icons/alert.svg'
 
-export default function ({alert}: {
-    alert: Alert
+export default function Alert({alert}: {
+    alert: AlertType
 }) {
     const alertEl = useRef<HTMLDivElement>(null)
     const endDate = new Date(alert.ends);

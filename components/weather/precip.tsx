@@ -1,5 +1,6 @@
 import stl from './weather.module.sass'
 import WeatherIcon from "@/components/weather/ui/icon";
+import {useMemo} from "react";
 
 interface PrecipProps {
     precip: number
@@ -19,6 +20,9 @@ const NO_PRECIP_MESSAGES = [
     'Сегодня даже лужи не знают чем заняться — осадков нет и в ближайшее время не предвидится',
     'Погода решила устроить себе сухой день — ни дождя, ни снега, просто тишина и сухость',
 ]
+
+const randomEmptyMsg = NO_PRECIP_MESSAGES[Math.floor(Math.random() * NO_PRECIP_MESSAGES.length)]
+
 export default function Precip({
                                    precip,
                                    precipprob,
@@ -32,9 +36,6 @@ export default function Precip({
         freezingrain: 'Ледяной дождь',
         ice: 'Лёд',
     }
-
-    const emptyMsg = NO_PRECIP_MESSAGES[Math.round(Math.random() * NO_PRECIP_MESSAGES.length)]
-
 
     return (
         <div className={`${stl.precip} ${stl.card}`}>
@@ -76,7 +77,7 @@ export default function Precip({
                     </div>
                     :
                     <div className={stl.precip__title}>
-                        {emptyMsg}
+                        {randomEmptyMsg}
                     </div>
             }
 

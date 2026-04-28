@@ -49,6 +49,9 @@ const icons = {
 
 export default function WeatherIcon({name, classCustom = ''} : {name: string, classCustom?: string}) {
     const Icon = icons[name as keyof typeof icons]
-    if (!Icon) return null
+    if (!Icon) {
+        console.log(name, 'No icon')
+        return null
+    }
     return <Icon className={`${stl.icon} ${classCustom}`}  />
 }

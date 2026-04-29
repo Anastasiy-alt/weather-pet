@@ -1,12 +1,26 @@
 .header
   display: flex
   flex-direction: row
-  margin: 10px auto
-  padding: 0 16px
+  padding: 10px 16px
   max-width: 1720px
   justify-content: space-between
   align-items: center
-  border-bottom: 2px solid $light-gray
+  z-index: 100
+  position: fixed
+  top: 0
+  width: 100vw
+  left: 50%
+  transform: translateX(-50%)
+  background: $white
+  &::after
+    content: ''
+    position: absolute
+    bottom: 0
+    left: 0
+    background: $light-gray
+    height: 2px
+    width: 100%
+    border-radius: 2px
 
 .header__icon svg
   width: 70px
@@ -37,10 +51,31 @@
     right: 0
     @include transitionMixin()
 
+.header__burger
+  display: none
+
+.burger
+  display: none
+  position: fixed
+  top: 0
+  height: 100dvh
+  right: 0
+  width: 100%
+  background: $white
+  flex-direction: column
+  gap: 16px
+  justify-content: center
+  z-index: -1
+  align-items: center
+  transform: translateX(105%)
+  @include transitionMixin()
+
 @include laptop
   .header
     max-width: 100%
-    margin: 10px 80px
+    padding: 10px 80px
+    left: 0
+    transform: none
 
 @include tablet
   .header__icon svg
@@ -49,22 +84,69 @@
     min-height: 45px
     min-width: 45px
   .header
-    margin: 10px 60px
-    padding: 0
+    padding: 10px 60px
   .header__link
     font-size: 18px
 
 @include mobile
   .header__nav
-    gap: 10px
+    display: none
   .header
-    margin: 10px 15px
+    padding: 10px 15px
   .header__link
     font-size: 16px
+  .header__burger
+    display: flex
+    flex-direction: column
+    gap: 4px
+    justify-content: center
 
+    span
+      width: 30px
+      height: 3px
+      background: $blue
+      border-radius: 2px
+      @include transitionMixin()
+
+      &:nth-child(2)
+        position: relative
+
+        &::after
+          content: ''
+          width: 100%
+          height: 100%
+          border-radius: 2px
+          background: $blue
+          position: absolute
+          top: 0
+          left: 0
+          @include transitionMixin()
+
+    &_active
+      span
+        &:nth-child(1)
+          transform: translateY(7px)
+          opacity: 0
+
+        &:nth-child(3)
+          transform: translateY(-7px)
+          opacity: 0
+
+        &:nth-child(2)
+          transform: rotate(45deg)
+
+          &::after
+            transform: rotate(90deg)
+  .burger
+    display: flex
+  .burger_active
+    transform: translateX(0)
+  body:has(.burger_active)
+    overflow: hidden
 @include hover
   .header__link:hover
     color: $dark-blue
+
     &::after
       width: 100%
       left: 0

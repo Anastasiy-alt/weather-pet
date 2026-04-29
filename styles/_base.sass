@@ -14,3 +14,10 @@ body
   overflow: visible
 .recharts-responsive-container
   min-width: 1400px !important
+
+.chart__hover-dot
+  fill: $yellow
+  r: 6px
+  stroke: $orange
+  stroke-width: 3
+  @include transitionMixin(r, fill)

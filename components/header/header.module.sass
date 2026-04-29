@@ -12,6 +12,7 @@
   left: 50%
   transform: translateX(-50%)
   background: $white
+
   &::after
     content: ''
     position: absolute
@@ -143,6 +144,7 @@
     transform: translateX(0)
   body:has(.burger_active)
     overflow: hidden
+
 @include hover
   .header__link:hover
     color: $dark-blue

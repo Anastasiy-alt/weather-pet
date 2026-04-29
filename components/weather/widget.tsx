@@ -15,7 +15,7 @@ import {useWeatherStore} from "@/store/weather";
 
 export default function MainWeatherCard() {
     const { weather, location, loading, refresh } = useWeatherStore()
-
+    const now = new Date()
     if (loading || !weather || !location) return <Loader />
     return (
         <>
@@ -32,7 +32,8 @@ export default function MainWeatherCard() {
                     <SunArc sunrise={weather.currentConditions.sunrise}
                             sunsetEpoch={weather.currentConditions.sunsetEpoch}
                             sunriseEpoch={weather.currentConditions.sunriseEpoch}
-                            sunset={weather.currentConditions.sunset}/>
+                            sunset={weather.currentConditions.sunset}
+                            now={now}/>
                     <Precip precip={weather.currentConditions.precip}
                             precipprob={weather.currentConditions.precipprob}
                             snow={weather.currentConditions.snow}

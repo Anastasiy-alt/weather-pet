@@ -10,6 +10,59 @@
   position: relative
   @include transitionMixin()
 
+.card_small
+  width: 100%
+  display: grid
+  grid-template-columns: 100px 1fr
+  grid-template-rows: 1fr 1fr
+
+  &:not(:has(.card__subtitle))
+    .card__title
+      grid-row: span 2
+      align-self: center
+      margin-top: 0
+
+  .card__icon
+    width: 100px
+    height: 100px
+
+  .card__tag
+    height: fit-content
+    top: 50%
+    left: auto
+    right: 0
+    width: calc(100% - 120px)
+    transform: translateY(-30%)
+
+  .card__title
+    align-self: flex-end
+
+  .card__subtitle
+    align-self: flex-start
+
+  .card__icon
+    grid-row: span 2
+
+  .visible__item
+    width: 20px
+
+    &:nth-child(3)::before
+      left: -60px
+
+    &:nth-child(2)::before
+      left: -20px
+
+    &:nth-child(1)::before
+      left: 55px
+
+  .visible__block
+    gap: 4px
+
+  .cloud__hiddenTitle
+    bottom: 15px
+    @include font-styles($black, 30px, 500, 30px)
+
+
 .card__title
   width: 100%
   text-align: center
@@ -268,6 +321,7 @@
   .card
     gap: 8px
     border-width: 2px
+
     *
       user-select: none
   .uv
@@ -361,29 +415,23 @@
     @include font-styles($black, 30px, 500, 30px)
 
 @include hover
-  .moon:hover
+  .card.card_small:hover
+    .card__tag
+      transform: translateY(-50%)
+  .card:hover
     .card__tag
       opacity: 1
       transform: translateY(0)
       @include mobile
         transform: translateY(-50%)
 
-    .card__title
+    .card__subtitle, .card__title
       opacity: 0
-
+  .moon:hover
     .moon__icon
       transform: rotate(360deg)
 
   .cloud:hover
-    .card__tag
-      opacity: 1
-      transform: translateY(0)
-      @include mobile
-        transform: translateY(-50%)
-
-    .cloud__title
-      opacity: 0
-
     .cloud__hiddenTitle
       opacity: 1
       transition-delay: 0.2s
@@ -397,27 +445,9 @@
   .uv:hover
     border-color: var(--c)
 
-    .card__subtitle, .card__title
-      opacity: 0
-
-    .card__tag
-      opacity: 1
-      transform: translateY(0)
-      @include mobile
-        transform: translateY(-50%)
-
     .uv__icon
       animation: sunAnim forwards 1s
   .visible:hover
-    .card__subtitle, .card__title
-      opacity: 0
-
-    .card__tag
-      opacity: 1
-      transform: translateY(0)
-      @include mobile
-        transform: translateY(-50%)
-
     .visible__item
       &::before, &::after
         opacity: 0.6
@@ -426,28 +456,10 @@
     .humidity__icon
       animation: dropRing 1s forwards ease-in
 
-    .card__subtitle, .card__title
-      opacity: 0
-
-    .card__tag
-      opacity: 1
-      transform: translateY(0)
-      @include mobile
-        transform: translateY(-50%)
-
     &::before
       opacity: var(--i)
 
   .temp:hover
-    .card__subtitle, .card__title
-      opacity: 0
-
-    .card__tag
-      opacity: 1
-      transform: translateY(0)
-      @include mobile
-        transform: translateY(-50%)
-
     .temp__arrow
       &_up
         animation: tempUp forwards 1s

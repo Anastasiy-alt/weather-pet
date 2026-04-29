@@ -10,7 +10,7 @@ const VISIBILITY_LEVELS = [
     {max: Infinity, label: 'Идеальная', description: 'Видно до горизонта и дальше', fog: 0},
 ]
 
-export default function Visible({vis}: { vis: number }) {
+export default function Visible({vis, small}: { vis: number, small?: boolean }) {
 
     function getVisibilityLevel(km: number) {
         return VISIBILITY_LEVELS.find(l => km <= l.max) ?? VISIBILITY_LEVELS[VISIBILITY_LEVELS.length - 1]
@@ -18,7 +18,7 @@ export default function Visible({vis}: { vis: number }) {
 
     const level = getVisibilityLevel(vis)
     return (
-        <div className={`${stl.visible} ${stl.card}`}>
+        <div className={`${stl.visible} ${stl.card} ${small ? stl.card_small : ''}`}>
             <div className={`${stl.visible__block} ${stl.card__icon}`} style={{'--fog': level.fog} as React.CSSProperties}>
                 <div className={stl.visible__item}></div>
                 <div className={stl.visible__item}></div>

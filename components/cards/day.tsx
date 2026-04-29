@@ -47,7 +47,6 @@ const iconDescriptions: Record<string, string> = {
 }
 
 export default function DayCard({data, globalMin, globalMax}: DayProps) {
-    console.log(data)
     const date = new Date(data.datetime);
     const today = new Date()
     const minColor = tempHue(data.tempmin)
@@ -84,7 +83,7 @@ export default function DayCard({data, globalMin, globalMax}: DayProps) {
                 </div>
                 <div className={stl.day__temp}>
                     <p className={stl.day__blockTitle}>{data.temp > 0 ? `+${data.temp}` : data.temp}°</p>
-                    <WeatherIcon name={data.icon}/>
+                    <WeatherIcon classCustom={stl.day__iconWeather} name={data.icon}/>
                     <div className={stl.day__tempHover}>
                         <p className={stl.day__tempTitle}>{data.conditions}</p>
                         <p className={stl.day__tempSubtitle}>{iconDescriptions[data.icon]}</p>

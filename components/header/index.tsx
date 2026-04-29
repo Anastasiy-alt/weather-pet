@@ -1,6 +1,7 @@
 import stl from './header.module.sass'
 import WeatherIcon from "@/components/weather/ui/icon";
 import Link from "next/link";
+import Burger from "@/components/header/burger";
 
 const icons = [
     'clear-day',
@@ -42,6 +43,11 @@ export default function HeaderApp() {
                 <Link className={stl.header__link} href="/where-i-am">Где я?</Link>
                 <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
             </nav>
+            <Burger>
+                <Link className={stl.header__link} href="/about">О проекте</Link>
+                <Link className={stl.header__link} href="/where-i-am">Где я?</Link>
+                <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
+            </Burger>
         </header>
     )
 }

@@ -19,6 +19,7 @@ import {useEffect, useRef} from "react";
 import {useDayStore} from "@/store/day";
 import Button from "@/components/ui/button";
 import PrecipSmall from "@/components/cards/small/precip";
+import TempFeels from "@/components/cards/small/feelsTemp";
 
 export default function OneDayWidget({slug}: { slug: string }) {
     const {weather, location, loading, refresh} = useWeatherStore()
@@ -89,6 +90,7 @@ export default function OneDayWidget({slug}: { slug: string }) {
                                             <PrecipSmall precipprob={activeHour.precipprob}
                                                          preciptype={activeHour.preciptype}
                                                          small={true}/>
+                                            <TempFeels feels={activeHour.feelslike} fact={activeHour.temp} small={true} />
                                         </div>
 
                                     }

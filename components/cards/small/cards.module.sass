@@ -310,6 +310,26 @@
       border-right: 8px solid $blue
       background: transparent
 
+.tempFeels__icon
+  position: relative
+
+.tempFeels__sun
+  transform: translate(-70%, -50%)
+  fill: $yellow
+
+.tempFeels__cloud
+  transform: translate(-30%, -50%)
+
+.tempFeels__sun,
+.tempFeels__cloud
+  position: absolute
+  top: 50%
+  left: 50%
+  width: 80%
+  height: 80%
+  @include transitionMixin()
+
+
 @include tablet
   .card__icon
     width: 130px
@@ -468,11 +488,18 @@
         animation: tempDown forwards 1s
   .precip:hover
     border-color: $blue
+
     canvas
       opacity: 1
   .precip_sun:hover
     border-color: $yellow
     background-color: rgba($yellow, 0.1)
+  .tempFeels:hover
+    .tempFeels__sun
+      transform: translate(-30%, -50%)
+
+    .tempFeels__cloud
+      transform: translate(-70%, -50%)
 
 @keyframes sunAnim
   0%

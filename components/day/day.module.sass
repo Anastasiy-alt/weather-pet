@@ -29,6 +29,7 @@
   @include transitionMixin()
   min-height: 0
   overflow: hidden
+
 .page__hiddenHour
   width: 100%
   grid-column: span 3
@@ -42,7 +43,6 @@
 .page__chartTitle
   @include font-value($black)
   padding: 0 16px 8px
-
 
 .chart__dot
   cursor: pointer
@@ -64,6 +64,7 @@
   grid-template-rows: min-content min-content 0fr
   gap: 20px
   @include transitionMixin()
+
   &_active
     grid-template-rows: min-content min-content 1fr
 
@@ -106,6 +107,105 @@
 .chart__circle
   @include transitionMixin()
 
+.notFound
+  display: flex
+  flex-direction: column
+  position: relative
+  align-items: center
+  width: 100%
+  margin: auto 0
+
+.notFound__fog
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  filter: blur(16px)
+  z-index: 2
+  &::after
+    content: ""
+    position: absolute
+    bottom: -40%
+    left: 10%
+    width: 110%
+    height: 110%
+    opacity: 0.3
+    background-color: $gray
+    animation: fogClip 16s ease-in-out infinite
+    clip-path: polygon(15% 5%, 75% 0%, 100% 25%, 98% 60%, 80% 95%, 30% 100%, 5% 75%, 0% 30%)
+
+.notFound__block
+  position: relative
+  width: 300px
+  height: 300px
+  z-index: -1
+  &::before
+    z-index: 1
+    content: ''
+    position: absolute
+    bottom: 20px
+    left: 100px
+    width: 120px
+    height: 120px
+    background-color: $white
+
+.notFound__pseudo
+  position: absolute
+  background-color: $gray
+  width: 95px
+  height: 20px
+  z-index: 1
+
+.notFound__pseudo:nth-child(1)
+  bottom: 112px
+  left: 130px
+  animation: sway1 3s ease-in infinite
+
+.notFound__pseudo:nth-child(2)
+  bottom: 75px
+  left: 95px
+  animation: sway2 2s ease-in infinite
+
+.notFound__pseudo:nth-child(3)
+  bottom: 36px
+  left: 135px
+  animation: sway3 3s ease-in infinite
+
+.notFound__icon
+  width: 100%
+  height: 100%
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+.notFound__title
+  text-align: center
+  @include font-styles($dark-blue, 50px, 600)
+
+.notFound__sub
+  @include font-styles($black, 36px)
+  text-align: center
+  margin-bottom: 16px
+
+.notFound__link
+  @include font-styles($blue, 20px, 500)
+  text-decoration: none
+  position: relative
+  text-align: center
+  @include transitionMixin()
+
+  &::after
+    content: ''
+    width: 0
+    height: 3px
+    background-color: $blue
+    position: absolute
+    bottom: -5px
+    right: 0
+    @include transitionMixin()
+
 @include laptop
   .page__layout
     grid-template-columns: repeat(4, 1fr)
@@ -113,6 +213,7 @@
     gap: 16px
   .page__layoutHour
     gap: 16px
+
 @include tablet
   .page__chart
     border-width: 2px
@@ -123,9 +224,112 @@
   .page__layout
     grid-template-columns: repeat(3, 1fr)
     grid-template-rows: 250px
+  .notFound__block
+    width: 250px
+    height: 250px
+    &::before
+      bottom: 30px
+      left: 80px
+      width: 100px
+      height: 80px
+  .notFound__pseudo
+    height: 16px
+    width: 78px
+  .notFound__pseudo:nth-child(1)
+    bottom: 92px
+    left: 110px
+  .notFound__pseudo:nth-child(2)
+    bottom: 63px
+    left: 75px
+  .notFound__pseudo:nth-child(3)
+    bottom: 30px
+    left: 105px
+  .notFound__title
+    @include font-styles($dark-blue, 40px, 600)
+  .notFound__sub
+    @include font-styles($black, 30px)
+
 @include mobile
   .page__layout, .page__layoutHour
     display: flex
     flex-direction: column
     align-items: center
     width: 100%
+  .notFound__block
+    width: 200px
+    height: 200px
+    &::before
+      bottom: 20px
+      left: 60px
+      width: 90px
+      height: 70px
+  .notFound__pseudo
+    height: 14px
+    width: 58px
+  .notFound__pseudo:nth-child(1)
+    bottom: 74px
+    left: 90px
+  .notFound__pseudo:nth-child(2)
+    bottom: 51px
+    left: 65px
+  .notFound__pseudo:nth-child(3)
+    bottom: 25px
+    left: 95px
+  .notFound__title
+    @include font-styles($dark-blue, 30px, 600)
+  .notFound__sub
+    @include font-styles($black, 20px)
+
+@include hover
+  .notFound__link:hover
+    color: $dark-blue
+
+    &::after
+      width: 100%
+      left: 0
+      right: auto
+      background-color: $dark-blue
+
+@keyframes sway1
+  0%, 100%
+    transform: translateX(0)
+  40%
+    transform: translateX(-30px)
+
+@keyframes sway2
+  0%, 100%
+    transform: translateX(0)
+  50%
+    transform: translateX(20px)
+
+@keyframes sway3
+  0%, 100%
+    transform: translateX(0)
+  60%
+    transform: translateX(-35px)
+
+@keyframes fogClip
+  0%
+    transform: rotate(0deg)
+    clip-path: polygon(15% 5%, 75% 0%, 100% 25%, 98% 60%, 80% 95%, 30% 100%, 5% 75%, 0% 30%)
+  10%
+    clip-path: polygon(25% 0%, 85% 8%, 100% 40%, 90% 80%, 65% 100%, 15% 92%, 0% 55%, 8% 15%)
+  20%
+    clip-path: polygon(5% 15%, 70% 0%, 100% 20%, 95% 75%, 75% 98%, 20% 100%, 0% 60%, 2% 25%)
+  30%
+    clip-path: polygon(30% 2%, 90% 5%, 98% 35%, 100% 70%, 70% 100%, 25% 95%, 2% 65%, 10% 10%)
+  40%
+    clip-path: polygon(10% 8%, 80% 2%, 100% 30%, 92% 65%, 60% 100%, 10% 98%, 0% 45%, 5% 20%)
+  50%
+    clip-path: polygon(15% 5%, 75% 0%, 100% 25%, 98% 60%, 80% 95%, 30% 100%, 5% 75%, 0% 30%)
+  60%
+    clip-path: polygon(15% 5%, 75% 0%, 100% 25%, 98% 60%, 80% 95%, 30% 100%, 5% 75%, 0% 30%)
+  70%
+    clip-path: polygon(25% 0%, 85% 8%, 100% 40%, 90% 80%, 65% 100%, 15% 92%, 0% 55%, 8% 15%)
+  80%
+    clip-path: polygon(5% 15%, 70% 0%, 100% 20%, 95% 75%, 75% 98%, 20% 100%, 0% 60%, 2% 25%)
+  90%
+    clip-path: polygon(30% 2%, 90% 5%, 98% 35%, 100% 70%, 70% 100%, 25% 95%, 2% 65%, 10% 10%)
+  100%
+    transform: rotate(360deg)
+    clip-path: polygon(15% 5%, 75% 0%, 100% 25%, 98% 60%, 80% 95%, 30% 100%, 5% 75%, 0% 30%)

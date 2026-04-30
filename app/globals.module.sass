@@ -48,7 +48,7 @@
     filter: blur(4px)
 
 .notFound__sub
-  @include font-heading($black)
+  @include font-styles($black, 36px)
   text-align: center
   margin-bottom: 16px
 
@@ -57,6 +57,7 @@
   text-decoration: none
   position: relative
   text-align: center
+  @include transitionMixin()
 
   &::after
     content: ''
@@ -81,16 +82,23 @@
   .notFound__block
     width: 250px
     height: 250px
+  .notFound__sub
+    @include font-styles($black, 30px)
+
 @include mobile
   .layout
     margin: 81px 15px 10px
   .notFound__title
     @include font-styles($dark-blue, 100px, 600)
+
     &::before
       @include font-styles($dark-blue, 180px, 800)
   .notFound__block
     width: 200px
     height: 200px
+  .notFound__sub
+    @include font-styles($black, 20px)
+
 @include hover
   .notFound__link:hover
     color: $dark-blue

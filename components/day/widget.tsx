@@ -20,21 +20,24 @@ import {useDayStore} from "@/store/day";
 import Button from "@/components/ui/button";
 import PrecipSmall from "@/components/cards/small/precip";
 import TempFeels from "@/components/cards/small/feelsTemp";
+import DayNotFound from "@/components/day/notFound";
 
 export default function OneDayWidget({slug}: { slug: string }) {
     const {weather, location, loading, refresh} = useWeatherStore()
     const {activeHourIndex, clearActiveHourIndex} = useDayStore()
     const chart = useRef<HTMLDivElement>(null)
+    const currentWeather: DayType | undefined = weather?.days?.find(day => day.datetime === slug)
+    const activeHour: HourType | undefined = activeHourIndex !== undefined ? currentWeather?.hours[activeHourIndex] : undefined
+    const currentDay = new Date(slug)
 
     useEffect(() => {
         return () => clearActiveHourIndex()
-    }, [slug])
+    }, [clearActiveHourIndex, slug])
 
     if (loading || !weather || !location) return <Loader/>
 
-    const currentWeather: DayType | undefined = weather?.days?.find(day => day.datetime === slug)
-    const activeHour: HourType | undefined = activeHourIndex !== undefined ? currentWeather?.hours[activeHourIndex] : undefined
-    const formattedDate = new Date(slug).toLocaleDateString('ru-RU', {
+
+    const formattedDate = currentDay.toLocaleDateString('ru-RU', {
         weekday: 'long',
         month: 'long',
         day: 'numeric',
@@ -90,7 +93,8 @@ export default function OneDayWidget({slug}: { slug: string }) {
                                             <PrecipSmall precipprob={activeHour.precipprob}
                                                          preciptype={activeHour.preciptype}
                                                          small={true}/>
-                                            <TempFeels feels={activeHour.feelslike} fact={activeHour.temp} small={true} />
+                                            <TempFeels feels={activeHour.feelslike} fact={activeHour.temp}
+                                                       small={true}/>
                                         </div>
 
                                     }
@@ -118,7 +122,7 @@ export default function OneDayWidget({slug}: { slug: string }) {
                                 <TempRange tempmax={currentWeather.tempmax} tempmin={currentWeather.tempmin}/>
                             </div>
                         </div>
-                        : <p>Мы не нашли погоду на {slug}</p>
+                        : <DayNotFound/>
                 }</>
                 : <Loader/>
         }

@@ -91,16 +91,17 @@ export default function SunArc({sunrise, sunset, sunriseEpoch, sunsetEpoch, now}
                     <circle cx={12} cy={12} r="5" strokeWidth="2" fill="" className={stl.sun__strokeYellow}/>
                 </g>
                 {
-                    now ?
-                        <text x={135} y={90} className={stl.sun__percent} textAnchor="middle" fontWeight={500}>
-                            {Math.round(animatedProgress * 100)}%
-                        </text>
-                        :
-                        <foreignObject x={90} y={20} width={90} height={90}>
-                            <Sun className={stl.sun__sunIcon}/>
-                        </foreignObject>
+                    now &&
+                    <text x={135} y={90} className={stl.sun__percent} textAnchor="middle" fontWeight={500}>
+                        {Math.round(animatedProgress * 100)}%
+                    </text>
                 }
             </svg>
+            {
+                !now &&
+                <Sun className={stl.sun__sunIcon}/>
+
+            }
             <div className={stl.sun__text}>
                 <p>{sunrise.slice(0, 5)}</p>
                 <p className={stl.sun__day}><span>Световой день</span><span>{sunDay.hours} ч {sunDay.minutes} мин</span>

@@ -30,6 +30,7 @@
   min-height: 0
   overflow: hidden
 .page__hiddenHour
+  width: 100%
   grid-column: span 3
   @include font-label($gray)
   display: flex
@@ -105,5 +106,26 @@
 .chart__circle
   @include transitionMixin()
 
-
-
+@include laptop
+  .page__layout
+    grid-template-columns: repeat(4, 1fr)
+    grid-template-rows: 300px
+    gap: 16px
+  .page__layoutHour
+    gap: 16px
+@include tablet
+  .page__chart
+    border-width: 2px
+  .page__layoutHour
+    grid-template-columns: repeat(2, 1fr)
+  .page__hiddenHour
+    grid-column: span 2
+  .page__layout
+    grid-template-columns: repeat(3, 1fr)
+    grid-template-rows: 250px
+@include mobile
+  .page__layout, .page__layoutHour
+    display: flex
+    flex-direction: column
+    align-items: center
+    width: 100%

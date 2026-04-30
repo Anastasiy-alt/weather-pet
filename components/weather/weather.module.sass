@@ -32,6 +32,7 @@
   flex-direction: row
   align-items: center
   gap: 8px
+
 .widget__icon
   width: 70px
   height: 70px
@@ -67,17 +68,28 @@
   gap: 20px
 
 .sun
+  width: 100%
   display: flex
   flex-direction: column
+  position: relative
 
 .sun__percent
   fill: $orange
   opacity: 0.2
   @include transitionMixin(opacity)
   @include font-styles($orange, 60px, 600)
+
 .sun__sunIcon
   opacity: 0.4
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -60%)
+  width: 40%
+  aspect-ratio: 1
+  z-index: -1
   @include transitionMixin(opacity, transform)
+
 .sun__main
   width: 100%
   height: auto
@@ -183,6 +195,8 @@
   flex-direction: column
   justify-content: space-between
   position: relative
+  gap: 10px
+  width: 100%
 
 .precip__title
   @include font-heading($black)
@@ -245,10 +259,13 @@
 
     path
       @include transitionMixin()
+
 .widget__alerts_mobile
   display: none
+
 .widget__alertBtn
   display: none
+
 @include laptop
   .layout
     grid-template-columns: repeat(4, 1fr)
@@ -285,6 +302,7 @@
     align-items: center
     gap: 5px
     @include font-label($orange)
+
     svg
       width: 40px
       height: 40px
@@ -300,11 +318,11 @@
   .card
     grid-column: span 2
     border-width: 2px
+
     *
       user-select: none
   .widget
     grid-column: span 3
-    order: 1
     border-width: 2px
   .sun
     order: 2
@@ -397,22 +415,11 @@
     height: 12px
     border-width: 1px
     transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-50px)
-//.rain
-//  *:hover > &
-//    pointer-events: none
-//  *:hover > & &__canvas
-//    opacity: 1
-//.rain_no
-//  *:hover > &
-//    .rain__canvas
-//      background-color: $yellow
-//      opacity: 0.1 !important
-//    .rain__sun
-//      opacity: 0.3
 
 @include hover
   .precip:hover
     border-color: $blue
+
     canvas
       opacity: 1
   .precip_sun:hover
@@ -431,9 +438,10 @@
   .sun:hover
     .sun__percent
       opacity: 0.4
+
     .sun__sunIcon
       opacity: 0.6
-      transform: rotate(90deg)
+      transform: translate(-50%, -50%) rotate(90deg)
 
     circle.sun__strokeYellow
       stroke: $orange

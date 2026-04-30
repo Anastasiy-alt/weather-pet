@@ -24,7 +24,6 @@ export default function Main({city, temp, icon, conditions, feelslike, datetime,
     const [open, setOpen] = useState(false);
 
     return (
-
         <article className={stl.widget}>
             <div className={stl.widget__main}>
                 <Location classCustom={stl.widget__city} city={city} />

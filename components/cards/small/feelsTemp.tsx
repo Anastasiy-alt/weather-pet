@@ -22,9 +22,16 @@ export default function TempFeels({fact, feels, small}: TempCardProps) {
                 Ощущается как {feels}°
             </p>
             <p className={stl.card__tag}>
-                По ощущениям {
-                feels - fact > 0 ? <>теплее</> : <>холоднее</>
-            } на {(fact - feels).toFixed(1)}°
+                {
+                    feels === fact ?
+                        <>
+                            Ощущается как фактическая
+                        </>
+                        : <>По ощущениям
+                            {feels - fact > 0 ? <> теплее</> : <> холоднее</>}
+                            на {(fact - feels).toFixed(1)}°
+                        </>
+                }
             </p>
         </div>
     )

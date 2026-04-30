@@ -8,19 +8,21 @@ import Main from "@/components/weather/main";
 import {Day as DayType, Hour as HourType} from "@/types";
 import Precip from "@/components/weather/precip";
 import Wind from "@/components/weather/wind";
-import UVindex from "@/components/weather/smallCards/uv";
-import Cloudy from "@/components/weather/smallCards/cloudy";
-import Visible from "@/components/weather/smallCards/visible";
-import MoonPhase from "@/components/weather/smallCards/moonPhase";
-import Humidity from "@/components/weather/smallCards/humidity";
-import TempRange from "@/components/weather/smallCards/temp";
+import UVindex from "@/components/cards/small/uv";
+import Cloudy from "@/components/cards/small/cloudy";
+import Visible from "@/components/cards/small/visible";
+import MoonPhase from "@/components/cards/small/moonPhase";
+import Humidity from "@/components/cards/small/humidity";
+import TempRange from "@/components/cards/small/temp";
 import SunArc from "@/components/weather/sun-arc";
-import {useState} from "react";
+import {useRef, useState} from "react";
+import Button from "@/components/ui/button";
+import PrecipSmall from "@/components/cards/small/precip";
 
 export default function OneDayWidget({slug}: { slug: string }) {
     const {weather, location, loading, refresh} = useWeatherStore()
     const [activeHour, setActiveHour] = useState<HourType | undefined>(undefined)
-
+    const chart = useRef<HTMLDivElement>(null)
     if (loading || !weather || !location) return <Loader/>
 
     const currentWeather: DayType | undefined = weather?.days?.find(day => day.datetime === slug)
@@ -29,17 +31,17 @@ export default function OneDayWidget({slug}: { slug: string }) {
         month: 'long',
         day: 'numeric',
     });
-    console.log('currentWeather', currentWeather)
 
     function setHour(i: number | string | undefined) {
         if (typeof i === 'number') {
             setActiveHour(currentWeather?.hours[i])
-            console.log('RERER', currentWeather?.hours[i])
+            console.log(activeHour)
         } else {
-            setActiveHour(undefined)
+            chart.current?.classList.remove(stl.page__chart_active)
+            setTimeout(() => {
+                setActiveHour(undefined)
+            }, 350)
         }
-
-
     }
 
     return (
@@ -57,16 +59,36 @@ export default function OneDayWidget({slug}: { slug: string }) {
                                   feelslike={currentWeather.feelslike}/>
                             {
                                 currentWeather?.hours &&
-                                <div className={`${stl.page__chart} ${activeHour ? stl.page__chart_active : ''}`}>
+                                <div className={`${stl.page__chart} ${activeHour ? stl.page__chart_active : ''}`}
+                                     ref={chart}>
                                     <p className={stl.page__chartTitle}>Прогноз на 24 часа</p>
                                     <Recharts data={currentWeather?.hours} setHour={setHour}/>
                                     {activeHour &&
+
                                         <div className={stl.page__layoutHour}>
-                                            <UVindex small={true} uv={activeHour.uvindex}/>
-                                            <Cloudy small={true} percent={activeHour.cloudcover}/>
-                                            <Visible small={true} vis={activeHour.visibility}/>
-                                            <Humidity small={true} percent={activeHour.humidity}/>
+                                            <div className={stl.page__hiddenHour}>
+                                                {`${formattedDate} 
+                                                  ${activeHour.datetime.slice(0, 5)}`}
+                                                <Button text='Скрыть'
+                                                        secondary={true}
+                                                        variant='btn'
+                                                        action={() => setHour(undefined)}/>
+
+                                            </div>
+
+                                            <UVindex small={true}
+                                                     uv={activeHour.uvindex}/>
+                                            <Cloudy small={true}
+                                                    percent={activeHour.cloudcover}/>
+                                            <Visible small={true}
+                                                     vis={activeHour.visibility}/>
+                                            <Humidity small={true}
+                                                      percent={activeHour.humidity}/>
+                                            <PrecipSmall precipprob={activeHour.precipprob}
+                                                         preciptype={activeHour.preciptype}
+                                                         small={true}/>
                                         </div>
+
                                     }
                                 </div>
                             }

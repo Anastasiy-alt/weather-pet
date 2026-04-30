@@ -1,6 +1,7 @@
 import stl from './weather.module.sass'
 import WeatherIcon from "@/components/weather/ui/icon";
-import {useMemo} from "react";
+import RainAnimation, {RainAnimationRef} from "@/components/cards/anim/rain";
+import {useRef} from "react";
 
 interface PrecipProps {
     precip: number
@@ -36,9 +37,13 @@ export default function Precip({
         freezingrain: 'Ледяной дождь',
         ice: 'Лёд',
     }
+    const rainRef = useRef<RainAnimationRef>(null)
 
     return (
-        <div className={`${stl.precip} ${stl.card}`}>
+        <div className={`${stl.precip} ${stl.card} ${precipprob > 0 ? '' : stl.precip_sun}`}
+             onMouseEnter={() => rainRef.current?.start()}
+             onMouseLeave={() => rainRef.current?.stop()}>
+            <RainAnimation ref={rainRef} probability={precipprob}/>
             <p className={stl.precip__title}>Осадки
             </p>
             {

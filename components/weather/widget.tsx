@@ -5,12 +5,12 @@ import SunArc from '@/components/weather/sun-arc'
 import Wind from "@/components/weather/wind";
 import Precip from "@/components/weather/precip";
 import Loader from "@/components/ui/loader";
-import MoonPhase from "@/components/weather/smallCards/moonPhase";
-import Cloudy from "@/components/weather/smallCards/cloudy";
-import UVindex from "@/components/weather/smallCards/uv";
-import Visible from "@/components/weather/smallCards/visible";
-import Humidity from "@/components/weather/smallCards/humidity";
-import TempRange from "@/components/weather/smallCards/temp";
+import MoonPhase from "@/components/cards/small/moonPhase";
+import Cloudy from "@/components/cards/small/cloudy";
+import UVindex from "@/components/cards/small/uv";
+import Visible from "@/components/cards/small/visible";
+import Humidity from "@/components/cards/small/humidity";
+import TempRange from "@/components/cards/small/temp";
 import {useWeatherStore} from "@/store/weather";
 
 export default function MainWeatherCard() {

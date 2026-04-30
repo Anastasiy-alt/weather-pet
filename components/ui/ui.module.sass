@@ -8,7 +8,11 @@
   @include transitionMixin()
   border-radius: 8px
   @include font-styles($white, 28px, 600, 30px)
-
+.btn_secondary
+  background: transparent
+  outline: 2px solid $blue
+  outline-offset: -2px
+  color: $blue
 .location
   display: flex
   flex-direction: row
@@ -125,6 +129,10 @@ body:has(.modal_open)
   .btn:hover
     background: $dark-blue
     color: $white
+  .btn_secondary:hover
+    background: transparent
+    color: $dark-blue
+    outline-color: $dark-blue
   .modal__close:hover
     transform: rotate(180deg)
 

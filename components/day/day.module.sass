@@ -23,15 +23,25 @@
   padding: 0 16px
   display: grid
   grid-template-columns: repeat(3, 1fr)
+  grid-template-rows: min-content 1fr
   gap: 20px
   height: 100%
   @include transitionMixin()
   min-height: 0
   overflow: hidden
+.page__hiddenHour
+  grid-column: span 3
+  @include font-label($gray)
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: flex-end
+  gap: 4px
 
 .page__chartTitle
   @include font-value($black)
   padding: 0 16px 8px
+
 
 .chart__dot
   cursor: pointer
@@ -50,11 +60,11 @@
   border-radius: 16px
   padding: 16px 0
   display: grid
-  grid-template-rows: min-content 1fr 0fr
+  grid-template-rows: min-content min-content 0fr
   gap: 20px
   @include transitionMixin()
   &_active
-    grid-template-rows: min-content 1fr 1fr
+    grid-template-rows: min-content min-content 1fr
 
 .chart
   width: 100%

@@ -11,6 +11,8 @@
   border-radius: 16px
   height: 100%
   grid-column: span 2
+  overflow: hidden
+  @include transitionMixin(border, background)
 
 .widget
   padding: 20px
@@ -73,7 +75,9 @@
   opacity: 0.2
   @include transitionMixin(opacity)
   @include font-styles($orange, 60px, 600)
-
+.sun__sunIcon
+  opacity: 0.4
+  @include transitionMixin(opacity, transform)
 .sun__main
   width: 100%
   height: auto
@@ -178,6 +182,7 @@
   display: flex
   flex-direction: column
   justify-content: space-between
+  position: relative
 
 .precip__title
   @include font-heading($black)
@@ -392,8 +397,28 @@
     height: 12px
     border-width: 1px
     transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-50px)
+//.rain
+//  *:hover > &
+//    pointer-events: none
+//  *:hover > & &__canvas
+//    opacity: 1
+//.rain_no
+//  *:hover > &
+//    .rain__canvas
+//      background-color: $yellow
+//      opacity: 0.1 !important
+//    .rain__sun
+//      opacity: 0.3
 
 @include hover
+  .precip:hover
+    border-color: $blue
+    canvas
+      opacity: 1
+  .precip_sun:hover
+    border-color: $yellow
+    background-color: rgba($yellow, 0.1)
+
   .precip__type:hover
     background: $blue
     color: $white
@@ -406,6 +431,9 @@
   .sun:hover
     .sun__percent
       opacity: 0.4
+    .sun__sunIcon
+      opacity: 0.6
+      transform: rotate(90deg)
 
     circle.sun__strokeYellow
       stroke: $orange

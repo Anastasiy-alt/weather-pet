@@ -97,7 +97,7 @@ export default function SunArc({sunrise, sunset, sunriseEpoch, sunsetEpoch, now}
                         </text>
                         :
                         <foreignObject x={90} y={20} width={90} height={90}>
-                            <Sun/>
+                            <Sun className={stl.sun__sunIcon}/>
                         </foreignObject>
                 }
             </svg>

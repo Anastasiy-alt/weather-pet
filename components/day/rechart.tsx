@@ -2,7 +2,8 @@ import {Area, AreaChart, ResponsiveContainer, XAxis} from 'recharts';
 import {Hour} from "@/types";
 import WeatherIcon from "@/components/weather/ui/icon";
 import stl from './day.module.sass'
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
+import {useDayStore} from "@/store/day";
 
 interface TickProps {
     x: string | number
@@ -22,13 +23,14 @@ function tempHue(t: number) {
     return "#ae2012";
 }
 
-export default function Recharts({data, setHour }: { data: Hour[], setHour: (i: number | string | undefined) => void}) {
+export default function Recharts({data}: { data: Hour[] }) {
 
     const chart = useRef<HTMLDivElement>(null)
+    const {activeHourIndex, setActiveHourIndex} = useDayStore()
 
     function IconTick({x, y, payload}: TickProps) {
         return (
-            <foreignObject x={Number(x) - 16} y={Number(y) - 40} width={32} height={32}>
+            <foreignObject x={Number(x) - 16} y={Number(y) - 42} width={32} height={32}>
                 <WeatherIcon classCustom={stl.chart__icon} name={payload.value}/>
             </foreignObject>
         )
@@ -53,7 +55,7 @@ export default function Recharts({data, setHour }: { data: Hour[], setHour: (i: 
             <g className={stl.chart__dot} id={'chart-dot-' + index}>
                 <circle className={stl.chart__circle} cx={cx} cy={cy} r={4} fill="#fff" stroke="#4091c9"
                         strokeWidth={2}/>
-                <text className={stl.chart__tempText} x={cx} y={Number(cy) - 12} textAnchor="middle" fontSize={11}
+                <text className={stl.chart__tempText} x={cx} y={Number(cy) - 8} textAnchor="middle" fontSize={11}
                       fontWeight={600}
                       fill={tempHue(payload.temp)}>
                     {Math.round(payload.temp) > 0 ? `+${Math.round(payload.temp)}` : Math.round(payload.temp)}°
@@ -62,13 +64,16 @@ export default function Recharts({data, setHour }: { data: Hour[], setHour: (i: 
         )
     }
 
-    function setActiveDot(i: number | string | undefined) {
+    function setActiveDot(i: number | undefined) {
         chart.current?.querySelectorAll('.' + stl.chart__dot).forEach(el => el.classList.remove(stl.chart__dot_active))
         if (typeof i === "number") {
             chart.current?.querySelector(`#chart-dot-${i}`)?.classList.add(stl.chart__dot_active)
         }
-
     }
+
+    useEffect(() => {
+        setActiveDot(activeHourIndex)
+    }, [activeHourIndex])
 
     return (
             <div className={stl.chart} ref={chart}>
@@ -82,8 +87,8 @@ export default function Recharts({data, setHour }: { data: Hour[], setHour: (i: 
                             bottom: 0,
                         }}
                         onClick={(data) => {
-                            setActiveDot(data.activeLabel)
-                            setHour(data.activeLabel)
+                            const i = data.activeLabel
+                            if (typeof i === "number") setActiveHourIndex(i)
                         }}
                     >
                         <defs>

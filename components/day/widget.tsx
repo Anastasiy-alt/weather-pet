@@ -15,33 +15,35 @@ import MoonPhase from "@/components/cards/small/moonPhase";
 import Humidity from "@/components/cards/small/humidity";
 import TempRange from "@/components/cards/small/temp";
 import SunArc from "@/components/weather/sun-arc";
-import {useRef, useState} from "react";
+import {useEffect, useRef} from "react";
+import {useDayStore} from "@/store/day";
 import Button from "@/components/ui/button";
 import PrecipSmall from "@/components/cards/small/precip";
 
 export default function OneDayWidget({slug}: { slug: string }) {
     const {weather, location, loading, refresh} = useWeatherStore()
-    const [activeHour, setActiveHour] = useState<HourType | undefined>(undefined)
+    const {activeHourIndex, clearActiveHourIndex} = useDayStore()
     const chart = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        return () => clearActiveHourIndex()
+    }, [slug])
+
     if (loading || !weather || !location) return <Loader/>
 
     const currentWeather: DayType | undefined = weather?.days?.find(day => day.datetime === slug)
+    const activeHour: HourType | undefined = activeHourIndex !== undefined ? currentWeather?.hours[activeHourIndex] : undefined
     const formattedDate = new Date(slug).toLocaleDateString('ru-RU', {
         weekday: 'long',
         month: 'long',
         day: 'numeric',
     });
 
-    function setHour(i: number | string | undefined) {
-        if (typeof i === 'number') {
-            setActiveHour(currentWeather?.hours[i])
-            console.log(activeHour)
-        } else {
-            chart.current?.classList.remove(stl.page__chart_active)
-            setTimeout(() => {
-                setActiveHour(undefined)
-            }, 350)
-        }
+    function hideHour() {
+        chart.current?.classList.remove(stl.page__chart_active)
+        setTimeout(() => {
+            clearActiveHourIndex()
+        }, 350)
     }
 
     return (
@@ -62,7 +64,7 @@ export default function OneDayWidget({slug}: { slug: string }) {
                                 <div className={`${stl.page__chart} ${activeHour ? stl.page__chart_active : ''}`}
                                      ref={chart}>
                                     <p className={stl.page__chartTitle}>Прогноз на 24 часа</p>
-                                    <Recharts data={currentWeather?.hours} setHour={setHour}/>
+                                    <Recharts data={currentWeather?.hours}/>
                                     {activeHour &&
 
                                         <div className={stl.page__layoutHour}>
@@ -72,7 +74,7 @@ export default function OneDayWidget({slug}: { slug: string }) {
                                                 <Button text='Скрыть'
                                                         secondary={true}
                                                         variant='btn'
-                                                        action={() => setHour(undefined)}/>
+                                                        action={hideHour}/>
 
                                             </div>
 

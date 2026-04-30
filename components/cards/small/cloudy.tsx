@@ -15,7 +15,7 @@ const CLOUD_LEVELS = {
     100: 'Полная облачность, хмуро',
 } as const
 
-export default function Cloudy({percent}: { percent: number }) {
+export default function Cloudy({percent, small}: { percent: number, small?: boolean }) {
     function getCloudDescription(percent: number): string {
         const key = Math.round(percent / 10) * 10 as keyof typeof CLOUD_LEVELS
         return CLOUD_LEVELS[key] ?? CLOUD_LEVELS[100]
@@ -23,7 +23,7 @@ export default function Cloudy({percent}: { percent: number }) {
 
     const description: string = getCloudDescription(percent) ?? ''
     return (
-        <div className={`${stl.cloud} ${stl.card}`}>
+        <div className={`${stl.cloud} ${stl.card} ${small ? stl.card_small : ''}`}>
             <div className={`${stl.cloud__block} ${stl.card__icon}`}>
                 <Cloud className={stl.cloud__icon}/>
                 <p className={stl.cloud__hiddenTitle}>{Math.round(percent)}%</p>

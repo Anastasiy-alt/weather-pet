@@ -14,14 +14,14 @@ const UV_LEVELS = {
     9: {label: 'Очень высокий', description: 'Лучше остаться в тени — солнце злое', color: '#ae2012'},
     10: {label: 'Экстремальный', description: 'Солнце сегодня не шутит — береги кожу', color: '#7b2cbf'},
 } as const
-export default function UVindex({uv}: { uv: number }) {
+export default function UVindex({uv, small}: { uv: number , small?: boolean}) {
     const level = UV_LEVELS[uv as keyof typeof UV_LEVELS] ?? {
         label: 'Экстремальный',
         description: 'Солнце сегодня не шутит — береги кожу',
         color: '#7b2cbf'
     }
     return (
-        <div className={`${stl.uv} ${stl.card}`} style={{'--c': level.color} as React.CSSProperties}>
+        <div className={`${stl.uv} ${small ? stl.card_small : ''} ${stl.card}`} style={{'--c': level.color} as React.CSSProperties}>
             <Sun className={`${stl.uv__icon} ${stl.card__icon}`} style={{'--i': uv / 10} as React.CSSProperties}/>
             <p className={stl.card__title}>УФ-индекс {uv}</p>
             <p className={stl.card__subtitle}>{level.label}</p>

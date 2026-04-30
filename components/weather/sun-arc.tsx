@@ -2,15 +2,18 @@
 
 import stl from './weather.module.sass'
 import {useEffect, useState} from 'react'
+import Sun from '@/assets/icons/weather/clear-day.svg'
+
 
 interface SunArcProps {
     sunrise: string
     sunset: string
     sunriseEpoch: number
     sunsetEpoch: number
+    now?: Date
 }
 
-export default function SunArc({sunrise, sunset, sunriseEpoch, sunsetEpoch}: SunArcProps) {
+export default function SunArc({sunrise, sunset, sunriseEpoch, sunsetEpoch, now}: SunArcProps) {
     function toMin(t: string) {
         const [h, m] = t.split(':').map(Number)
         return h * 60 + m
@@ -23,9 +26,15 @@ export default function SunArc({sunrise, sunset, sunriseEpoch, sunsetEpoch}: Sun
         hours: Math.floor(totalSec / 3600),
         minutes: Math.floor((totalSec % 3600) / 60)
     }
-    const now = new Date()
-    const nowMin = now.getHours() * 60 + now.getMinutes()
-    const progress = Math.min(1, Math.max(0, (nowMin - srMin) / (ssMin - srMin)))
+    let nowMin
+    let progress
+    if (now) {
+        nowMin = now.getHours() * 60 + now.getMinutes()
+        progress = Math.min(1, Math.max(0, (nowMin - srMin) / (ssMin - srMin)))
+    } else {
+        progress = 1
+    }
+
     const [animatedProgress, setAnimatedProgress] = useState(0)
 
     useEffect(() => {
@@ -81,10 +90,18 @@ export default function SunArc({sunrise, sunset, sunriseEpoch, sunsetEpoch}: Sun
                 <g transform={`translate(${sunX - 12}, ${sunY - 12})`}>
                     <circle cx={12} cy={12} r="5" strokeWidth="2" fill="" className={stl.sun__strokeYellow}/>
                 </g>
-                <text x={135} y={90} className={stl.sun__percent} textAnchor="middle" fontWeight={500}>
-                    {Math.round(animatedProgress * 100)}%
-                </text>
+                {
+                    now &&
+                    <text x={135} y={90} className={stl.sun__percent} textAnchor="middle" fontWeight={500}>
+                        {Math.round(animatedProgress * 100)}%
+                    </text>
+                }
             </svg>
+            {
+                !now &&
+                <Sun className={stl.sun__sunIcon}/>
+
+            }
             <div className={stl.sun__text}>
                 <p>{sunrise.slice(0, 5)}</p>
                 <p className={stl.sun__day}><span>Световой день</span><span>{sunDay.hours} ч {sunDay.minutes} мин</span>

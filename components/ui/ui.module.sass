@@ -8,7 +8,11 @@
   @include transitionMixin()
   border-radius: 8px
   @include font-styles($white, 28px, 600, 30px)
-
+.btn_secondary
+  background: transparent
+  outline: 2px solid $blue
+  outline-offset: -2px
+  color: $blue
 .location
   display: flex
   flex-direction: row
@@ -37,6 +41,13 @@
   opacity: 0
   z-index: -100
   position: fixed
+  inset: 0
+  display: flex
+  align-items: center
+  justify-content: center
+
+body:has(.modal_open)
+  overflow: hidden
 
 .modal.modal_open
   top: 50%
@@ -44,6 +55,8 @@
   transform: translate(-50%, -50%)
   z-index: 1000
   opacity: 1
+  width: 100%
+  height: 100%
 
   &::before
     content: ""
@@ -54,19 +67,16 @@
     background: $gray
     opacity: 0.6
     width: 100vw
-    height: 100dvh
+    height: 100vh
 
 .modal__inner
   width: 70vw
   max-height: 80vh
   border-radius: 16px
   padding: 24px
-  position: fixed
-  top: 50%
-  left: 50%
-  transform: translate(-50%, -50%)
+  position: relative
   background: $white
-  z-index: 1000
+  z-index: 1
   display: flex
   flex-direction: column
   gap: 20px
@@ -105,19 +115,26 @@
 @include tablet
   .btn
     @include font-styles($white, 22px, 600, 24px)
+  .btn_secondary
+    color: $blue
   .modal__close
     width: 30px
     height: 30px
   .modal__inner
     width: 80vw
     padding: 12px
-    max-height: 90dvh
+    max-height: 80dvh
+    margin-top: 70px
     gap: 12px
 
 @include hover
   .btn:hover
     background: $dark-blue
     color: $white
+  .btn_secondary:hover
+    background: transparent
+    color: $dark-blue
+    outline-color: $dark-blue
   .modal__close:hover
     transform: rotate(180deg)
 

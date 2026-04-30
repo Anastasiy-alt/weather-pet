@@ -73,7 +73,9 @@ export interface Day {
     solarenergy: number
     solarradiation: number
     sunrise: string
+    sunriseEpoch: number
     sunset: string
+    sunsetEpoch: number
     temp: number
     tempmax: number
     tempmin: number

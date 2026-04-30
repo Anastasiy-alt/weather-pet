@@ -1,8 +1,9 @@
-import {Area, AreaChart, ResponsiveContainer, Tooltip, XAxis} from 'recharts';
+import {Area, AreaChart, ResponsiveContainer, XAxis} from 'recharts';
 import {Hour} from "@/types";
 import WeatherIcon from "@/components/weather/ui/icon";
 import stl from './day.module.sass'
-import {mkdtemp} from "node:fs";
+import {useEffect, useRef} from "react";
+import {useDayStore} from "@/store/day";
 
 interface TickProps {
     x: string | number
@@ -23,9 +24,13 @@ function tempHue(t: number) {
 }
 
 export default function Recharts({data}: { data: Hour[] }) {
+
+    const chart = useRef<HTMLDivElement>(null)
+    const {activeHourIndex, setActiveHourIndex} = useDayStore()
+
     function IconTick({x, y, payload}: TickProps) {
         return (
-            <foreignObject x={Number(x) - 16} y={Number(y) - 32} width={32} height={32}>
+            <foreignObject x={Number(x) - 16} y={Number(y) - 42} width={32} height={32}>
                 <WeatherIcon classCustom={stl.chart__icon} name={payload.value}/>
             </foreignObject>
         )
@@ -39,17 +44,18 @@ export default function Recharts({data}: { data: Hour[] }) {
         )
     }
 
-    function CustomDot({cx, cy, payload}: {
+    function CustomDot({cx, cy, payload, index}: {
         cx?: number | string;
         cy?: number | string;
         payload?: { temp: number; value: string }
+        index: number
     }) {
         if (!cx || !cy || !payload) return null
         return (
-            <g>
+            <g className={stl.chart__dot} id={'chart-dot-' + index}>
                 <circle className={stl.chart__circle} cx={cx} cy={cy} r={4} fill="#fff" stroke="#4091c9"
                         strokeWidth={2}/>
-                <text className={stl.chart__tempText} x={cx} y={Number(cy) - 10} textAnchor="middle" fontSize={11}
+                <text className={stl.chart__tempText} x={cx} y={Number(cy) - 8} textAnchor="middle" fontSize={11}
                       fontWeight={600}
                       fill={tempHue(payload.temp)}>
                     {Math.round(payload.temp) > 0 ? `+${Math.round(payload.temp)}` : Math.round(payload.temp)}°
@@ -58,17 +64,31 @@ export default function Recharts({data}: { data: Hour[] }) {
         )
     }
 
+    function setActiveDot(i: number | undefined) {
+        chart.current?.querySelectorAll('.' + stl.chart__dot).forEach(el => el.classList.remove(stl.chart__dot_active))
+        if (typeof i === "number") {
+            chart.current?.querySelector(`#chart-dot-${i}`)?.classList.add(stl.chart__dot_active)
+        }
+    }
+
+    useEffect(() => {
+        setActiveDot(activeHourIndex)
+    }, [activeHourIndex])
+
     return (
-        <>
-            <div className={stl.chart}>
+            <div className={stl.chart} ref={chart}>
                 <ResponsiveContainer>
                     <AreaChart
                         data={data}
                         margin={{
                             top: 20,
-                            right: 30,
-                            left: 30,
+                            right: 32,
+                            left: 32,
                             bottom: 0,
+                        }}
+                        onClick={(data) => {
+                            const i = data.activeLabel
+                            if (typeof i === "number") setActiveHourIndex(i)
                         }}
                     >
                         <defs>
@@ -86,7 +106,6 @@ export default function Recharts({data}: { data: Hour[] }) {
                             tickLine={false}
                             interval={0}
                         />
-
                         <XAxis
                             xAxisId="time"
                             dataKey="datetime"
@@ -97,7 +116,7 @@ export default function Recharts({data}: { data: Hour[] }) {
                         />
                         <Area type="monotone"
                               dot={CustomDot}
-                              activeDot={{r: 6, fill: '#4091c9'}}
+                              activeDot={{className: 'chart__hover-dot'}}
                               dataKey="temp"
                               strokeWidth={3}
                               stroke="#4091c9"
@@ -105,6 +124,5 @@ export default function Recharts({data}: { data: Hour[] }) {
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
-        </>
     )
 }

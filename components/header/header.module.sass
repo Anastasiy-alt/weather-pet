@@ -12,6 +12,7 @@
   left: 50%
   transform: translateX(-50%)
   background: $white
+  @include transitionMixin()
 
   &::after
     content: ''
@@ -29,7 +30,7 @@
   min-height: 70px
   min-width: 70px
 
-.header__nav
+.header__nav, .header__navOuter
   display: flex
   flex-direction: row
   gap: 20px
@@ -70,6 +71,15 @@
   align-items: center
   transform: translateX(105%)
   @include transitionMixin()
+
+.header__searchIcon
+  width: 30px
+  height: 30px
+  cursor: pointer
+
+  svg path
+    @include transitionMixin()
+    stroke: $blue
 
 @include laptop
   .header
@@ -146,6 +156,8 @@
     overflow: hidden
 
 @include hover
+  .header__searchIcon:hover svg path
+    stroke: $dark-blue
   .header__link:hover
     color: $dark-blue
 

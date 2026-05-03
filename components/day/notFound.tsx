@@ -10,8 +10,7 @@ export default function DayNotFound() {
                 <div className={stl.notFound__pseudo}></div>
                 <div className={stl.notFound__pseudo}></div>
                 <div className={stl.notFound__fog}></div>
-                <Fog className={stl.notFound__icon} />
-
+                <Fog className={stl.notFound__icon}/>
             </div>
             <p className={stl.notFound__title}>Этот день в тумане</p>
             <p className={stl.notFound__sub}>И не только метафорически — данных правда нет</p>

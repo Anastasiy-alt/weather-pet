@@ -17,7 +17,6 @@ export async function GET(req: NextRequest) {
     if (!lat || !lon) {
         return NextResponse.json({error: "Не переданы координаты"}, {status: 400});
     }
-console.log(`${host}?latitude=${lat}&longitude=${lon}&key=${key}&localityLanguage=${lang}`)
     const res = await fetchRequest(`${host}?latitude=${lat}&longitude=${lon}&key=${key}&localityLanguage=${lang}`);
 
     if (!res.ok) {

@@ -126,7 +126,6 @@ export default function OneDayWidget({slug}: { slug: string }) {
                 }</>
                 : <Loader/>
         }
-
         </>
     )
 }

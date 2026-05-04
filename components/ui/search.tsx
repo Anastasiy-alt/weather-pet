@@ -65,7 +65,7 @@ export default function Search() {
     return (
         <div className={stl.searchWrap}>
             {
-                history &&
+                (history && history.length) >0 &&
                 <div className={stl.history}>
                     <p className={stl.history__title}>Искали ранее: </p>
                     <ul className={stl.history__list}>

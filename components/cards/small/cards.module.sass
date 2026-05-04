@@ -25,6 +25,10 @@
   .card__icon
     width: 100px
     height: 100px
+    min-width: 100px
+    min-height: 100px
+    max-width: 100px
+    max-height: 100px
 
   .card__tag
     height: fit-content
@@ -94,6 +98,10 @@
 .card__icon
   height: 150px
   width: 150px
+  min-width: 150px
+  min-height: 150px
+  max-width: 150px
+  max-height: 150px
 
 .moon__icon
   border-radius: 100%
@@ -328,12 +336,27 @@
   width: 80%
   height: 80%
   @include transitionMixin()
-
-
+.wind .card__icon
+  position: relative
+.wind__icon
+  position: absolute
+  top: 50%
+  left: 50%
+  width: 80%
+  height: 80%
+  overflow: visible
+  stroke-width: 1px
+  stroke: transparent
+  @include transitionMixin()
+  transform: translate(-50%, -50%) rotate(calc(-45deg + var(--dir)))
 @include tablet
   .card__icon
     width: 130px
     height: 130px
+    min-width: 130px
+    min-height: 130px
+    max-width: 130px
+    max-height: 130px
   .visible__block
     width: 170px
   .card__title
@@ -376,6 +399,10 @@
   .card__icon
     width: 100px
     height: 100px
+    min-width: 100px
+    min-height: 100px
+    max-width: 100px
+    max-height: 100px
   .card__tag
     height: fit-content
     top: 50%

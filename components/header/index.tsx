@@ -1,53 +1,74 @@
+'use client'
 import stl from './header.module.sass'
-import WeatherIcon from "@/components/weather/ui/icon";
 import Link from "next/link";
 import Burger from "@/components/header/burger";
+import Sun from '@/assets/icons/weather/clear-day.svg'
+import Search from "@/components/ui/search";
+import IconSearch from '@/assets/icons/search.svg'
+import {useSearchStore} from "@/store/search";
+import Modal from "@/components/ui/modal";
+import Location from "@/components/ui/location";
+import {useGeolocation} from "@/hooks/useGeolocation";
+import {useWeatherStore} from "@/store/weather";
+import {useEffect} from "react";
+import {useBackHomeStore} from "@/store/backHome";
 
-const icons = [
-    'clear-day',
-    'clear-night',
-    'cloudy',
-    'fog',
-    'hail',
-    'partly-cloudy-day',
-    'partly-cloudy-night',
-    'rain',
-    'rain-snow',
-    'rain-snow-showers-day',
-    'rain-snow-showers-night',
-    'showers-day',
-    'showers-night',
-    'snow',
-    'snow-showers-day',
-    'snow-showers-night',
-    'thunder',
-    'thunder-rain',
-    'thunder-showers-day',
-    'thunder-showers-night',
-]
-
-function getRandomIcon() {
-    return icons[Math.floor(Math.random() * icons.length)]
-}
 
 export default function HeaderApp() {
-    const randomIcon = getRandomIcon()
+    const {open, toggle, setClose} = useSearchStore()
+    const load = useWeatherStore(s => s.load)
+    const {reset, coords, currentCoords} = useGeolocation()
+    const {visible, setVisible} = useBackHomeStore()
 
+
+    const handleBackHome = () => {
+        if (!currentCoords) return
+        reset()
+        load(currentCoords.lat, currentCoords.lon).then()
+        setVisible(false)
+    }
+    useEffect(() => {
+        if (!coords || !currentCoords) return
+        if (coords?.lat !== currentCoords?.lat || coords?.lon !== currentCoords?.lon) {
+            setVisible(true)
+        } else {
+            setVisible(false)
+        }
+    }, [coords, currentCoords])
     return (
-        <header className={stl.header}>
-            <Link className={stl.header__icon} href="/">
-                <WeatherIcon name={randomIcon}/>
-            </Link>
-            <nav className={stl.header__nav}>
-                <Link className={stl.header__link} href="/about">О проекте</Link>
-                <Link className={stl.header__link} href="/where-i-am">Где я?</Link>
-                <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
-            </nav>
-            <Burger>
-                <Link className={stl.header__link} href="/about">О проекте</Link>
-                <Link className={stl.header__link} href="/where-i-am">Где я?</Link>
-                <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
-            </Burger>
-        </header>
+        <>
+            <header className={`${stl.header} ${open ? stl.header_open : ''}`}>
+                <div className={stl.header__navOuter}>
+                    <Link className={stl.header__icon} href="/">
+                        <Sun/>
+                    </Link>
+                    {
+                        visible &&
+                        <button onClick={handleBackHome} className={stl.header__home}>
+                            <Location city={'Я тут'}/>
+                        </button>
+                    }
+                </div>
+                <div className={stl.header__navOuter}>
+                    <nav className={stl.header__nav}>
+                        <Link className={stl.header__link} href="/about">О проекте</Link>
+                        <Link className={stl.header__link} href="/where-i-am">Где я?</Link>
+                        <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
+                    </nav>
+                    <button className={stl.header__searchIcon} onClick={toggle}>
+                        <IconSearch/>
+                    </button>
+                    <Burger>
+                        <Link className={stl.header__link} href="/about">О проекте</Link>
+                        <Link className={stl.header__link} href="/where-i-am">Где я?</Link>
+                        <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
+                    </Burger>
+                </div>
+            </header>
+            <Modal open={open} close={() => setClose()} title={'Поиск погоды по городам'}>
+                <Search/>
+            </Modal>
+
+        </>
     )
 }

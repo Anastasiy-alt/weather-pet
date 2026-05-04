@@ -50,7 +50,7 @@ export default function Main({city, temp, icon, conditions, feelslike, datetime,
                         <AlertIcon/>
                         Предупреждения
                     </button>
-                    <Modal open={open} close={() => setOpen(false)}>
+                    <Modal open={open} close={() => setOpen(false)} title={'Предупреждения'}>
                         <div className={`${stl.widget__alerts} ${stl.widget__alerts_mobile}`}>
                             {alerts.map(alert => (
                                 <Alert key={alert.id} alert={alert}/>

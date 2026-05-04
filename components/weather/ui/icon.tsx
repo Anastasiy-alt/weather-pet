@@ -1,4 +1,3 @@
-import stl from './ui.module.sass'
 import ClearDay from '@/assets/icons/weather/clear-day.svg'
 import ClearNight from '@/assets/icons/weather/clear-night.svg'
 import Cloudy from '@/assets/icons/weather/cloudy.svg'

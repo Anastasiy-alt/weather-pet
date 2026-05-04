@@ -12,11 +12,15 @@ import Visible from "@/components/cards/small/visible";
 import Humidity from "@/components/cards/small/humidity";
 import TempRange from "@/components/cards/small/temp";
 import {useWeatherStore} from "@/store/weather";
+import WeatherHours from "@/components/day/hoursWeather";
 
 export default function MainWeatherCard() {
-    const { weather, location, loading, refresh } = useWeatherStore()
+    const {weather, location, loading, refresh} = useWeatherStore()
     const now = new Date()
-    if (loading || !weather || !location) return <Loader />
+
+    if (loading || !weather || !location) return <Loader/>
+    const timeZone = weather?.timezone
+    const dateInTimezone = new Date(now.toLocaleString('en-US', {timeZone: timeZone}))
     return (
         <>
             {(weather && location) ?
@@ -29,11 +33,14 @@ export default function MainWeatherCard() {
                           datetime={weather.currentConditions?.datetime}
                           alerts={weather.alerts}
                           update={refresh}/>
+                    <div className={stl.layout__chart}>
+                        <WeatherHours slug={weather.days[0].datetime}/>
+                    </div>
                     <SunArc sunrise={weather.currentConditions.sunrise}
                             sunsetEpoch={weather.currentConditions.sunsetEpoch}
                             sunriseEpoch={weather.currentConditions.sunriseEpoch}
                             sunset={weather.currentConditions.sunset}
-                            now={now}/>
+                            now={dateInTimezone}/>
                     <Precip precip={weather.currentConditions.precip}
                             precipprob={weather.currentConditions.precipprob}
                             snow={weather.currentConditions.snow}
@@ -48,6 +55,8 @@ export default function MainWeatherCard() {
                     <MoonPhase phase={weather.currentConditions.moonphase}/>
                     <Humidity percent={weather.currentConditions.humidity}/>
                     <TempRange tempmax={weather.days[0].tempmax} tempmin={weather.days[0].tempmin}/>
+
+
                 </section> :
                 <Loader/>
             }</>

@@ -25,6 +25,10 @@
   .card__icon
     width: 100px
     height: 100px
+    min-width: 100px
+    min-height: 100px
+    max-width: 100px
+    max-height: 100px
 
   .card__tag
     height: fit-content
@@ -94,6 +98,10 @@
 .card__icon
   height: 150px
   width: 150px
+  min-width: 150px
+  min-height: 150px
+  max-width: 150px
+  max-height: 150px
 
 .moon__icon
   border-radius: 100%
@@ -329,11 +337,42 @@
   height: 80%
   @include transitionMixin()
 
+.wind
+  overflow: hidden
+
+  .card__icon
+    position: relative
+
+.wind__icon
+  position: absolute
+  top: 50%
+  left: 50%
+  width: 70%
+  height: 70%
+  overflow: visible
+  stroke-width: 1px
+  stroke: transparent
+  @include transitionMixin()
+  transform: translate(-50%, -50%) rotate(calc(-45deg + var(--dir)))
+
+.wind__deco
+  opacity: 0
+  position: absolute
+  bottom: -30%
+  right: -50%
+  transform: rotate(-30deg)
+  width: 120%
+  height: 120%
+  @include transitionMixin()
 
 @include tablet
   .card__icon
     width: 130px
     height: 130px
+    min-width: 130px
+    min-height: 130px
+    max-width: 130px
+    max-height: 130px
   .visible__block
     width: 170px
   .card__title
@@ -376,6 +415,10 @@
   .card__icon
     width: 100px
     height: 100px
+    min-width: 100px
+    min-height: 100px
+    max-width: 100px
+    max-height: 100px
   .card__tag
     height: fit-content
     top: 50%
@@ -500,6 +543,14 @@
 
     .tempFeels__cloud
       transform: translate(-70%, -50%)
+  .wind:hover
+    .wind__deco
+      opacity: 0.2
+
+    .wind__icon
+      stroke: $orange
+  .weather:hover .card__icon
+    animation: jelly 1s cubic-bezier(.36, .07, .19, .97)
 
 @keyframes sunAnim
   0%
@@ -554,3 +605,17 @@
     transform: translateY(-5px)
   100%
     transform: translateY(0)
+
+@keyframes jelly
+  0%
+    transform: scale(1)
+  20%
+    transform: scale(1.3, 0.7)
+  40%
+    transform: scale(0.75, 1.25)
+  60%
+    transform: scale(1.15, 0.85)
+  80%
+    transform: scale(0.95, 1.05)
+  100%
+    transform: scale(1)

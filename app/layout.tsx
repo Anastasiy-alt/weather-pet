@@ -4,6 +4,7 @@ import '@/styles/_base.sass'
 import HeaderApp from "@/components/header";
 import stl from './globals.module.sass'
 import WeatherInit from "@/components/weather/init";
+
 const golos = Golos_Text({
     subsets: ['latin', 'cyrillic'],
     variable: '--font-golos',
@@ -22,7 +23,7 @@ export default function RootLayout({
     return (
         <html lang="ru" className={golos.variable}>
         <body className={golos.className}>
-        <WeatherInit />
+        <WeatherInit/>
         <HeaderApp/>
         <main className={stl.layout}>{children}</main>
         </body>

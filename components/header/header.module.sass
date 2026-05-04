@@ -12,6 +12,7 @@
   left: 50%
   transform: translateX(-50%)
   background: $white
+  @include transitionMixin()
 
   &::after
     content: ''
@@ -29,7 +30,7 @@
   min-height: 70px
   min-width: 70px
 
-.header__nav
+.header__nav, .header__navOuter
   display: flex
   flex-direction: row
   gap: 20px
@@ -54,7 +55,19 @@
 
 .header__burger
   display: none
-
+.header__home
+  cursor: pointer
+  @include transitionMixin()
+  position: relative
+  &::after
+    content: ''
+    width: 0
+    height: 3px
+    background-color: $yellow
+    position: absolute
+    bottom: -2px
+    right: 0
+    @include transitionMixin()
 .burger
   display: none
   position: fixed
@@ -70,6 +83,15 @@
   align-items: center
   transform: translateX(105%)
   @include transitionMixin()
+
+.header__searchIcon
+  width: 30px
+  height: 30px
+  cursor: pointer
+
+  svg path
+    @include transitionMixin()
+    stroke: $blue
 
 @include laptop
   .header
@@ -146,6 +168,13 @@
     overflow: hidden
 
 @include hover
+  .header__home:hover
+    &::after
+      width: calc(100% - 35px)
+      left: 35px
+      right: auto
+  .header__searchIcon:hover svg path
+    stroke: $dark-blue
   .header__link:hover
     color: $dark-blue
 

@@ -8,11 +8,13 @@
   @include transitionMixin()
   border-radius: 8px
   @include font-styles($white, 28px, 600, 30px)
+
 .btn_secondary
   background: transparent
   outline: 2px solid $blue
   outline-offset: -2px
   color: $blue
+
 .location
   display: flex
   flex-direction: row
@@ -41,20 +43,12 @@
   opacity: 0
   z-index: -100
   position: fixed
-  inset: 0
-  display: flex
-  align-items: center
-  justify-content: center
-
-body:has(.modal_open)
-  overflow: hidden
-
-.modal.modal_open
   top: 50%
   left: 50%
   transform: translate(-50%, -50%)
-  z-index: 1000
-  opacity: 1
+  display: flex
+  align-items: center
+  justify-content: center
   width: 100%
   height: 100%
 
@@ -65,9 +59,21 @@ body:has(.modal_open)
     left: 50%
     transform: translate(-50%, -50%)
     background: $gray
-    opacity: 0.6
+    opacity: 0
     width: 100vw
     height: 100vh
+    @include transitionMixin(opacity)
+
+body:has(.modal_open)
+  overflow: hidden
+
+.modal.modal_open
+  z-index: 1000
+  opacity: 1
+
+  &::before
+    opacity: 0.6
+
 
 .modal__inner
   width: 70vw
@@ -82,12 +88,14 @@ body:has(.modal_open)
   gap: 20px
 
 .modal__content
-  overflow: scroll
+  overflow: auto
 
 .modal__header
   display: flex
   flex-direction: row
   justify-content: space-between
+  align-items: center
+  @include font-label($gray)
 
 .modal__close
   position: relative
@@ -112,6 +120,107 @@ body:has(.modal_open)
     &:nth-child(2)
       transform: translate(-50%, -50%) rotate(-45deg)
 
+.search
+  position: relative
+  overflow: visible
+  height: fit-content
+  margin: 8px 0
+
+.search:has(.search__input:focus)
+  .input__span
+    transform: translateY(-30px)
+    @include font-styles($gray, 16px, 400, 20px)
+
+.search__input
+  @include transitionMixin()
+  width: 100%
+  height: 100%
+  padding: 16px 20px
+  border-radius: 8px
+  border: 2px solid $light-gray
+  background: $white
+  @include font-styles($black, 20px, 400, 20px)
+  outline: none !important
+
+  &:focus
+    border-color: $light-blue
+
+.searchIcon
+  width: 30px
+  height: 30px
+  cursor: pointer
+
+  svg path
+    @include transitionMixin()
+    stroke: $blue
+
+.input__span
+  position: absolute
+  top: 14px
+  left: 18px
+  background-color: $white
+  border-radius: 100px
+  padding: 4px
+  @include transitionMixin()
+  @include font-styles($gray, 20px, 400, 20px)
+  pointer-events: none
+
+  &_open
+    transform: translateY(-30px)
+    @include font-styles($gray, 16px, 400, 20px)
+
+.search__dropdown
+  display: flex
+  flex-direction: column
+  gap: 8px
+
+.searchWrap
+  display: flex
+  flex-direction: column
+  gap: 16px
+
+.search__item
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+  padding: 16px
+  border-radius: 8px
+  @include transitionMixin()
+  @include font-label($black)
+  text-decoration: none
+  cursor: pointer
+
+  span:last-child
+    color: $gray
+
+.history
+  display: flex
+  flex-direction: column
+  gap: 5px
+
+.history__title
+  @include font-label($gray)
+
+.history__list
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  gap: 5px
+
+.history__item
+  cursor: pointer
+  display: flex
+  flex-direction: row
+  gap: 5px
+  border-radius: 40px
+  border: 2px solid $blue
+  width: fit-content
+  align-items: center
+  padding: 6px 12px 6px 8px
+  @include transitionMixin()
+  @include font-label($black, 500)
+
 @include tablet
   .btn
     @include font-styles($white, 22px, 600, 24px)
@@ -122,12 +231,24 @@ body:has(.modal_open)
     height: 30px
   .modal__inner
     width: 80vw
-    padding: 12px
+    padding: 16px
     max-height: 80dvh
     margin-top: 70px
     gap: 12px
+  .search__item
+    flex-direction: column
+    align-items: flex-start
+    gap: 5px
+    border: 1px solid $light-gray
+    padding: 10px
+  .search
+    margin-bottom: 0
 
 @include hover
+  .search__item:hover
+    background-color: rgba($light-blue, 0.4)
+  .search__input:hover
+    border-color: $light-blue
   .btn:hover
     background: $dark-blue
     color: $white
@@ -140,6 +261,11 @@ body:has(.modal_open)
 
     span
       background: $dark-blue
+  .input:hover .input__el
+    border-color: $light-blue
+  .history__item:hover
+    background: $blue
+    color: $white
 
 @keyframes loadAnim
   0%

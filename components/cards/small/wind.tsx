@@ -58,7 +58,7 @@ export default function WindSmall({dir, speed, gust, small}: WindProps) {
     const dirString = getWindDirection(dir)
     const speedMeters = convertSpeed(speed)
     const gustMeters = convertSpeed(gust ? gust : speed)
-    const level = getWindLevel(speed)
+    const level = getWindLevel(speedMeters)
     return (
         <div className={`${stl.wind} ${stl.card} ${small ? stl.card_small : ''}`}>
             <div className={stl.card__icon}>

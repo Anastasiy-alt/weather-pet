@@ -174,6 +174,11 @@ body:has(.modal_open)
   flex-direction: column
   gap: 8px
 
+.searchWrap
+  display: flex
+  flex-direction: column
+  gap: 16px
+
 .search__item
   display: flex
   flex-direction: row
@@ -185,6 +190,36 @@ body:has(.modal_open)
   @include font-label($black)
   text-decoration: none
   cursor: pointer
+
+  span:last-child
+    color: $gray
+
+.history
+  display: flex
+  flex-direction: column
+  gap: 5px
+
+.history__title
+  @include font-label($gray)
+
+.history__list
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  gap: 5px
+
+.history__item
+  cursor: pointer
+  display: flex
+  flex-direction: row
+  gap: 5px
+  border-radius: 40px
+  border: 2px solid $blue
+  width: fit-content
+  align-items: center
+  padding: 6px 12px 6px 8px
+  @include transitionMixin()
+  @include font-label($black, 500)
 
 @include tablet
   .btn
@@ -200,6 +235,14 @@ body:has(.modal_open)
     max-height: 80dvh
     margin-top: 70px
     gap: 12px
+  .search__item
+    flex-direction: column
+    align-items: flex-start
+    gap: 5px
+    border: 1px solid $light-gray
+    padding: 10px
+  .search
+    margin-bottom: 0
 
 @include hover
   .search__item:hover
@@ -220,6 +263,9 @@ body:has(.modal_open)
       background: $dark-blue
   .input:hover .input__el
     border-color: $light-blue
+  .history__item:hover
+    background: $blue
+    color: $white
 
 @keyframes loadAnim
   0%

@@ -21,7 +21,6 @@ export default function MainWeatherCard() {
     if (loading || !weather || !location) return <Loader/>
     const timeZone = weather?.timezone
     const dateInTimezone = new Date(now.toLocaleString('en-US', {timeZone: timeZone}))
-    console.log(weather)
     return (
         <>
             {(weather && location) ?

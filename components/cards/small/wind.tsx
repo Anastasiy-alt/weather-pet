@@ -1,5 +1,6 @@
 import stl from "./cards.module.sass";
 import LocationIcon from "@/assets/icons/location.svg";
+import Wind from '@/assets/icons/weather/wind.svg'
 
 interface WindProps {
     dir: number
@@ -31,7 +32,7 @@ const WIND_LEVELS = [
     },
     {
         max: 12,
-        label: 'Свежий',
+        label: 'Средний',
         description: 'На велосипеде в одну сторону легко, в другую — уже работа',
     },
     {
@@ -70,6 +71,7 @@ export default function WindSmall({dir, speed, gust, small}: WindProps) {
             <div className={stl.card__icon}>
                 <LocationIcon className={stl.wind__icon} style={{'--dir': dir + 'deg'} as React.CSSProperties}/>
             </div>
+            <Wind className={stl.wind__deco} />
 
             <p className={stl.card__title}>{level.label}: ветер {dirString} {speedMeters}м/с</p>
             <p className={stl.card__subtitle}>Порывы: {gustMeters}м/с</p>

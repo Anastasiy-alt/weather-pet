@@ -336,8 +336,10 @@
   width: 80%
   height: 80%
   @include transitionMixin()
-.wind .card__icon
-  position: relative
+.wind
+  overflow: hidden
+  .card__icon
+    position: relative
 .wind__icon
   position: absolute
   top: 50%
@@ -349,6 +351,16 @@
   stroke: transparent
   @include transitionMixin()
   transform: translate(-50%, -50%) rotate(calc(-45deg + var(--dir)))
+.wind__deco
+  opacity: 0
+  position: absolute
+  bottom: -30%
+  right: -50%
+  transform: rotate(-30deg)
+  width: 120%
+  height: 120%
+  @include transitionMixin()
+
 @include tablet
   .card__icon
     width: 130px
@@ -527,7 +539,11 @@
 
     .tempFeels__cloud
       transform: translate(-70%, -50%)
-
+  .wind:hover
+    .wind__deco
+      opacity: 0.2
+    .wind__icon
+      stroke: $orange
 @keyframes sunAnim
   0%
     transform: scale(1)

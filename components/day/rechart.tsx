@@ -30,7 +30,7 @@ export default function Recharts({data}: { data: Hour[] }) {
 
     function IconTick({x, y, payload}: TickProps) {
         return (
-            <foreignObject x={Number(x) - 16} y={Number(y) - 42} width={32} height={32}>
+            <foreignObject x={Number(x) - 16} y={Number(y) - 50} width={32} height={32}>
                 <WeatherIcon classCustom={stl.chart__icon} name={payload.value}/>
             </foreignObject>
         )
@@ -76,53 +76,53 @@ export default function Recharts({data}: { data: Hour[] }) {
     }, [activeHourIndex])
 
     return (
-            <div className={stl.chart} ref={chart}>
-                <ResponsiveContainer>
-                    <AreaChart
-                        data={data}
-                        margin={{
-                            top: 20,
-                            right: 32,
-                            left: 32,
-                            bottom: 0,
-                        }}
-                        onClick={(data) => {
-                            const i = data.activeLabel
-                            if (typeof i === "number") setActiveHourIndex(i)
-                        }}
-                    >
-                        <defs>
-                            <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#9dcee2" stopOpacity={0.8}/>
-                                <stop offset="95%" stopColor="#4091c9" stopOpacity={0}/>
-                            </linearGradient>
-                        </defs>
-                        <XAxis
-                            xAxisId="icons"
-                            dataKey="icon"
-                            orientation="top"
-                            tick={IconTick}
-                            axisLine={false}
-                            tickLine={false}
-                            interval={0}
-                        />
-                        <XAxis
-                            xAxisId="time"
-                            dataKey="datetime"
-                            tick={TimeTick}
-                            axisLine={false}
-                            tickLine={false}
-                            interval={0}
-                        />
-                        <Area type="monotone"
-                              dot={CustomDot}
-                              activeDot={{className: 'chart__hover-dot'}}
-                              dataKey="temp"
-                              strokeWidth={3}
-                              stroke="#4091c9"
-                              fill="url(#colorTemp)"/>
-                    </AreaChart>
-                </ResponsiveContainer>
-            </div>
+        <div className={stl.chart} ref={chart}>
+            <ResponsiveContainer>
+                <AreaChart
+                    data={data}
+                    margin={{
+                        top: 32,
+                        right: 32,
+                        left: 32,
+                        bottom: 0,
+                    }}
+                    onClick={(data) => {
+                        const i = data.activeLabel
+                        if (typeof i === "number") setActiveHourIndex(i)
+                    }}
+                >
+                    <defs>
+                        <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#9dcee2" stopOpacity={0.8}/>
+                            <stop offset="95%" stopColor="#4091c9" stopOpacity={0}/>
+                        </linearGradient>
+                    </defs>
+                    <XAxis
+                        xAxisId="icons"
+                        dataKey="icon"
+                        orientation="top"
+                        tick={IconTick}
+                        axisLine={false}
+                        tickLine={false}
+                        interval={0}
+                    />
+                    <XAxis
+                        xAxisId="time"
+                        dataKey="datetime"
+                        tick={TimeTick}
+                        axisLine={false}
+                        tickLine={false}
+                        interval={0}
+                    />
+                    <Area type="monotone"
+                          dot={CustomDot}
+                          activeDot={{className: 'chart__hover-dot'}}
+                          dataKey="temp"
+                          strokeWidth={3}
+                          stroke="#4091c9"
+                          fill="url(#colorTemp)"/>
+                </AreaChart>
+            </ResponsiveContainer>
+        </div>
     )
 }

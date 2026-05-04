@@ -344,8 +344,8 @@
   position: absolute
   top: 50%
   left: 50%
-  width: 80%
-  height: 80%
+  width: 70%
+  height: 70%
   overflow: visible
   stroke-width: 1px
   stroke: transparent
@@ -544,6 +544,8 @@
       opacity: 0.2
     .wind__icon
       stroke: $orange
+  .weather:hover .card__icon
+    animation: jelly 1s cubic-bezier(.36,.07,.19,.97)
 @keyframes sunAnim
   0%
     transform: scale(1)
@@ -597,3 +599,17 @@
     transform: translateY(-5px)
   100%
     transform: translateY(0)
+
+@keyframes jelly
+  0%
+    transform: scale(1)
+  20%
+    transform: scale(1.3, 0.7)
+  40%
+    transform: scale(0.75, 1.25)
+  60%
+    transform: scale(1.15, 0.85)
+  80%
+    transform: scale(0.95, 1.05)
+  100%
+    transform: scale(1)

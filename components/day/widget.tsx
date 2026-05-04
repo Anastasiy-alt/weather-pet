@@ -22,6 +22,7 @@ import PrecipSmall from "@/components/cards/small/precip";
 import TempFeels from "@/components/cards/small/feelsTemp";
 import DayNotFound from "@/components/day/notFound";
 import WindSmall from "@/components/cards/small/wind";
+import WeatherSmall from "@/components/cards/small/weather";
 
 export default function OneDayWidget({slug}: { slug: string }) {
     const {weather, location, loading, refresh} = useWeatherStore()
@@ -82,8 +83,13 @@ export default function OneDayWidget({slug}: { slug: string }) {
                                                         action={hideHour}/>
 
                                             </div>
-                                            <WindSmall dir={activeHour.winddir} speed={activeHour.windspeed} gust={activeHour.windgust} small={true} />
-
+                                            <WeatherSmall conditions={activeHour.conditions}
+                                                          icon={activeHour.icon}
+                                                          small={true}/>
+                                            <WindSmall dir={activeHour.winddir}
+                                                       speed={activeHour.windspeed}
+                                                       gust={activeHour.windgust}
+                                                       small={true}/>
                                             <UVindex small={true}
                                                      uv={activeHour.uvindex}/>
                                             <Cloudy small={true}

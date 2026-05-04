@@ -55,7 +55,7 @@ export default function Recharts({data}: { data: Hour[] }) {
             <g className={stl.chart__dot} id={'chart-dot-' + index}>
                 <circle className={stl.chart__circle} cx={cx} cy={cy} r={4} fill="#fff" stroke="#4091c9"
                         strokeWidth={2}/>
-                <text className={stl.chart__tempText} x={cx} y={Number(cy) - 8} textAnchor="middle" fontSize={11}
+                <text className={stl.chart__tempText} x={cx} y={Number(cy) - 10} textAnchor="middle" fontSize={11}
                       fontWeight={600}
                       fill={tempHue(payload.temp)}>
                     {Math.round(payload.temp) > 0 ? `+${Math.round(payload.temp)}` : Math.round(payload.temp)}°

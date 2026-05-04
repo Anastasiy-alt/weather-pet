@@ -43,20 +43,12 @@
   opacity: 0
   z-index: -100
   position: fixed
-  inset: 0
-  display: flex
-  align-items: center
-  justify-content: center
-
-body:has(.modal_open)
-  overflow: hidden
-
-.modal.modal_open
   top: 50%
   left: 50%
   transform: translate(-50%, -50%)
-  z-index: 1000
-  opacity: 1
+  display: flex
+  align-items: center
+  justify-content: center
   width: 100%
   height: 100%
 
@@ -67,9 +59,21 @@ body:has(.modal_open)
     left: 50%
     transform: translate(-50%, -50%)
     background: $gray
-    opacity: 0.6
+    opacity: 0
     width: 100vw
     height: 100vh
+    @include transitionMixin(opacity)
+
+body:has(.modal_open)
+  overflow: hidden
+
+.modal.modal_open
+  z-index: 1000
+  opacity: 1
+
+  &::before
+    opacity: 0.6
+
 
 .modal__inner
   width: 70vw
@@ -160,13 +164,16 @@ body:has(.modal_open)
   @include transitionMixin()
   @include font-styles($gray, 20px, 400, 20px)
   pointer-events: none
+
   &_open
     transform: translateY(-30px)
     @include font-styles($gray, 16px, 400, 20px)
+
 .search__dropdown
   display: flex
   flex-direction: column
   gap: 8px
+
 .search__item
   display: flex
   flex-direction: row
@@ -177,6 +184,7 @@ body:has(.modal_open)
   @include transitionMixin()
   @include font-label($black)
   text-decoration: none
+  cursor: pointer
 
 @include tablet
   .btn

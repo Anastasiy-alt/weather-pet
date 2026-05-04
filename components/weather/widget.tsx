@@ -14,9 +14,13 @@ import TempRange from "@/components/cards/small/temp";
 import {useWeatherStore} from "@/store/weather";
 
 export default function MainWeatherCard() {
-    const { weather, location, loading, refresh } = useWeatherStore()
+    const {weather, location, loading, refresh} = useWeatherStore()
     const now = new Date()
-    if (loading || !weather || !location) return <Loader />
+
+    if (loading || !weather || !location) return <Loader/>
+    const timeZone = weather?.timezone
+    const dateInTimezone = new Date(now.toLocaleString('en-US', {timeZone: timeZone}))
+    console.log(weather)
     return (
         <>
             {(weather && location) ?
@@ -33,7 +37,7 @@ export default function MainWeatherCard() {
                             sunsetEpoch={weather.currentConditions.sunsetEpoch}
                             sunriseEpoch={weather.currentConditions.sunriseEpoch}
                             sunset={weather.currentConditions.sunset}
-                            now={now}/>
+                            now={dateInTimezone}/>
                     <Precip precip={weather.currentConditions.precip}
                             precipprob={weather.currentConditions.precipprob}
                             snow={weather.currentConditions.snow}

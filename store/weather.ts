@@ -47,6 +47,7 @@ export const useWeatherStore = create<WeatherState & WeatherActions>((set, get) 
 
     refresh: async () => {
         const { coords, load } = get()
+        console.log(coords, '-------')
         if (!coords) return
         await load(coords.lat, coords.lon)
     },

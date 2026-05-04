@@ -63,8 +63,8 @@
   @include font-styles($black, 100px, 500)
 
 .widget__alerts
-  display: flex
-  flex-direction: row
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
   gap: 20px
 
 .sun
@@ -86,7 +86,7 @@
   left: 50%
   transform: translate(-50%, -60%)
   width: 40%
-  max-width: 200px
+  max-width: 150px
   aspect-ratio: 1
   z-index: -1
   @include transitionMixin(opacity, transform)
@@ -293,7 +293,8 @@
     height: 100px
   .wind__deco
     transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-120px)
-
+  .widget__alerts
+    grid-template-columns: repeat(2, 1fr)
 @include tablet
   .widget__alerts_desk
     display: none
@@ -303,7 +304,8 @@
     align-items: center
     gap: 5px
     @include font-label($orange)
-
+    cursor: pointer
+    width: fit-content
     svg
       width: 40px
       height: 40px

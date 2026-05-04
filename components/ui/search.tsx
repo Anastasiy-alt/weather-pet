@@ -6,31 +6,36 @@ import {useCitySearch} from '@/hooks/useSearch'
 import {useWeatherStore} from '@/store/weather'
 import {CityResult} from '@/types'
 import {usePathname, useRouter} from "next/navigation";
+import {useSearchStore} from "@/store/search";
+import {useGeolocation} from "@/hooks/useGeolocation";
+import {useBackHomeStore} from "@/store/backHome";
 
 export default function Search() {
     const [query, setQuery] = useState('')
     const [open, setOpen] = useState(false)
     const {results, loading} = useCitySearch(query)
     const load = useWeatherStore(s => s.load)
-
+    const {setClose} = useSearchStore()
     const router = useRouter()
     const pathname = usePathname()
+    const {setLocation} = useGeolocation()
+    const {setVisible} = useBackHomeStore()
 
     function handleSelect(city: CityResult) {
-        load(city.lat, city.lon)
-        setQuery(city.city)
+        localStorage.setItem('coords', JSON.stringify({lat: city.lat, lon: city.lon}))
+        load(city.lat, city.lon).then()
+        setVisible(true)
+        setLocation({lat: city.lat, lon: city.lon})
+        setQuery('')
         setOpen(false)
-
-        // обновляем URL только на главной
+        setClose()
         if (pathname === '/') {
             const params = new URLSearchParams()
             params.set('lat', city.lat.toString())
             params.set('lon', city.lon.toString())
-            router.replace(`/?${params.toString()}`, { scroll: false })
+            router.replace(`/?${params.toString()}`, {scroll: false})
         }
     }
-
-    console.log(results)
 
     return (
         <div className={stl.searchWrap}>
@@ -55,8 +60,8 @@ export default function Search() {
                 <ul className={stl.search__dropdown}>
                     {results.map((city) => (
                         <li onClick={() => handleSelect(city)}
-                              key={city.place_id}
-                              className={stl.search__item}>
+                            key={city.place_id}
+                            className={stl.search__item}>
                             <span className={stl.search__city}>{city.city}</span>
                             <span className={stl.search__country}>{city.address_line2}</span>
                         </li>

@@ -336,10 +336,13 @@
   width: 80%
   height: 80%
   @include transitionMixin()
+
 .wind
   overflow: hidden
+
   .card__icon
     position: relative
+
 .wind__icon
   position: absolute
   top: 50%
@@ -351,6 +354,7 @@
   stroke: transparent
   @include transitionMixin()
   transform: translate(-50%, -50%) rotate(calc(-45deg + var(--dir)))
+
 .wind__deco
   opacity: 0
   position: absolute
@@ -542,10 +546,12 @@
   .wind:hover
     .wind__deco
       opacity: 0.2
+
     .wind__icon
       stroke: $orange
   .weather:hover .card__icon
-    animation: jelly 1s cubic-bezier(.36,.07,.19,.97)
+    animation: jelly 1s cubic-bezier(.36, .07, .19, .97)
+
 @keyframes sunAnim
   0%
     transform: scale(1)

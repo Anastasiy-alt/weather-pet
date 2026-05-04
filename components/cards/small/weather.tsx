@@ -29,7 +29,6 @@ export default function WeatherSmall({conditions, icon, small}: { conditions: st
     return (
         <div className={`${stl.weather} ${stl.card} ${small ? stl.card_small : ''}`}>
             <WeatherIcon classCustom={stl.card__icon} name={icon}/>
-
             <p className={`${stl.weather__title} ${stl.card__title}`}>
                 {conditions}
             </p>

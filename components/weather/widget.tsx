@@ -12,6 +12,7 @@ import Visible from "@/components/cards/small/visible";
 import Humidity from "@/components/cards/small/humidity";
 import TempRange from "@/components/cards/small/temp";
 import {useWeatherStore} from "@/store/weather";
+import WeatherHours from "@/components/day/hoursWeather";
 
 export default function MainWeatherCard() {
     const {weather, location, loading, refresh} = useWeatherStore()
@@ -33,6 +34,9 @@ export default function MainWeatherCard() {
                           datetime={weather.currentConditions?.datetime}
                           alerts={weather.alerts}
                           update={refresh}/>
+                    <div className={stl.layout__chart}>
+                        <WeatherHours slug={weather.days[0].datetime}/>
+                    </div>
                     <SunArc sunrise={weather.currentConditions.sunrise}
                             sunsetEpoch={weather.currentConditions.sunsetEpoch}
                             sunriseEpoch={weather.currentConditions.sunriseEpoch}
@@ -52,6 +56,8 @@ export default function MainWeatherCard() {
                     <MoonPhase phase={weather.currentConditions.moonphase}/>
                     <Humidity percent={weather.currentConditions.humidity}/>
                     <TempRange tempmax={weather.days[0].tempmax} tempmin={weather.days[0].tempmin}/>
+
+
                 </section> :
                 <Loader/>
             }</>

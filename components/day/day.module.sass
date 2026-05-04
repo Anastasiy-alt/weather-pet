@@ -40,7 +40,7 @@
   align-items: flex-end
   gap: 4px
 
-.page__chartTitle
+.hours__title
   @include font-value($black)
   padding: 0 16px 8px
 
@@ -56,7 +56,7 @@
   stroke: $orange
   stroke-width: 3
 
-.page__chart
+.hours
   border: 4px $light-blue solid
   border-radius: 16px
   padding: 16px 0
@@ -217,7 +217,7 @@
     gap: 16px
 
 @include tablet
-  .page__chart
+  .hours
     border-width: 2px
   .page__layoutHour
     grid-template-columns: repeat(2, 1fr)

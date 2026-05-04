@@ -1,9 +1,12 @@
 .layout
   display: grid
   grid-template-columns: repeat(6, 1fr)
-  grid-template-rows: min-content 330px 1fr
+  grid-template-rows: min-content min-content 330px 1fr
   gap: 20px
   z-index: 1
+
+.layout__chart
+  grid-column: span 6
 
 .card
   padding: 16px
@@ -270,8 +273,10 @@
 @include laptop
   .layout
     grid-template-columns: repeat(4, 1fr)
-    grid-template-rows: min-content 300px
+    grid-template-rows: min-content min-content 300px
     gap: 16px
+  .layout__chart
+    grid-column: span 4
   .card
     grid-column: span 2
   .widget
@@ -295,6 +300,7 @@
     transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-120px)
   .widget__alerts
     grid-template-columns: repeat(2, 1fr)
+
 @include tablet
   .widget__alerts_desk
     display: none
@@ -306,6 +312,7 @@
     @include font-label($orange)
     cursor: pointer
     width: fit-content
+
     svg
       width: 40px
       height: 40px
@@ -317,7 +324,9 @@
     padding: 2px
   .layout
     grid-template-columns: repeat(3, 1fr)
-    grid-template-rows: min-content 250px 250px 250px 250px
+    grid-template-rows: min-content min-content 250px 250px 250px 250px
+  .layout__chart
+    grid-column: span 3
   .card
     grid-column: span 2
     border-width: 2px

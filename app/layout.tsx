@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: "WeatherPet",
     description: "Weather pet-project",
     other: {
-        'yandex-tableau-widget': 'logo=/tableau.png, color=#fefdf8',
+        'yandex-tableau-widget': 'logo=/web-app-manifest-192x192.png, color=#fefdf8, title=WeatherPet',
     },
 };
 

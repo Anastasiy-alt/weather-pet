@@ -220,7 +220,11 @@ body:has(.modal_open)
   padding: 6px 12px 6px 8px
   @include transitionMixin()
   @include font-label($black, 500)
-
+.history__clear
+  width: fit-content
+  @include transitionMixin()
+  cursor: pointer
+  @include font-styles($gray, 16px, 500)
 @include tablet
   .btn
     @include font-styles($white, 22px, 600, 24px)
@@ -230,7 +234,7 @@ body:has(.modal_open)
     width: 30px
     height: 30px
   .modal__inner
-    width: 80vw
+    width: 90vw
     padding: 16px
     max-height: 80dvh
     margin-top: 70px
@@ -243,6 +247,8 @@ body:has(.modal_open)
     padding: 10px
   .search
     margin-bottom: 0
+  .history__item
+    font-size: 18px
 
 @include hover
   .search__item:hover
@@ -266,6 +272,8 @@ body:has(.modal_open)
   .history__item:hover
     background: $blue
     color: $white
+  .history__clear:hover
+    color: $black
 
 @keyframes loadAnim
   0%

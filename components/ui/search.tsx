@@ -36,7 +36,10 @@ export default function Search() {
         const cached = localStorage.getItem(SEARCH_HISTORY_KEY)
         return cached ? JSON.parse(cached) : []
     }
-
+    function clearHistory() {
+        localStorage.removeItem(SEARCH_HISTORY_KEY)
+        setHistory([])
+    }
     function addToHistory(item: HistoryItem) {
         const history = getHistory()
         const filtered = history.filter(h => h.city !== item.city)
@@ -77,6 +80,7 @@ export default function Search() {
                             ))
                         }
                     </ul>
+                    <button className={stl.history__clear} onClick={clearHistory}>Очистить историю поиска</button>
                 </div>
 
             }

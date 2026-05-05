@@ -46,6 +46,7 @@ export function useGeolocation() {
             fallback()
             return
         }
+        if (coords) return
         navigator.geolocation.getCurrentPosition(
             pos => {
                 const c = {lat: pos.coords.latitude, lon: pos.coords.longitude}

@@ -40,8 +40,8 @@ export const useGeoStore = create<GeoStore>((set, get) => ({
     initialized: false,
 
     init: () => {
-        if (get().initialized) return  // ← уже инициализировано — не запрашиваем снова
-        set({ initialized: true })
+        // if (get().initialized) return  // ← уже инициализировано — не запрашиваем снова
+        // set({ initialized: true })
 
         if (!navigator.geolocation) {
             // fallback

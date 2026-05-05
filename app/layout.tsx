@@ -13,6 +13,9 @@ const golos = Golos_Text({
 export const metadata: Metadata = {
     title: "WeatherPet",
     description: "Weather pet-project",
+    other: {
+        'yandex-tableau-widget': 'logo=/tableau.png, color=#fefdf8',
+    },
 };
 
 export default function RootLayout({

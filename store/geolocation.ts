@@ -55,7 +55,6 @@ export const useGeoStore = create<GeoStore>((set, get) => ({
             }
 
             if (result.state === 'prompt' && get().coords) {
-                // есть кэш и разрешение не давалось — не беспокоим пользователя
                 return
             }
 

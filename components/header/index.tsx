@@ -8,16 +8,16 @@ import IconSearch from '@/assets/icons/search.svg'
 import {useSearchStore} from "@/store/search";
 import Modal from "@/components/ui/modal";
 import Location from "@/components/ui/location";
-import {useGeolocation} from "@/hooks/useGeolocation";
 import {useWeatherStore} from "@/store/weather";
 import {useEffect} from "react";
 import {useBackHomeStore} from "@/store/backHome";
+import {useGeoStore} from "@/store/geolocation";
 
 
 export default function HeaderApp() {
     const {open, toggle, setClose} = useSearchStore()
     const load = useWeatherStore(s => s.load)
-    const {reset, coords, currentCoords} = useGeolocation()
+    const {reset, coords, currentCoords} = useGeoStore()
     const {visible, setVisible} = useBackHomeStore()
 
 

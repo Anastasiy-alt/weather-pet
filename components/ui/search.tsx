@@ -7,8 +7,8 @@ import {useWeatherStore} from '@/store/weather'
 import {CityResult} from '@/types'
 import {usePathname, useRouter} from "next/navigation";
 import {useSearchStore} from "@/store/search";
-import {useGeolocation} from "@/hooks/useGeolocation";
 import {useBackHomeStore} from "@/store/backHome";
+import {useGeoStore} from "@/store/geolocation";
 
 const SEARCH_HISTORY_KEY = 'search_history'
 const MAX_HISTORY = 5
@@ -28,7 +28,7 @@ export default function Search() {
     const {setClose} = useSearchStore()
     const router = useRouter()
     const pathname = usePathname()
-    const {setLocation} = useGeolocation()
+    const {setLocation} = useGeoStore()
     const {setVisible} = useBackHomeStore()
 
     function getHistory(): HistoryItem[] {

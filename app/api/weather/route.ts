@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({error: "Не переданы координаты"}, {status: 400});
     }
 
-    const res = await fetchRequest(`${host}${lat},${lon}?${key}&${metric}&lang=${lang}`);
+    const res = await fetchRequest(`${host}${lat},${lon}?key=${key}&${metric}&lang=${lang}`);
 
     if (!res.ok) {
         return NextResponse.json({ error: "Ошибка запроса к API погоды" }, { status: res.status });

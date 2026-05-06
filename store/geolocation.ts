@@ -1,5 +1,4 @@
-// store/geolocation.ts
-import { create } from 'zustand'
+import {create} from 'zustand'
 
 type Coords = { lat: number; lon: number }
 
@@ -41,7 +40,7 @@ export const useGeoStore = create<GeoStore>((set, get) => ({
     initialized: false,
     init: () => {
         if (get().initialized) return
-        set({ initialized: true })
+        set({initialized: true})
 
         if (!navigator.geolocation) {
             get().fallback()
@@ -51,81 +50,44 @@ export const useGeoStore = create<GeoStore>((set, get) => ({
         const proceed = () => {
             navigator.geolocation.getCurrentPosition(
                 pos => {
-                    const c = { lat: pos.coords.latitude, lon: pos.coords.longitude }
-                    set({ currentCoords: c })
+                    const c = {lat: pos.coords.latitude, lon: pos.coords.longitude}
+                    set({currentCoords: c})
                     if (!get().coords) {
                         localStorage.setItem('coords', JSON.stringify(c))
-                        set({ coords: c })
+                        set({coords: c})
                     }
                 },
                 () => get().fallback()
             )
         }
-
-        // Safari не поддерживает permissions.query для геолокации
         try {
-            navigator.permissions.query({ name: 'geolocation' }).then(result => {
+            navigator.permissions.query({name: 'geolocation'}).then(result => {
                 if (result.state === 'denied') {
                     get().fallback()
                 } else {
                     proceed()
                 }
-            }).catch(() => proceed())  // ← Safari упадёт сюда
+            }).catch(() => proceed())
         } catch {
-            proceed()  // ← fallback если permissions API недоступен совсем
+            proceed()
         }
     },
-    // init: () => {
-    //     // if (get().initialized) return  // ← уже инициализировано — не запрашиваем снова
-    //     // set({ initialized: true })
-    //
-    //     if (!navigator.geolocation) {
-    //         // fallback
-    //         return
-    //     }
-    //
-    //     navigator.permissions.query({ name: 'geolocation' }).then(result => {
-    //         if (result.state === 'denied') {
-    //             // fallback
-    //             return
-    //         }
-    //
-    //         if (result.state === 'prompt' && get().coords) {
-    //             return
-    //         }
-    //
-    //         navigator.geolocation.getCurrentPosition(
-    //             pos => {
-    //                 const c = { lat: pos.coords.latitude, lon: pos.coords.longitude }
-    //                 set({ currentCoords: c })
-    //                 if (!get().coords) {
-    //                     localStorage.setItem('coords', JSON.stringify(c))
-    //                     set({ coords: c })
-    //                 }
-    //             },
-    //             () => {
-    //                 const city = FALLBACK_CITIES[Math.floor(Math.random() * FALLBACK_CITIES.length)]
-    //                 set({ currentCoords: city, coords: city, error: 'Геолокация недоступна' })
-    //             }
-    //         )
-    //     })
-    // },
 
     setLocation: (c) => {
         localStorage.setItem('coords', JSON.stringify(c))
-        set({ coords: c })
+        set({coords: c})
     },
     fallback: () => {
         const city = FALLBACK_CITIES[Math.floor(Math.random() * FALLBACK_CITIES.length)]
-        const c = { lat: city.lat, lon: city.lon }
-        set({ currentCoords: c, error: 'Геолокация недоступна, показываем случайный город' })
+        const c = {lat: city.lat, lon: city.lon}
+        set({currentCoords: c, error: 'Геолокация недоступна, показываем случайный город'})
         if (!get().coords) {
             localStorage.setItem('coords', JSON.stringify(c))
-            set({ coords: c })
+            set({coords: c})
         }
     },
     reset: () => {
-        const { currentCoords, setLocation } = get()
+        const {currentCoords, setLocation} = get()
         if (currentCoords) {
             setLocation(currentCoords)
         }

@@ -2,7 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 import {fetchRequest} from "@/lib/fetchRequest";
 
 const host = process.env.API_WEATHER;
-const key = process.env.SECRET_API_KEY;
+const key = process.env.SECRET_API_KEY_WEATHER;
 const metric = process.env.METRIC;
 const lang = process.env.LANG;
 
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({error: "Не переданы координаты"}, {status: 400});
     }
 
-    const res = await fetchRequest(`${host}${lat},${lon}?${key}&${metric}&${lang}`);
+    const res = await fetchRequest(`${host}${lat},${lon}?${key}&${metric}&lang=${lang}`);
 
     if (!res.ok) {
         return NextResponse.json({ error: "Ошибка запроса к API погоды" }, { status: res.status });

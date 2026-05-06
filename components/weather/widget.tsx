@@ -25,7 +25,7 @@ export default function MainWeatherCard() {
         <>
             {(weather && location) ?
                 <section className={stl.layout}>
-                    <Main city={location.city}
+                    <Main city={location.features[0].properties.city || location.features[0].properties.county}
                           temp={weather.currentConditions?.temp}
                           icon={weather.currentConditions.icon}
                           conditions={weather.currentConditions.conditions}

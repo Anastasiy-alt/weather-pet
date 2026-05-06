@@ -1,7 +1,9 @@
 'use client'
 import stl from './offline.module.sass'
 import {useEffect} from "react";
-
+import Moon from "@/assets/icons/weather/clear-night.svg";
+import Cloud from "@/assets/icons/cloud.svg";
+import Link from "next/link";
 
 export default function OfflinePage() {
     useEffect(() => {
@@ -13,19 +15,18 @@ export default function OfflinePage() {
     }, [])
 
     return (
-        <div className="offline-page"style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '100vh',
-            border: '3px solid blue'
-        }}>
+        <div className="offline-page">
             <div className={stl.page}>
-                <h1 className={stl.page__title}>Нет соединения</h1>
-                <p>tuczdfhzhhj</p>
+                <div className={stl.page__block}>
+                    <Moon className={`${stl.page__icon} ${stl.page__icon_moon}`}/>
+                    <Cloud className={`${stl.page__icon} ${stl.page__icon_cloud}`}/>
+                </div>
+                <h1 className={stl.page__title}>OFF</h1>
+                <p className={stl.page__sub}>Без интернета погоду не покажем,<br/>но можем посочувствовать</p>
+                <Link href="/" className={stl.page__link}>
+                    Обновить, вдруг повезёт
+                </Link>
             </div>
-
         </div>
     )
 }

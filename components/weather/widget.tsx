@@ -13,6 +13,7 @@ import Humidity from "@/components/cards/small/humidity";
 import TempRange from "@/components/cards/small/temp";
 import {useWeatherStore} from "@/store/weather";
 import WeatherHours from "@/components/day/hoursWeather";
+import YMap from "@/components/cards/map";
 
 export default function MainWeatherCard() {
     const {weather, location, loading, refresh} = useWeatherStore()
@@ -24,7 +25,12 @@ export default function MainWeatherCard() {
     return (
         <>
             {(weather && location) ?
+                <>
                 <section className={stl.layout}>
+                    <div className={stl.layout__chart}>
+                        <YMap lat={location.query.lat} lon={location.query.lon} />
+                    </div>
+
                     <Main city={location.features[0].properties.city || location.features[0].properties.county}
                           temp={weather.currentConditions?.temp}
                           icon={weather.currentConditions.icon}
@@ -57,7 +63,8 @@ export default function MainWeatherCard() {
                     <TempRange tempmax={weather.days[0].tempmax} tempmin={weather.days[0].tempmin}/>
 
 
-                </section> :
+                </section>
+                </>:
                 <Loader/>
             }</>
     );

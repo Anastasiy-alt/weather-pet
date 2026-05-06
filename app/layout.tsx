@@ -5,6 +5,7 @@ import HeaderApp from "@/components/header";
 import stl from './globals.module.sass'
 import WeatherInit from "@/components/weather/init";
 import Script from 'next/script';
+
 const golos = Golos_Text({
     subsets: ['latin', 'cyrillic'],
     variable: '--font-golos',
@@ -29,7 +30,21 @@ export default function RootLayout({
         <WeatherInit/>
         <HeaderApp/>
         <main className={stl.layout}>{children}</main>
-        <Script src={`https://api-maps.yandex.ru/v3/?apikey=${host}&lang=ru_RU`} strategy="beforeInteractive" />
+        <Script
+            id="sw"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+                __html: `
+              if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js', {
+                  scope: '/',
+                  updateViaCache: 'none',
+                })
+              }
+            `
+            }}
+        />
+        <Script src={`https://api-maps.yandex.ru/v3/?apikey=${host}&lang=ru_RU`} strategy="beforeInteractive"/>
         </body>
         </html>
     );

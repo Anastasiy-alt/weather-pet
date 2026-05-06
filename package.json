@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
     "@recharts/devtools": "^0.0.11",
+    "@serwist/next": "^9.5.11",
     "@svgr/webpack": "^8.1.0",
     "@yandex/ymaps3-types": "^1.0.19487230",
     "next": "^16.2.3",
@@ -17,6 +18,8 @@
     "react-dom": "19.2.4",
     "recharts": "^3.8.1",
     "sass": "^1.99.0",
+    "serwist": "^9.5.11",
+    "webpack": "^5.106.2",
     "zustand": "^5.0.12"
   },
   "devDependencies": {

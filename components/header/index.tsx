@@ -13,13 +13,21 @@ import {useEffect} from "react";
 import {useBackHomeStore} from "@/store/backHome";
 import {useGeoStore} from "@/store/geolocation";
 
+type Coords = { lat: number; lon: number }
+
+function coordsAreEqual(a: Coords, b: Coords, precision = 2): boolean {
+    const factor = Math.pow(10, precision)
+    return (
+        Math.round(a.lat * factor) === Math.round(b.lat * factor) &&
+        Math.round(a.lon * factor) === Math.round(b.lon * factor)
+    )
+}
 
 export default function HeaderApp() {
     const {open, toggle, setClose} = useSearchStore()
     const load = useWeatherStore(s => s.load)
     const {reset, coords, currentCoords} = useGeoStore()
     const {visible, setVisible} = useBackHomeStore()
-
 
     const handleBackHome = () => {
         if (!currentCoords) return
@@ -28,13 +36,11 @@ export default function HeaderApp() {
         setVisible(false)
     }
     useEffect(() => {
+        console.log(coords, currentCoords)
         if (!coords || !currentCoords) return
-        if (coords?.lat !== currentCoords?.lat || coords?.lon !== currentCoords?.lon) {
-            setVisible(true)
-        } else {
-            setVisible(false)
-        }
+        setVisible(!coordsAreEqual(coords, currentCoords))
     }, [coords, currentCoords])
+
     return (
         <>
             <header className={`${stl.header} ${open ? stl.header_open : ''}`}>

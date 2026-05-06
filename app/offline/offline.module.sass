@@ -1,0 +1,125 @@
+.page
+  display: flex
+  flex-direction: column
+  position: relative
+  align-items: center
+  width: 100%
+  margin: auto 0
+
+.page__block
+  position: relative
+  width: 300px
+  height: 300px
+
+.page__icon
+  width: 100%
+  height: 100%
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+  &_cloud
+    animation: cloudFlyby 4s linear infinite
+
+    path
+      fill: $blue
+
+  &_moon
+    animation: moonRotate 4s linear infinite
+
+.page__title
+  @include font-styles($dark-blue, 200px, 600)
+  position: relative
+
+  &::before
+    content: 'OFF'
+    position: absolute
+    bottom: 0
+    left: 50%
+    transform: translateX(-50%)
+    @include font-styles($dark-blue, 450px, 800)
+    opacity: 0.2
+    z-index: -1
+    filter: blur(4px)
+
+.page__sub
+  @include font-styles($black, 36px)
+  text-align: center
+  margin-bottom: 16px
+
+.page__link
+  @include font-styles($blue, 20px, 500)
+  text-decoration: none
+  position: relative
+  text-align: center
+  @include transitionMixin()
+
+  &::after
+    content: ''
+    width: 0
+    height: 3px
+    background-color: $blue
+    position: absolute
+    bottom: -5px
+    right: 0
+    @include transitionMixin()
+
+
+@include tablet
+  .page__title::before
+    @include font-styles($dark-blue, 350px, 800)
+  .page__block
+    width: 250px
+    height: 250px
+  .page__sub
+    @include font-styles($black, 30px)
+
+@include mobile
+  .layout
+    margin: 81px 15px 10px
+  .page__title
+    @include font-styles($dark-blue, 100px, 600)
+
+    &::before
+      @include font-styles($dark-blue, 180px, 800)
+  .page__block
+    width: 200px
+    height: 200px
+  .page__sub
+    @include font-styles($black, 20px)
+
+@include hover
+  .page__link:hover
+    color: $dark-blue
+
+    &::after
+      width: 100%
+      left: 0
+      right: auto
+      background-color: $dark-blue
+
+@keyframes cloudFlyby
+  0%
+    transform: translate(calc(-50% - 80px), -40%)
+    opacity: 0
+  20%
+    opacity: 1
+  50%
+    transform: translate(-50%, -40%)
+    opacity: 1
+  80%
+    opacity: 1
+  100%
+    transform: translate(calc(-50% + 80px), -40%)
+    opacity: 0
+
+@keyframes moonRotate
+  0%
+    transform: translate(-50%, -50%) rotate(0deg)
+  30%
+    transform: translate(-50%, -50%) rotate(15deg)
+  70%
+    transform: translate(-50%, -50%) rotate(-15deg)
+  100%
+    transform: translate(-50%, -50%) rotate(0deg)

@@ -1,11 +1,12 @@
 .layout
   display: grid
   grid-template-columns: repeat(6, 1fr)
-  grid-template-rows: min-content min-content 330px 1fr
+  grid-template-rows: min-content min-content min-content 330px 1fr
   gap: 20px
   z-index: 1
 
 .layout__chart
+  width: 100%
   grid-column: span 6
 
 .card
@@ -273,7 +274,7 @@
 @include laptop
   .layout
     grid-template-columns: repeat(4, 1fr)
-    grid-template-rows: min-content min-content 300px
+    grid-template-rows: min-content min-content min-content 300px
     gap: 16px
   .layout__chart
     grid-column: span 4
@@ -324,7 +325,7 @@
     padding: 2px
   .layout
     grid-template-columns: repeat(3, 1fr)
-    grid-template-rows: min-content min-content 250px 250px 250px 250px
+    grid-template-rows: min-content min-content min-content 250px 250px 250px 250px
   .layout__chart
     grid-column: span 3
   .card

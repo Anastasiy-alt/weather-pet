@@ -15,7 +15,7 @@ export default function ListDayPage() {
     return (
         <div>
             <h1 className={stl.title}>
-                <Location city={location.city}/>
+                <Location city={location.features[0].properties.city || location.features[0].properties.county}/>
             </h1>
             <div className={stl.dayList}>
                 {weather.days.map(day => (

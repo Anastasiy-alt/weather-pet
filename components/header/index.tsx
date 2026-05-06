@@ -45,14 +45,13 @@ export default function HeaderApp() {
                     {
                         visible &&
                         <button onClick={handleBackHome} className={stl.header__home}>
-                            <Location city={'Я тут'}/>
+                            <Location city={'Где я?'}/>
                         </button>
                     }
                 </div>
                 <div className={stl.header__navOuter}>
                     <nav className={stl.header__nav}>
                         <Link className={stl.header__link} href="/about">О проекте</Link>
-                        <Link className={stl.header__link} href="/where-i-am">Где я?</Link>
                         <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
                     </nav>
                     <button className={stl.header__searchIcon} onClick={toggle}>
@@ -60,7 +59,6 @@ export default function HeaderApp() {
                     </button>
                     <Burger>
                         <Link className={stl.header__link} href="/about">О проекте</Link>
-                        <Link className={stl.header__link} href="/where-i-am">Где я?</Link>
                         <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
                     </Burger>
                 </div>

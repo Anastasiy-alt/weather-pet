@@ -37,7 +37,7 @@ export default function OneDayWidget({slug}: { slug: string }) {
                     currentWeather ?
                         <div className={stl.page}>
                             <h1 className={stl.page__title}>{formattedDate}</h1>
-                            <Main city={location.city}
+                            <Main city={location.features[0].properties.city || location.features[0].properties.county}
                                   temp={currentWeather.temp}
                                   icon={currentWeather.icon}
                                   conditions={currentWeather.conditions}

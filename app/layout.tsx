@@ -29,13 +29,16 @@ export default function RootLayout({
     return (
         <html lang="ru" className={golos.variable} suppressHydrationWarning>
         <body className={golos.className}>
-        <ThemeProvider>
+
             <WeatherInit/>
+            <ThemeProvider>
             <HeaderApp/>
             <main className={stl.layout}>
                 {children}
             </main>
             <FooterApp/>
+                <Script src={`https://api-maps.yandex.ru/v3/?apikey=${host}&lang=ru_RU`} strategy="beforeInteractive"/>
+
             </ThemeProvider>
         <Script
             id="sw"
@@ -51,7 +54,6 @@ export default function RootLayout({
             `
             }}
         />
-        <Script src={`https://api-maps.yandex.ru/v3/?apikey=${host}&lang=ru_RU`} strategy="beforeInteractive"/>
 
         </body>
         </html>

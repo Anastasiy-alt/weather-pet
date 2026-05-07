@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
         description: 'Погодное приложение',
         start_url: '/',
         display: 'standalone',
-        // background_color: '#fefdf8',  // ← реальный цвет вместо var()
-        // theme_color: '#4091c9',       // ← реальный цвет
+        // background_color: '#fefdf8',
+        // theme_color: '#4091c9',
         icons: [
             {
                 src: '/web-app-manifest-192x192.png',

@@ -8,6 +8,7 @@
 .layout__chart
   width: 100%
   grid-column: span 6
+  @include transitionMixin(border)
 
 .card
   padding: 16px
@@ -21,6 +22,7 @@
 .widget
   padding: 20px
   border: 4px $light-blue solid
+  @include transitionMixin(border)
   border-radius: 16px
   display: flex
   gap: 24px

@@ -222,11 +222,46 @@ body:has(.modal_open)
   padding: 6px 12px 6px 8px
   @include transitionMixin()
   @include font-label($black, 500)
+
 .history__clear
   width: fit-content
   @include transitionMixin()
   cursor: pointer
   @include font-styles($gray, 16px, 500)
+
+.color__input
+  height: 0
+  width: 0
+  visibility: hidden
+
+.color
+  cursor: pointer
+  width: 70px
+  height: 36px
+  background: $blue
+  display: block
+  border-radius: 30px
+  position: relative
+  @include transitionMixin()
+  outline: 2px solid transparent
+
+.color__check
+  position: absolute
+  top: 3px
+  left: 3px
+  width: 30px
+  height: 30px
+  background: $white
+  border-radius: 30px
+  @include transitionMixin()
+
+.color__input:checked ~ .color__check
+  transform: translateX(calc(63px - 100%))
+
+.color:active .color__check
+  width: 40px
+
+
 @include tablet
   .btn
     @include font-styles($white, 22px, 600, 24px)
@@ -251,7 +286,19 @@ body:has(.modal_open)
     margin-bottom: 0
   .history__item
     font-size: 18px
+  .color
+    width: 60px
+    height: 30px
+  .color__check
+    width: 24px
+    height: 24px
+    border-radius: 24px
 
+  .color__input:checked ~ .color__check
+    transform: translateX(calc(52px - 100%))
+
+  .color:active .color__check
+    width: 34px
 @include hover
   .search__item:hover
     background-color: rgba($light-blue, 0.4)
@@ -276,6 +323,9 @@ body:has(.modal_open)
     color: $white
   .history__clear:hover
     color: $black
+  .color:hover
+    outline: 2px solid $blue
+
 
 @keyframes loadAnim
   0%

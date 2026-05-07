@@ -5,10 +5,20 @@
   //outline: 1px solid lightseagreen
   background: none
   box-sizing: border-box
-
+  @include transitionMixin(color, stroke)
+  *::after, *::before
+    @include transitionMixin(color)
+html
+  min-height: 100%
+  height: 100%
+  max-height: fit-content
 body
   background: $white
   scrollbar-gutter: stable
+  display: flex
+  flex-direction: column
+  min-height: 100%
+  @include transitionMixin(background)
 
 .recharts-surface
   overflow: visible
@@ -22,3 +32,31 @@ body
   stroke: $orange
   stroke-width: 3
   @include transitionMixin(r, fill)
+
+:root
+  --white: #fefdf8
+  --light-blue: #9dcee2
+  --blue: #4091c9
+  --dark-blue: #1368aa
+  --black: #001219
+  --yellow: #FFB703
+  --orange: #FB8500
+  --red: #ae2012
+  --gray: #7d8597
+  --light-gray: #dcdfe5
+  --green: #72b01d
+  --violet: #7b2cbf
+
+[data-theme="dark"]
+  --white: #0d1b2a
+  --light-blue: #1e3a5f
+  --blue: #4091c9
+  --dark-blue: #9dcee2
+  --black: #e8f4fb
+  --yellow: #FFB703
+  --orange: #FB8500
+  --red: #e63946
+  --gray: #8d99ae
+  --light-gray: #1e2d3d
+  --green: #72b01d
+  --violet: #9d4edd

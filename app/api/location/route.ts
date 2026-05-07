@@ -23,6 +23,5 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "Ошибка запроса к API локации" }, { status: res.status });
     }
     const data = await res.json();
-    console.log(data)
     return NextResponse.json(data);
 }

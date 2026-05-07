@@ -19,7 +19,7 @@ interface YMapProps {
     zoom?: number
 }
 
-export default function YMap({lat, lon, zoom = 12}: YMapProps) {
+export default function YMap({lat, lon, zoom = 13}: YMapProps) {
     const [reactifiedApi, setReactifiedApi] = useState<ReactifiedApi>()
 
     const location: YMapLocationRequest = {

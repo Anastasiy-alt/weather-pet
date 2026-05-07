@@ -5,6 +5,7 @@ import HeaderApp from "@/components/header";
 import stl from './globals.module.sass'
 import WeatherInit from "@/components/weather/init";
 import Script from 'next/script';
+import FooterApp from "@/components/footer";
 
 const golos = Golos_Text({
     subsets: ['latin', 'cyrillic'],
@@ -30,6 +31,7 @@ export default function RootLayout({
         <WeatherInit/>
         <HeaderApp/>
         <main className={stl.layout}>{children}</main>
+        <FooterApp />
         <Script
             id="sw"
             strategy="afterInteractive"

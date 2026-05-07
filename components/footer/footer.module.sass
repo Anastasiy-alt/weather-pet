@@ -1,0 +1,93 @@
+.footer
+  display: flex
+  flex-direction: row
+  padding: 32px 16px
+  max-width: 1720px
+  justify-content: space-between
+  align-items: center
+  width: 100vw
+  background: $white
+  position: relative
+  @include transitionMixin()
+  margin: auto auto 0
+
+  &::after
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    background: $light-gray
+    height: 2px
+    width: 100%
+    border-radius: 2px
+
+.footer__block
+  display: flex
+  flex-direction: column
+  gap: 10px
+
+.footer__text
+  @include font-label($gray)
+
+.footer__copyright
+  @include font-styles($gray, 18px)
+
+.footer__git
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 5px
+  width: fit-content
+  @include font-label($blue, 500)
+  @include transitionMixin()
+  text-decoration: none
+  text-transform: uppercase
+  position: relative
+
+  svg
+    width: 30px
+    height: 30px
+    min-width: 30px
+    min-height: 30px
+    @include transitionMixin()
+
+  &::after
+    content: ''
+    width: 0
+    height: 3px
+    background-color: $blue
+    position: absolute
+    bottom: -5px
+    right: 0
+    @include transitionMixin()
+
+@include laptop
+  .footer
+    max-width: 100%
+    padding: 32px 80px
+
+@include tablet
+  .footer
+    padding: 20px 60px
+  //.footer__git
+  //  font-size: 18px
+
+@include mobile
+  .footer
+    padding: 20px 15px
+    flex-direction: column-reverse
+    gap: 16px
+    justify-content: center
+  //.footer__git
+  //  font-size: 16px
+  .footer__text, .footer__copyright
+    text-align: center
+@include hover
+  .footer__git:hover
+    color: $dark-blue
+
+    &::after
+      width: 100%
+      left: 0
+      right: auto
+      background-color: $dark-blue

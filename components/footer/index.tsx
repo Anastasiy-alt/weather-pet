@@ -7,7 +7,7 @@ export default function FooterApp() {
         <footer className={stl.footer}>
             <div className={stl.footer__block}>
                 <ColorPicker />
-                <i className={stl.footer__text}>Погода предсказана, ответственность не гарантирована</i>
+                <i className={stl.footer__text}>Погода предсказана, ответственность не&nbsp;гарантирована</i>
                 <p className={stl.footer__copyright}>© 2026 WeatherPet</p>
             </div>
             <Link target='_blank' className={stl.footer__git} href="https://github.com/Anastasiy-alt">

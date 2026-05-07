@@ -1,10 +1,12 @@
 import stl from './footer.module.sass'
 import Link from "next/link";
+import ColorPicker from "@/components/ui/colorPicker";
 
 export default function FooterApp() {
     return (
         <footer className={stl.footer}>
             <div className={stl.footer__block}>
+                <ColorPicker />
                 <i className={stl.footer__text}>Погода предсказана, ответственность не гарантирована</i>
                 <p className={stl.footer__copyright}>© 2026 WeatherPet</p>
             </div>

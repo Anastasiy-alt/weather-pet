@@ -61,8 +61,6 @@ export default function MainWeatherCard() {
                     <MoonPhase phase={weather.currentConditions.moonphase}/>
                     <Humidity percent={weather.currentConditions.humidity}/>
                     <TempRange tempmax={weather.days[0].tempmax} tempmin={weather.days[0].tempmin}/>
-
-
                 </section>
                 </>:
                 <Loader/>

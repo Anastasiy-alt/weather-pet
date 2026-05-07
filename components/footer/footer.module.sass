@@ -6,9 +6,7 @@
   justify-content: space-between
   align-items: center
   width: 100vw
-  background: $white
   position: relative
-  @include transitionMixin()
   margin: auto auto 0
 
   &::after
@@ -20,6 +18,7 @@
     height: 2px
     width: 100%
     border-radius: 2px
+    @include transitionMixin(background)
 
 .footer__block
   display: flex
@@ -69,8 +68,6 @@
 @include tablet
   .footer
     padding: 20px 60px
-  //.footer__git
-  //  font-size: 18px
 
 @include mobile
   .footer
@@ -78,10 +75,11 @@
     flex-direction: column-reverse
     gap: 16px
     justify-content: center
-  //.footer__git
-  //  font-size: 16px
   .footer__text, .footer__copyright
     text-align: center
+  .footer__block
+    align-items: center
+
 @include hover
   .footer__git:hover
     color: $dark-blue

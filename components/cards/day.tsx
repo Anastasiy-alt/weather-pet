@@ -12,13 +12,13 @@ interface DayProps {
 }
 
 function tempHue(t: number) {
-    if (t <= -10) return "#1368aa";
-    if (t <= 0) return "#4091c9";
-    if (t <= 10) return "#9dcee2";
-    if (t <= 18) return "#72b01d";
-    if (t <= 25) return "#FFB703";
-    if (t <= 32) return "#FB8500";
-    return "#ae2012";
+    if (t <= -10) return "var(--dark-blue)";
+    if (t <= 0) return "var(--blue)";
+    if (t <= 10) return "var(--light-blue)";
+    if (t <= 18) return "var(--green)";
+    if (t <= 25) return "var(--yellow)";
+    if (t <= 32) return "var(--orange)";
+    return "var(--red)";
 }
 
 const iconDescriptions: Record<string, string> = {

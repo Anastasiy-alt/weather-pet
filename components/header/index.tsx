@@ -1,8 +1,10 @@
 'use client'
 import stl from './header.module.sass'
+import {useTheme} from "next-themes";
 import Link from "next/link";
 import Burger from "@/components/header/burger";
 import Sun from '@/assets/icons/weather/clear-day.svg'
+import Moon from '@/assets/icons/weather/clear-night.svg'
 import Search from "@/components/ui/search";
 import IconSearch from '@/assets/icons/search.svg'
 import {useSearchStore} from "@/store/search";
@@ -28,6 +30,7 @@ export default function HeaderApp() {
     const load = useWeatherStore(s => s.load)
     const {reset, coords, currentCoords} = useGeoStore()
     const {visible, setVisible} = useBackHomeStore()
+    const {theme} = useTheme()
 
     const handleBackHome = () => {
         if (!currentCoords) return
@@ -36,7 +39,6 @@ export default function HeaderApp() {
         setVisible(false)
     }
     useEffect(() => {
-        console.log(coords, currentCoords)
         if (!coords || !currentCoords) return
         setVisible(!coordsAreEqual(coords, currentCoords))
     }, [coords, currentCoords])
@@ -46,7 +48,10 @@ export default function HeaderApp() {
             <header className={`${stl.header} ${open ? stl.header_open : ''}`}>
                 <div className={stl.header__navOuter}>
                     <Link className={stl.header__icon} href="/">
-                        <Sun/>
+                        {
+                            theme === 'dark' ?
+                                <Moon /> : <Sun/>
+                        }
                     </Link>
                     {
                         visible &&
@@ -72,7 +77,6 @@ export default function HeaderApp() {
             <Modal open={open} close={() => setClose()} title={'Поиск погоды по городам'}>
                 <Search/>
             </Modal>
-
         </>
     )
 }

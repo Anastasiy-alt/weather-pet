@@ -36,7 +36,6 @@ export const useWeatherStore = create<WeatherState & WeatherActions>((set, get) 
                 fetchWeather(lat, lon),
                 fetchLocation(lat, lon),
             ])
-            console.log(location)
             set({ weather, location, loading: false })
         } catch (err) {
             set({

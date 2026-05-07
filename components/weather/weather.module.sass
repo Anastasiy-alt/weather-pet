@@ -146,6 +146,7 @@
   width: auto
   height: 290px
   aspect-ratio: 1/1
+  @include transitionMixin(outline)
 
 .wind__decoBlock
   @include transitionMixinLong()
@@ -172,6 +173,7 @@
   border-radius: 3px
   background: $dark-blue
   outline: 2px solid $light-gray
+  @include transitionMixin(outline, background)
   position: absolute
   top: 50%
   left: 49%

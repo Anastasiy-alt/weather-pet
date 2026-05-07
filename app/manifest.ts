@@ -4,7 +4,6 @@ export default function manifest(): MetadataRoute.Manifest {
     return {
         name: 'WeatherPet',
         short_name: 'Weather',
-        description: 'A Progressive Web App built with Next.js',
         start_url: '/',
         display: 'standalone',
         background_color: 'var(--white)',

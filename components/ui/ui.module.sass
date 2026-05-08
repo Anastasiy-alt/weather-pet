@@ -18,8 +18,8 @@
 .location
   display: flex
   flex-direction: row
-  align-items: center
-  gap: 10px
+  align-items: flex-end
+  gap: 5px
   @include font-label($black)
 
   svg
@@ -27,6 +27,7 @@
     height: 25px
     min-width: 25px
     min-height: 25px
+    transform: rotate(45deg)
 
 .loader
   position: fixed

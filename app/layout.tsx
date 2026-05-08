@@ -1,4 +1,4 @@
-import type {Metadata, Viewport} from "next";
+import type {Metadata} from "next";
 import {Golos_Text} from 'next/font/google'
 import '@/styles/_base.sass'
 import HeaderApp from "@/components/header";
@@ -6,7 +6,7 @@ import stl from './globals.module.sass'
 import WeatherInit from "@/components/weather/init";
 import Script from 'next/script';
 import FooterApp from "@/components/footer";
-import {ThemeProvider} from "next-themes";
+import {ThemeProvider} from "@teispace/next-themes";
 
 const golos = Golos_Text({
     subsets: ['latin', 'cyrillic'],
@@ -29,17 +29,17 @@ export default function RootLayout({
     return (
         <html lang="ru" className={golos.variable} suppressHydrationWarning>
         <body className={golos.className}>
-
-            <WeatherInit/>
-            <ThemeProvider>
+        <WeatherInit/>
+        <ThemeProvider>
             <HeaderApp/>
             <main className={stl.layout}>
                 {children}
             </main>
             <FooterApp/>
-                <Script src={`https://api-maps.yandex.ru/v3/?apikey=${host}&lang=ru_RU`} strategy="beforeInteractive"/>
+        </ThemeProvider>
 
-            </ThemeProvider>
+        <Script src={`https://api-maps.yandex.ru/v3/?apikey=${host}&lang=ru_RU`} strategy="beforeInteractive"/>
+
         <Script
             id="sw"
             strategy="afterInteractive"

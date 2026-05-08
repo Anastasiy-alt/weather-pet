@@ -18,8 +18,8 @@
 .location
   display: flex
   flex-direction: row
-  align-items: center
-  gap: 10px
+  align-items: flex-end
+  gap: 5px
   @include font-label($black)
 
   svg
@@ -27,6 +27,7 @@
     height: 25px
     min-width: 25px
     min-height: 25px
+    transform: rotate(45deg)
 
 .loader
   position: fixed
@@ -122,113 +123,6 @@ body:has(.modal_open)
     &:nth-child(2)
       transform: translate(-50%, -50%) rotate(-45deg)
 
-.search
-  position: relative
-  overflow: visible
-  height: fit-content
-  margin: 8px 0
-
-.search:has(.search__input:focus)
-  .input__span
-    transform: translateY(-30px)
-    @include font-styles($gray, 16px, 400, 20px)
-
-.search__input
-  @include transitionMixin()
-  width: 100%
-  height: 100%
-  padding: 16px 20px
-  border-radius: 8px
-  border: 2px solid $light-gray
-  background: $white
-  @include font-styles($black, 20px, 400, 20px)
-  outline: none !important
-
-  &:focus
-    border-color: $light-blue
-
-.searchIcon
-  width: 30px
-  height: 30px
-  cursor: pointer
-
-  svg path
-    @include transitionMixin()
-    stroke: $blue
-
-.input__span
-  position: absolute
-  top: 14px
-  left: 18px
-  background-color: $white
-  border-radius: 100px
-  padding: 4px
-  @include transitionMixin()
-  @include font-styles($gray, 20px, 400, 20px)
-  pointer-events: none
-
-  &_open
-    transform: translateY(-30px)
-    @include font-styles($gray, 16px, 400, 20px)
-
-.search__dropdown
-  display: flex
-  flex-direction: column
-  gap: 8px
-
-.searchWrap
-  display: flex
-  flex-direction: column
-  gap: 16px
-
-.search__item
-  display: flex
-  flex-direction: row
-  align-items: center
-  justify-content: space-between
-  padding: 16px
-  border-radius: 8px
-  @include transitionMixin()
-  @include font-label($black)
-  text-decoration: none
-  cursor: pointer
-
-  span:last-child
-    color: $gray
-
-.history
-  display: flex
-  flex-direction: column
-  gap: 5px
-
-.history__title
-  @include font-label($gray)
-
-.history__list
-  display: flex
-  flex-direction: row
-  flex-wrap: wrap
-  gap: 5px
-
-.history__item
-  cursor: pointer
-  display: flex
-  flex-direction: row
-  gap: 5px
-  border-radius: 40px
-  border: 2px solid $blue
-  width: fit-content
-  align-items: center
-  padding: 6px 12px 6px 8px
-  @include transitionMixin()
-  @include font-label($black, 500)
-
-.history__clear
-  width: fit-content
-  @include transitionMixin()
-  cursor: pointer
-  @include font-styles($gray, 16px, 500)
-
 .color__input
   height: 0
   width: 0
@@ -276,16 +170,7 @@ body:has(.modal_open)
     max-height: 80dvh
     margin-top: 70px
     gap: 12px
-  .search__item
-    flex-direction: column
-    align-items: flex-start
-    gap: 5px
-    border: 1px solid $light-gray
-    padding: 10px
-  .search
-    margin-bottom: 0
-  .history__item
-    font-size: 18px
+
   .color
     width: 60px
     height: 30px
@@ -299,11 +184,8 @@ body:has(.modal_open)
 
   .color:active .color__check
     width: 34px
+
 @include hover
-  .search__item:hover
-    background-color: rgba($light-blue, 0.4)
-  .search__input:hover
-    border-color: $light-blue
   .btn:hover
     background: $dark-blue
     color: $white
@@ -316,13 +198,6 @@ body:has(.modal_open)
 
     span
       background: $dark-blue
-  .input:hover .input__el
-    border-color: $light-blue
-  .history__item:hover
-    background: $blue
-    color: $white
-  .history__clear:hover
-    color: $black
   .color:hover
     outline: 2px solid $blue
 

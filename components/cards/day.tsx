@@ -99,7 +99,7 @@ export default function DayCard({data, globalMin, globalMax}: DayProps) {
                 <div className={stl.day__block}>
                     <p className={stl.day__blockSubtitle}>Ветер</p>
                     <p className={stl.day__blockTitle}>
-                        <WindIcon style={{'--dir': data.winddir - 45 + 'deg'} as React.CSSProperties}
+                        <WindIcon style={{'--dir': data.winddir + 'deg'} as React.CSSProperties}
                                   className={`${stl.day__icon} ${stl.day__icon_wind}`}/>
                         {convertSpeed()}м/с</p>
                 </div>

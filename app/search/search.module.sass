@@ -1,0 +1,11 @@
+.search
+  display: flex
+  flex-direction: column
+  gap: 16px
+
+.search__title
+  @include font-styles($black, 36px, 700)
+
+@include tablet
+  .search__title
+    @include font-styles($black, 28px, 700)

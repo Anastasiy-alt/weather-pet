@@ -138,6 +138,7 @@
 .wind
   display: flex
   flex-direction: row
+  align-items: center
   gap: 20px
 
 .wind__round
@@ -146,7 +147,7 @@
   outline-offset: -8px
   outline: 4px solid $light-gray
   width: auto
-  height: 290px
+  height: 270px
   aspect-ratio: 1/1
   @include transitionMixin(outline)
 
@@ -167,7 +168,7 @@
   stroke-width: 1px
   stroke: transparent
   @include transitionMixin()
-  transform: translate(-50%, -50%) rotate(calc(-45deg + var(--dir)))
+  transform: translate(-50%, -50%) rotate(var(--dir))
 
 .wind__deco
   width: 6px
@@ -180,7 +181,7 @@
   top: 50%
   left: 49%
   transform-origin: top
-  transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-145px)
+  transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-135px)
 
 .wind__dirTitle
   margin-bottom: 10px
@@ -296,13 +297,13 @@
   .wind__dir
     margin: auto 0
   .wind__round
-    height: 240px
-    width: 240px
+    height: 220px
+    width: 220px
   .wind__arrow
     width: 100px
     height: 100px
   .wind__deco
-    transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-120px)
+    transform: rotate(calc(var(--i) * (360deg / var(--total)))) translateY(-110px)
   .widget__alerts
     grid-template-columns: repeat(2, 1fr)
 

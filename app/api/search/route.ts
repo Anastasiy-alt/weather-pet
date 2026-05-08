@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     if (!query) {
         return NextResponse.json({error: "Не переданы данные для поиска"}, {status: 400});
     }
-    const res = await fetchRequest(`${host}/autocomplete?text=${query}&apiKey=${key}&type=city&limit=5&lang=${lang}&format=json`);
+    const res = await fetchRequest(`${host}/autocomplete?text=${query}&apiKey=${key}&type=city&limit=7&lang=${lang}&format=json`);
 
     if (!res.ok) {
         return NextResponse.json({error: "Ошибка запроса к API поиску"}, {status: res.status});

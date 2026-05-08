@@ -8,7 +8,7 @@ const UV_LEVELS = {
     3: {label: 'Умеренный', description: 'Захвати крем, если надолго выходишь', color: 'var(--yellow)'},
     4: {label: 'Умеренный', description: 'Солнце уже чувствуется, намажь крем', color: 'var(--yellow)'},
     5: {label: 'Умеренный', description: 'Лучше не забывать про SPF', color: 'var(--yellow)'},
-    6: {label: 'Высокий', description: 'Шляпа и крем — твои лучшие друзья сегодня', color: '#var(--orange)'},
+    6: {label: 'Высокий', description: 'Шляпа и крем — твои лучшие друзья сегодня', color: 'var(--orange)'},
     7: {label: 'Высокий', description: 'Серьёзно, надень шляпу и возьми SPF 30+', color: 'var(--orange)'},
     8: {label: 'Очень высокий', description: 'Старайся не торчать на солнце в середине дня', color: 'var(--red)'},
     9: {label: 'Очень высокий', description: 'Лучше остаться в тени — солнце злое', color: 'var(--red)'},

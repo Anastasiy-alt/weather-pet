@@ -6,12 +6,17 @@
   background: none
   box-sizing: border-box
   @include transitionMixin(color, stroke)
+
   *::after, *::before
     @include transitionMixin(color)
+
 html
   min-height: 100%
   height: 100%
   max-height: fit-content
+  @include tablet
+    scrollbar-gutter: stable
+
 body
   background: $white
   scrollbar-gutter: stable
@@ -49,7 +54,7 @@ body
 
 [data-theme="dark"]
   --white: #0d1b2a
-  --light-blue: #1e3a5f
+  --light-blue: #17639a
   --blue: #4091c9
   --dark-blue: #9dcee2
   --black: #e8f4fb

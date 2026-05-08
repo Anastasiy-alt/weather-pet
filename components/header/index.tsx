@@ -1,6 +1,6 @@
 'use client'
 import stl from './header.module.sass'
-import {useTheme} from "next-themes";
+import {useTheme} from "@teispace/next-themes";
 import Link from "next/link";
 import Burger from "@/components/header/burger";
 import Sun from '@/assets/icons/weather/clear-day.svg'
@@ -11,7 +11,8 @@ import {useSearchStore} from "@/store/search";
 import Modal from "@/components/ui/modal";
 import Location from "@/components/ui/location";
 import {useWeatherStore} from "@/store/weather";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
+import {CSSTransition, SwitchTransition} from "react-transition-group";
 import {useBackHomeStore} from "@/store/backHome";
 import {useGeoStore} from "@/store/geolocation";
 
@@ -31,7 +32,10 @@ export default function HeaderApp() {
     const {reset, coords, currentCoords} = useGeoStore()
     const {visible, setVisible} = useBackHomeStore()
     const {theme} = useTheme()
-
+    const iconRef = useRef<HTMLSpanElement>(null)
+    const sunRef = useRef<HTMLSpanElement>(null)
+    const moonRef = useRef<HTMLSpanElement>(null)
+    const nodeRef = theme === 'dark' ? moonRef : sunRef
     const handleBackHome = () => {
         if (!currentCoords) return
         reset()
@@ -46,33 +50,49 @@ export default function HeaderApp() {
     return (
         <>
             <header className={`${stl.header} ${open ? stl.header_open : ''}`}>
-                <div className={stl.header__navOuter}>
-                    <Link className={stl.header__icon} href="/">
+                <div className={stl.header__block}>
+                    <div className={stl.header__navOuter}>
+                        <Link className={stl.header__icon} href="/">
+                            <SwitchTransition mode="out-in">
+                                <CSSTransition
+                                    key={theme ?? 'light'}
+                                    timeout={350}
+                                    nodeRef={nodeRef}
+                                    classNames={{
+                                        enter: stl.iconEnter,
+                                        enterActive: stl.iconEnterActive,
+                                        exit: stl.iconExit,
+                                        exitActive: stl.iconExitActive,
+                                    }}
+                                >
+                                <span ref={nodeRef}>
+                                    {theme === 'dark' ? <Moon/> : <Sun/>}
+                                </span>
+                                </CSSTransition>
+                            </SwitchTransition>
+                        </Link>
                         {
-                            theme === 'dark' ?
-                                <Moon /> : <Sun/>
+                            visible &&
+                            <button onClick={handleBackHome} className={stl.header__home}>
+                                <Location city={'Где я?'}/>
+                            </button>
                         }
-                    </Link>
-                    {
-                        visible &&
-                        <button onClick={handleBackHome} className={stl.header__home}>
-                            <Location city={'Где я?'}/>
+                    </div>
+                    <div className={stl.header__navOuter}>
+                        <nav className={stl.header__nav}>
+                            <Link className={stl.header__link} href="/about">О проекте</Link>
+                            <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
+                        </nav>
+                        <button className={stl.header__searchIcon} onClick={toggle}>
+                            <IconSearch/>
                         </button>
-                    }
+                        <Burger>
+                            <Link className={stl.header__link} href="/about">О проекте</Link>
+                            <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
+                        </Burger>
+                    </div>
                 </div>
-                <div className={stl.header__navOuter}>
-                    <nav className={stl.header__nav}>
-                        <Link className={stl.header__link} href="/about">О проекте</Link>
-                        <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
-                    </nav>
-                    <button className={stl.header__searchIcon} onClick={toggle}>
-                        <IconSearch/>
-                    </button>
-                    <Burger>
-                        <Link className={stl.header__link} href="/about">О проекте</Link>
-                        <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
-                    </Burger>
-                </div>
+
             </header>
             <Modal open={open} close={() => setClose()} title={'Поиск погоды по городам'}>
                 <Search/>

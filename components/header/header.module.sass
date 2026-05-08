@@ -1,10 +1,10 @@
 .header
-  display: flex
-  flex-direction: row
-  padding: 10px 16px
-  max-width: 1720px
-  justify-content: space-between
-  align-items: center
+  //display: flex
+  //flex-direction: row
+  //padding: 10px 16px
+  //max-width: 1720px
+  //justify-content: space-between
+  //align-items: center
   z-index: 100
   position: fixed
   top: 0
@@ -12,8 +12,19 @@
   left: 50%
   transform: translateX(-50%)
   background: $white
-  @include transitionMixin()
+  @include transitionMixin(background)
 
+
+.header__block
+  padding: 10px 16px
+  max-width: 1720px
+  display: flex
+  width: 100vw
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+  margin: 0 auto
+  position: relative
   &::after
     content: ''
     position: absolute
@@ -24,12 +35,28 @@
     width: 100%
     border-radius: 2px
     @include transitionMixin(background)
-
 .header__icon svg
   width: 70px
   height: 70px
   min-height: 70px
   min-width: 70px
+  @include transitionMixin()
+
+.iconEnter svg
+  opacity: 0
+  transform: scale(0.6) rotate(-60deg)
+
+.iconEnterActive svg
+  opacity: 1
+  transform: scale(1) rotate(0deg)
+
+.iconExit svg
+  opacity: 1
+  transform: scale(1) rotate(0deg)
+
+.iconExitActive svg
+  opacity: 0
+  transform: scale(0.6) rotate(60deg)
 
 .header__nav, .header__navOuter
   display: flex
@@ -98,19 +125,22 @@
     stroke: $blue
 
 @include laptop
-  .header
+  .header__block
     max-width: 100%
     padding: 10px 80px
+    width: 100%
+    margin: 0
+  .header
+    width: 100%
     left: 0
     transform: none
-
 @include tablet
   .header__icon svg
     width: 45px
     height: 45px
     min-height: 45px
     min-width: 45px
-  .header
+  .header__block
     padding: 10px 60px
   .header__link
     font-size: 18px
@@ -118,7 +148,7 @@
 @include mobile
   .header__nav
     display: none
-  .header
+  .header__block
     padding: 10px 15px
   .header__link
     font-size: 16px
@@ -187,3 +217,21 @@
       left: 0
       right: auto
       background-color: $dark-blue
+  .header__icon:hover svg
+    animation: logoDrag 1s ease
+
+@keyframes logoDrag
+  0%
+    transform: rotate(0)
+  30%
+    transform: rotate(30deg)
+  50%
+    transform: rotate(-15deg)
+  70%
+    transform: rotate(15deg)
+  80%
+    transform: rotate(-10deg)
+  90%
+    transform: rotate(10deg)
+  100%
+    transform: rotate(0)

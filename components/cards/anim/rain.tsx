@@ -53,7 +53,7 @@ function RainAnimationComponent(
         function draw() {
             if (!runningRef.current || !canvas || !ctx) return
             ctx.clearRect(0, 0, canvas.width, canvas.height)
-
+            const blue = wrap ? getComputedStyle(wrap).getPropertyValue('--light-blue').trim() : '#0000ff'
             const drops = dropsRef.current
             if (drops.length < maxDrops && Math.random() < 0.3) {
                 drops.push(spawnDrop(canvas.width))
@@ -63,7 +63,7 @@ function RainAnimationComponent(
                 ctx.beginPath()
                 ctx.moveTo(d.x, d.y)
                 ctx.lineTo(d.x - 1, d.y + d.len)
-                ctx.strokeStyle = `var(--light-blue)`
+                ctx.strokeStyle = blue
                 ctx.lineWidth = 2
                 ctx.lineCap = 'round'
                 ctx.stroke()

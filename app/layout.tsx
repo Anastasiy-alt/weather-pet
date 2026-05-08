@@ -6,7 +6,7 @@ import stl from './globals.module.sass'
 import WeatherInit from "@/components/weather/init";
 import Script from 'next/script';
 import FooterApp from "@/components/footer";
-import {ThemeProvider} from "next-themes";
+import {ThemeProvider} from "@teispace/next-themes";
 
 const golos = Golos_Text({
     subsets: ['latin', 'cyrillic'],
@@ -29,7 +29,6 @@ export default function RootLayout({
     return (
         <html lang="ru" className={golos.variable} suppressHydrationWarning>
         <body className={golos.className}>
-
             <WeatherInit/>
             <ThemeProvider>
             <HeaderApp/>

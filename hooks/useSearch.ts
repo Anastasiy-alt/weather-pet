@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { searchCities } from '@/lib/search'
+import {useEffect, useState} from 'react'
+import {searchCities} from '@/lib/search'
 import {CityResult} from "@/types";
 
 export function useCitySearch(query: string) {
@@ -11,6 +11,7 @@ export function useCitySearch(query: string) {
     useEffect(() => {
         if (query.length < 2) {
             setResults([])
+            setLoading(false)
             return
         }
 
@@ -24,5 +25,5 @@ export function useCitySearch(query: string) {
         return () => clearTimeout(timeout)
     }, [query])
 
-    return { results, loading }
+    return {results, loading}
 }

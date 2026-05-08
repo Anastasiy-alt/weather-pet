@@ -1,0 +1,206 @@
+.search__dropdown
+  display: flex
+  flex-direction: column
+  gap: 8px
+  list-style: none
+  overflow-x: hidden
+
+.searchWrap
+  display: flex
+  flex-direction: column
+  gap: 16px
+  margin-bottom: 32px
+
+
+@for $i from 1 through 20
+  .search__itemOut:nth-child(#{$i})
+    opacity: 0
+    animation: 1s ($i - 0.8) * 0.4s visibleItem ease forwards
+
+.search__item
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+  padding: 16px
+  border-radius: 8px
+  @include transitionMixin()
+  @include font-label($black)
+  text-decoration: none
+  cursor: pointer
+  border: 2px solid $light-gray
+
+  span:last-child
+    color: $gray
+
+
+.search
+  position: relative
+  overflow: visible
+  height: fit-content
+  margin: 8px 0
+
+.search:has(.search__input:focus)
+  .search__inputSpan
+    transform: translateY(-30px)
+    @include font-styles($gray, 16px, 400, 20px)
+
+.search__input
+  @include transitionMixin()
+  width: 100%
+  height: 100%
+  padding: 16px 20px
+  border-radius: 8px
+  border: 2px solid $dark-blue
+  background: $white
+  @include font-styles($black, 20px, 400, 20px)
+  outline: none !important
+
+  &:focus
+    border-color: $light-blue
+
+.searchIcon
+  width: 30px
+  height: 30px
+  cursor: pointer
+
+  svg path
+    @include transitionMixin()
+    stroke: $blue
+
+.search__inputSpan
+  position: absolute
+  top: 14px
+  left: 18px
+  background-color: $white
+  border-radius: 100px
+  padding: 4px
+  @include transitionMixin()
+  @include font-styles($gray, 20px, 400, 20px)
+  pointer-events: none
+
+  &_open
+    transform: translateY(-30px)
+    @include font-styles($gray, 16px, 400, 20px)
+
+.history
+  display: flex
+  flex-direction: column
+  gap: 10px
+
+.history__title
+  @include font-label($gray)
+
+.history__list
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  gap: 5px
+  list-style: none
+
+.history__item
+  cursor: pointer
+  display: flex
+  flex-direction: row
+  gap: 5px
+  border-radius: 40px
+  border: 2px solid $blue
+  width: fit-content
+  align-items: center
+  padding: 6px 12px 6px 8px
+  text-decoration: none
+  @include transitionMixin()
+  @include font-label($black, 500)
+
+.history__clear
+  width: fit-content
+  @include transitionMixin()
+  cursor: pointer
+  @include font-styles($gray, 16px, 600)
+
+.loader
+  position: relative
+  margin: 40px auto
+  animation: slide 0.5s infinite linear
+  width: fit-content
+
+.loader__dot
+  display: block
+  width: 10px
+  height: 10px
+  margin: 5px
+  border-radius: 10px
+  background-color: $blue
+  float: left
+
+  &:first-child
+    animation: fadeIn 0.5s infinite ease
+
+  &:last-child
+    animation: fadeOut 0.5s infinite ease
+
+.search__notFound
+  @include font-value($black)
+  margin: 0 auto
+  text-align: center
+
+@include tablet
+  .search__item
+    flex-direction: column
+    align-items: flex-start
+    border-width: 1px
+    gap: 5px
+    padding: 10px
+  .search
+    margin-bottom: 0
+  .history__item
+    font-size: 18px
+
+@include hover
+  .search__item:hover
+    background-color: $light-blue
+    border-color: $dark-blue
+
+    span:last-child
+      color: $dark-blue
+  .search__input:hover
+    border-color: $light-blue
+  .input:hover .input__el
+    border-color: $light-blue
+  .history__item:hover
+    background: $blue
+    color: $white
+  .history__clear:hover
+    color: $black
+
+
+@keyframes slide
+  from
+    transform: translateX(0px)
+  to
+    transform: translateX(18px)
+
+@keyframes fadeIn
+  0%
+    transform: scale(0)
+    opacity: 0
+  100%
+    transform: scale(1)
+    opacity: 1
+
+@keyframes fadeOut
+  0%
+    transform: scale(1)
+    opacity: 1
+  100%
+    transform: scale(0)
+    opacity: 0
+
+
+@keyframes visibleItem
+  0%
+    opacity: 0
+    transform: translateX(200px)
+  100%
+    opacity: 1
+    transform: translateX(0)

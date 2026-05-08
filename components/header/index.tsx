@@ -5,10 +5,7 @@ import Link from "next/link";
 import Burger from "@/components/header/burger";
 import Sun from '@/assets/icons/weather/clear-day.svg'
 import Moon from '@/assets/icons/weather/clear-night.svg'
-import Search from "@/components/ui/search";
 import IconSearch from '@/assets/icons/search.svg'
-import {useSearchStore} from "@/store/search";
-import Modal from "@/components/ui/modal";
 import Location from "@/components/ui/location";
 import {useWeatherStore} from "@/store/weather";
 import {useEffect, useRef} from "react";
@@ -27,15 +24,14 @@ function coordsAreEqual(a: Coords, b: Coords, precision = 2): boolean {
 }
 
 export default function HeaderApp() {
-    const {open, toggle, setClose} = useSearchStore()
     const load = useWeatherStore(s => s.load)
     const {reset, coords, currentCoords} = useGeoStore()
     const {visible, setVisible} = useBackHomeStore()
     const {theme} = useTheme()
-    const iconRef = useRef<HTMLSpanElement>(null)
     const sunRef = useRef<HTMLSpanElement>(null)
     const moonRef = useRef<HTMLSpanElement>(null)
     const nodeRef = theme === 'dark' ? moonRef : sunRef
+
     const handleBackHome = () => {
         if (!currentCoords) return
         reset()
@@ -49,7 +45,7 @@ export default function HeaderApp() {
 
     return (
         <>
-            <header className={`${stl.header} ${open ? stl.header_open : ''}`}>
+            <header className={stl.header}>
                 <div className={stl.header__block}>
                     <div className={stl.header__navOuter}>
                         <Link className={stl.header__icon} href="/">
@@ -83,9 +79,9 @@ export default function HeaderApp() {
                             <Link className={stl.header__link} href="/about">О проекте</Link>
                             <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
                         </nav>
-                        <button className={stl.header__searchIcon} onClick={toggle}>
+                        <Link className={stl.header__searchIcon} href='/search'>
                             <IconSearch/>
-                        </button>
+                        </Link>
                         <Burger>
                             <Link className={stl.header__link} href="/about">О проекте</Link>
                             <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
@@ -94,9 +90,6 @@ export default function HeaderApp() {
                 </div>
 
             </header>
-            <Modal open={open} close={() => setClose()} title={'Поиск погоды по городам'}>
-                <Search/>
-            </Modal>
         </>
     )
 }

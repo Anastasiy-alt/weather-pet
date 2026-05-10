@@ -1,5 +1,5 @@
 import {create} from 'zustand'
-import {CityResult} from "@/types";
+import {fetchLocation} from "@/lib/location";
 
 interface HistoryItem {
     city: string
@@ -13,7 +13,9 @@ interface SearchType {
     getHistory: () => HistoryItem[] | []
     clearHistory: () => void
     addToHistory: (item: HistoryItem) => void
-    setSelect: (city: CityResult | HistoryItem) => void
+    setSelect: (
+        city: string
+    ) => Promise<HistoryItem | undefined>
     init: () => void
 }
 
@@ -29,7 +31,7 @@ export const useSearchStore = create<SearchType>((set, get) => ({
         const cached = localStorage.getItem(SEARCH_HISTORY_KEY)
         return cached ? JSON.parse(cached) : []
     },
-    init: () => set({ history: get().getHistory() }),
+    init: () => set({history: get().getHistory()}),
     clearHistory: () => {
         localStorage.removeItem(SEARCH_HISTORY_KEY)
         set({history: []})
@@ -41,8 +43,13 @@ export const useSearchStore = create<SearchType>((set, get) => ({
         set({history: updated})
         localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(updated))
     },
-    setSelect(city: CityResult | HistoryItem) {
-        localStorage.setItem('coords', JSON.stringify({lat: city.lat, lon: city.lon}))
-        get().addToHistory({city: city.city, lat: city.lat, lon: city.lon})
+    async setSelect(city: string) {
+        const [location] = await Promise.all([
+            fetchLocation(undefined, undefined, city)
+        ])
+        if (!location) return
+        localStorage.setItem('coords', JSON.stringify({lat: location.lat, lon: location.lon}))
+        get().addToHistory({city: location.city, lat: location.lat, lon: location.lon})
+        return location
     }
 }))

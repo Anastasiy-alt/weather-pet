@@ -5,6 +5,7 @@ import * as ReactDOM from 'react-dom'
 import {ReactifiedModule} from '@yandex/ymaps3-types/reactify/reactify'
 import type {YMapLocationRequest} from '@yandex/ymaps3-types'
 import stl from './cards.module.sass'
+import {useTheme} from "@teispace/next-themes";
 
 declare global {
     interface Window {
@@ -21,6 +22,7 @@ interface YMapProps {
 
 export default function YMap({lat, lon, zoom = 13}: YMapProps) {
     const [reactifiedApi, setReactifiedApi] = useState<ReactifiedApi>()
+    const {theme} = useTheme()
 
     const location: YMapLocationRequest = {
         center: [lon, lat],
@@ -43,7 +45,7 @@ export default function YMap({lat, lon, zoom = 13}: YMapProps) {
 
     return (
         <div className={stl.map}>
-            <YMap location={location}>
+            <YMap location={location} theme={theme === 'dark' || theme === 'light' ? theme : 'light'}>
                 <YMapDefaultSchemeLayer/>
                 <YMapDefaultFeaturesLayer/>
                 <YMapMarker coordinates={[lon, lat]}>

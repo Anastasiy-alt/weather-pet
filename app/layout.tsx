@@ -12,7 +12,7 @@ const golos = Golos_Text({
     subsets: ['latin', 'cyrillic'],
     variable: '--font-golos',
 })
-const host = process.env.SECRET_API_KEY_MAPS;
+const host = process.env.NEXT_PUBLIC_API_KEY_MAPS;
 export const metadata: Metadata = {
     title: "WeatherPet",
     description: "Weather pet-project",

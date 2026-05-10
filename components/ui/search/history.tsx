@@ -24,17 +24,24 @@ export default function SearchHistory() {
         init()
     }, []);
 
-    function handleSelect(city: CityResult | HistoryItem) {
+    async function handleSelect(city: string) {
+        const loc = await setSelect(city)
+        if (!loc) return
         if (pathname === '/') {
             const params = new URLSearchParams()
-            params.set('lat', city.lat.toString())
-            params.set('lon', city.lon.toString())
-            router.replace(`/?${params.toString()}`, {scroll: false})
-        }
-        setSelect(city)
-        load(city.lat, city.lon).then()
-        setLocation({lat: city.lat, lon: city.lon})
 
+            params.set('lat', loc.lat.toString())
+            params.set('lon', loc.lon.toString())
+
+            router.replace(`/?${params.toString()}`, {
+                scroll: false
+            })
+        }
+        await load(loc.lat, loc.lon)
+        setLocation({
+            lat: loc.lat,
+            lon: loc.lon
+        })
     }
 
     return (
@@ -46,7 +53,7 @@ export default function SearchHistory() {
                     <ul className={stl.history__list}>
                         {
                             history.map((i) => (
-                                <li key={i.city} onClick={() => handleSelect(i)}>
+                                <li key={i.city} onClick={() => handleSelect(i.city)}>
                                     <Link href={'/'} className={stl.history__item}>
                                         {i.city}
                                     </Link>

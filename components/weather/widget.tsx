@@ -28,10 +28,10 @@ export default function MainWeatherCard() {
                 <>
                 <section className={stl.layout}>
                     <div className={stl.layout__chart}>
-                        <YMap lat={location.query.lat} lon={location.query.lon} />
+                        <YMap lat={location.lat} lon={location.lon} />
                     </div>
 
-                    <Main city={location.features[0].properties.city || location.features[0].properties.county}
+                    <Main city={location.city}
                           temp={weather.currentConditions?.temp}
                           icon={weather.currentConditions.icon}
                           conditions={weather.currentConditions.conditions}

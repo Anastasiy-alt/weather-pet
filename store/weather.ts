@@ -2,17 +2,23 @@ import { create } from 'zustand'
 import { fetchWeather } from '@/lib/weather'
 import { fetchLocation } from '@/lib/location'
 import type { Weather } from '@/types/weather'
-import type { Location } from '@/types/location'
+import {GeocoderResponse} from '@/types/location'
 
 interface Coords {
     lat: number
     lon: number
 }
 
+type CityData = {
+    city: string;
+    lat: number;
+    lon: number;
+};
+
 interface WeatherState {
     coords: Coords | null
     weather: Weather | null
-    location: Location | null
+    location: CityData | null
     loading: boolean
     error: string | null
 }

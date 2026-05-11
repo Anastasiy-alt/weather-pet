@@ -1,0 +1,94 @@
+.main
+  padding: 20px
+  border: 4px $light-blue solid
+  @include transitionMixin(border)
+  border-radius: 16px
+  display: flex
+  gap: 16px
+  flex-direction: column
+  position: relative
+  grid-column: span 6
+
+.main__header
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: flex-start
+
+.main__block
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 16px
+
+.main__iconBlock
+  background: $light-blue
+  border-radius: 100%
+  width: 130px
+  height: 130px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  @include transitionMixin(background)
+
+.main__icon
+  width: 90px
+  height: 90px
+  min-width: 90px
+  min-height: 90px
+
+  path
+    fill: $black
+    @include transitionMixin(fill)
+
+.main__content
+  display: flex
+  flex-direction: column
+  gap: 8px
+
+.main__condition
+  @include font-heading($black)
+
+.main__temp
+  @include font-styles($black, 80px, 500)
+
+.main__range
+  height: 8px
+  width: 100%
+  border-radius: 8px
+  background: linear-gradient(90deg, $red, $yellow, $green)
+  position: relative
+
+.main__marker
+  position: absolute
+  top: -4px
+  height: 16px
+  width: 8px
+  border-radius: 6px
+  background: $white
+  left: var(--val)
+  outline: 4px solid $black
+  transform: translateX(-50%)
+  @include transitionMixin()
+
+.main__rangeBlock
+  display: flex
+  flex-direction: column
+  gap: 8px
+  margin: 8px 0
+
+.main__rangeValues
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+
+.main__value
+  @include font-styles($gray, 16px)
+  text-transform: uppercase
+
+.main__description
+  @include font-label($black, 400, 32px)
+  @include laptop
+    line-height: 30px
+

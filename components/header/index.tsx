@@ -12,6 +12,7 @@ import {useEffect, useRef} from "react";
 import {CSSTransition, SwitchTransition} from "react-transition-group";
 import {useBackHomeStore} from "@/store/backHome";
 import {useGeoStore} from "@/store/geolocation";
+import {usePathname} from "next/navigation";
 
 type Coords = { lat: number; lon: number }
 
@@ -31,7 +32,7 @@ export default function HeaderApp() {
     const sunRef = useRef<HTMLSpanElement>(null)
     const moonRef = useRef<HTMLSpanElement>(null)
     const nodeRef = theme === 'dark' ? moonRef : sunRef
-
+    const pathname = usePathname()
     const handleBackHome = () => {
         if (!currentCoords) return
         reset()
@@ -76,15 +77,29 @@ export default function HeaderApp() {
                     </div>
                     <div className={stl.header__navOuter}>
                         <nav className={stl.header__nav}>
-                            <Link className={stl.header__link} href="/about">О проекте</Link>
-                            <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
+                            <Link
+                                className={`${stl.header__link} ${pathname === '/about' ? stl.header__link_active : ''}`}
+                                href="/about">О проекте</Link>
+                            <Link
+                                className={`${stl.header__link} ${pathname === '/bike' ? stl.header__link_active : ''}`}
+                                href="/bike">BIKE</Link>
+                            <Link
+                                className={`${stl.header__link} ${pathname === '/day' ? stl.header__link_active : ''}`}
+                                href="/day">Погода на 15 дней</Link>
                         </nav>
                         <Link className={stl.header__searchIcon} href='/search'>
                             <IconSearch/>
                         </Link>
                         <Burger>
-                            <Link className={stl.header__link} href="/about">О проекте</Link>
-                            <Link className={stl.header__link} href="/day">Погода на 15 дней</Link>
+                            <Link
+                                className={`${stl.header__link} ${pathname === '/about' ? stl.header__link_active : ''}`}
+                                href="/about">О проекте</Link>
+                            <Link
+                                className={`${stl.header__link} ${pathname === '/bike' ? stl.header__link_active : ''}`}
+                                href="/bike">BIKE</Link>
+                            <Link
+                                className={`${stl.header__link} ${pathname === '/day' ? stl.header__link_active : ''}`}
+                                href="/day">Погода на 15 дней</Link>
                         </Burger>
                     </div>
                 </div>

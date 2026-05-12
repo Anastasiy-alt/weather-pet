@@ -1,162 +1,278 @@
-// const BIKE_CONDITIONS = {
-//     temperature: {
-//         ideal:      { min: 15, max: 25 },  // комфортно
-//         acceptable: { min: 5,  max: 32 },  // можно ехать
-//         bad:        { min: -5, max: 40 },  // тяжело но можно
-//         // всё за пределами — не рекомендуется
-//     },
-//
-//     feelsLike: {
-//         ideal:      { min: 12, max: 26 },
-//         acceptable: { min: 3,  max: 33 },
-//         bad:        { min: -3, max: 38 },
-//     },
-//
-//     wind: {
-//         speed: {
-//             ideal:      { max: 5  },  // попутный ветерок
-//             acceptable: { max: 10 },  // заметно но терпимо
-//             bad:        { max: 15 },  // тяжело крутить
-//             dangerous:  { max: 999 }, // опасно
-//         },
-//         gust: {
-//             acceptable: { max: 12 },
-//             bad:        { max: 20 },
-//             // выше — опасно
-//         }
-//     },
-//
-//     precipitation: {
-//         prob: {
-//             ideal:      { max: 10 },  // почти нет
-//             acceptable: { max: 30 },  // мало вероятно
-//             bad:        { max: 60 },  // возможен дождь
-//             // выше — не ехать
-//         },
-//         amount: {
-//             acceptable: { max: 1  },  // морось
-//             bad:        { max: 5  },  // дождь
-//             // выше — не ехать
-//         },
-//         types: {
-//             dangerous: ['snow', 'ice', 'freezingrain', 'hail'],
-//             bad:       ['rain'],
-//             acceptable:['showers'],
-//         }
-//     },
-//
-//     visibility: {
-//         ideal:      { min: 10 },   // км
-//         acceptable: { min: 5  },
-//         bad:        { min: 2  },
-//         // ниже — опасно
-//     },
-//
-//     humidity: {
-//         ideal:      { max: 60 },   // %
-//         acceptable: { max: 80 },
-//         bad:        { max: 90 },
-//     },
-//
-//     uvindex: {
-//         acceptable: { max: 6  },   // крем обязателен выше
-//         bad:        { max: 9  },   // очень высокий
-//         dangerous:  { max: 11 },
-//     },
-//
-//     daylight: {
-//         // поездка должна быть в светлое время
-//         // если выезд после заката или до рассвета — предупреждение
-//     }
-// } as const
-//
-//
-// type BikeScore = 'ideal' | 'good' | 'acceptable' | 'bad' | 'dangerous'
-//
-// interface BikeAnalysis {
-//     score: BikeScore
-//     recommendation: string
-//     warnings: string[]
-//     tips: string[]
-// }
-//
-// function analyzeBikeConditions(data: WeatherData): BikeAnalysis {
-//     const warnings: string[] = []
-//     const tips: string[] = []
-//     let score: BikeScore = 'ideal'
-//
-//     // понижаем оценку если показатель плохой
-//     function downgrade(to: BikeScore) {
-//         const order: BikeScore[] = ['ideal', 'good', 'acceptable', 'bad', 'dangerous']
-//         if (order.indexOf(to) > order.indexOf(score)) score = to
-//     }
-//
-//     // температура
-//     const temp = data.feelslike
-//     if (temp < BIKE_CONDITIONS.feelsLike.bad.min || temp > BIKE_CONDITIONS.feelsLike.bad.max) {
-//         downgrade('dangerous')
-//         warnings.push(temp < 0 ? 'Слишком холодно — риск обморожения' : 'Слишком жарко — риск перегрева')
-//     } else if (temp < BIKE_CONDITIONS.feelsLike.acceptable.min || temp > BIKE_CONDITIONS.feelsLike.acceptable.max) {
-//         downgrade('bad')
-//         warnings.push('Некомфортная температура для поездки')
-//     } else if (temp < BIKE_CONDITIONS.feelsLike.ideal.min || temp > BIKE_CONDITIONS.feelsLike.ideal.max) {
-//         downgrade('acceptable')
-//         tips.push('Оденься по погоде')
-//     }
-//
-//     // ветер
-//     if (data.windgust > BIKE_CONDITIONS.wind.gust.bad.max) {
-//         downgrade('dangerous')
-//         warnings.push(`Сильные порывы ${data.windgust} м/с — опасно`)
-//     } else if (data.windspeed > BIKE_CONDITIONS.wind.speed.bad.max) {
-//         downgrade('bad')
-//         warnings.push(`Сильный ветер ${data.windspeed} м/с — тяжело крутить`)
-//     } else if (data.windspeed > BIKE_CONDITIONS.wind.speed.acceptable.max) {
-//         downgrade('acceptable')
-//         tips.push('Встречный ветер — запас больше времени')
-//     }
-//
-//     // осадки
-//     if (data.preciptype?.some(t => BIKE_CONDITIONS.precipitation.types.dangerous.includes(t))) {
-//         downgrade('dangerous')
-//         warnings.push('Гололёд или снег — ехать опасно')
-//     } else if (data.precipprob > 60) {
-//         downgrade('bad')
-//         warnings.push('Высокая вероятность дождя')
-//     } else if (data.precipprob > 30) {
-//         downgrade('acceptable')
-//         tips.push('Возможен дождь — возьми дождевик')
-//     }
-//
-//     // видимость
-//     if (data.visibility < BIKE_CONDITIONS.visibility.bad.min) {
-//         downgrade('dangerous')
-//         warnings.push('Плохая видимость — опасно на дороге')
-//     } else if (data.visibility < BIKE_CONDITIONS.visibility.acceptable.min) {
-//         downgrade('bad')
-//         warnings.push('Ограниченная видимость')
-//     }
-//
-//     // УФ
-//     if (data.uvindex > BIKE_CONDITIONS.uvindex.bad.max) {
-//         downgrade('bad')
-//         tips.push('Высокий УФ — нанеси SPF 50 и возьми воды больше')
-//     } else if (data.uvindex > BIKE_CONDITIONS.uvindex.acceptable.max) {
-//         tips.push('Не забудь крем от солнца')
-//     }
-//
-//     const recommendations: Record<BikeScore, string> = {
-//         ideal:      'Отличные условия — самое время крутить педали! 🚴',
-//         good:       'Хорошие условия для поездки',
-//         acceptable: 'Ехать можно, но учти предупреждения',
-//         bad:        'Не лучший день для велопрогулки',
-//         dangerous:  'Сегодня лучше оставить велосипед дома',
-//     }
-//
-//     return {
-//         score,
-//         recommendation: recommendations[score],
-//         warnings,
-//         tips,
-//     }
-// }
+// weiaght -> (1, 2, 3) по степени важности (от менее к более), TD дать пользователю самому менять значение
+
+import {BikeAnalysis} from "@/types";
+
+interface Bike {
+    temperature: BikeAnalysis
+    feelsLike: BikeAnalysis
+    windSpeed: BikeAnalysis
+    windGust: BikeAnalysis
+    precipProb: BikeAnalysis
+    visibility: BikeAnalysis
+    humidity: BikeAnalysis
+    uvIndex: BikeAnalysis
+}
+
+export const BIKE_CONDITIONS: Bike = {
+    temperature: {
+        weight: 5,
+        values: [
+            {
+                min: 18, max: 22, point: 5,
+                description: 'Идеальная температура для езды — не жарко, не холодно. Грех не выкатитьтся'
+            },
+            {
+                min: 15, max: 25, point: 4,
+                description: 'Тепло, бодро, приятно — поездка будет почти идеальной'
+            },
+            {
+                min: 10, max: 30, point: 3,
+                description: 'На улице либо свежо, либо уже припекает — угадай с одеждой с первого раза, удачи'
+            },
+            {
+                min: -5, max: 40, point: 2,
+                description: 'Ну и зачем тебе это? Либо дубак, либо асфальт плавится — но дело твоё, уважаем'
+            },
+            {
+                min: -100, max: 100, point: 1,
+                description: 'Либо ты где-то в Сахаре, либо в Антарктиде. Велосипед в обоих случаях молча страдает'
+            }
+        ],
+    },
+
+    feelsLike: {
+        weight: 3,
+        values: [
+            {
+                min: 15, max: 23, point: 5,
+                description: 'Погода говорит «поехали» — и в кои-то веки она права. Слушай погоду'
+            },
+            {
+                min: 10, max: 26, point: 4,
+                description: 'Ощущается чуть прохладнее или теплее чем хотелось бы, но совсем немного — организм адаптируется быстро'
+            },
+            {
+                min: 3, max: 33, point: 3,
+                description: 'Не самые приятные ощущения, но и не катастрофа — просто оденься правильно'
+            },
+            {
+                min: -3, max: 38, point: 2,
+                description: 'Тело уже серьёзно сомневается, но голова у тебя своя — она и решает'
+            },
+            {
+                min: -100, max: 100, point: 1,
+                description: 'Ощущается как откровенно плохая идея. Не потому что мы так говорим, а потому что это правда'
+            },
+        ]
+    },
+
+    windSpeed: {
+        weight: 4,
+        values: [
+            {
+                max: 3, point: 5,
+                description: 'Полный штиль — флаги висят неподвижно, ты летишь вперёд и ничто тебе не мешает'
+            },
+            {
+                max: 5, point: 4,
+                description: 'Лёгкий приятный бриз, который освежает в подъём и не мешает на прямой'
+            },
+            {
+                max: 10, point: 3,
+                description: 'Ветер уже заметный — в одну сторону чувствуешь себя героем, в другую молча страдаешь'
+            },
+            {
+                max: 15, point: 2,
+                description: 'Ветер явно против тебя хотя бы на половине маршрута — закладывай время с запасом'
+            },
+            {
+                max: 1000, point: 1,
+                description: 'Велосипед — это ты, ты — это парус, маршрут определяет ветер. Удачи, смелый человек'
+            },
+        ]
+    },
+
+    windGust: {
+        weight: 2,
+        values: [
+            {
+                max: 5, point: 5,
+                description: 'Порывов почти нет — едешь ровно, руль слушается, жизнь прекрасна'
+            },
+            {
+                max: 7, point: 4,
+                description: 'Редкие лёгкие порывы — скорее приятное разнообразие, чем реальная помеха'
+            },
+            {
+                max: 15, point: 3,
+                description: 'Порывы заметные и неожиданные — держи руль покрепче, особенно на мостах и открытых участках'
+            },
+            {
+                max: 20, point: 2,
+                description: 'Тебя будет периодически сносить в сторону, и это не метафора — буквально сносить'
+            },
+            {
+                max: 1000, point: 1,
+                description: 'При таких порывах даже стоять сложно, не то что ехать. Велосипед оценит выходной'
+            },
+        ]
+    },
+
+    precipProb: {
+        weight: 3,
+        values: [
+            {
+                max: 10, point: 5,
+                description: 'Дождя не будет — это почти клятва, можно смело оставлять дождевик дома'
+            },
+            {
+                max: 20, point: 4,
+                description: 'Вероятность намокнуть низкая, но ненулевая — решай сам, насколько ты азартный человек'
+            },
+            {
+                max: 30, point: 3,
+                description: 'Может капнуть, а может и нет — классическая погодная лотерея, бери дождевик на всякий'
+            },
+            {
+                max: 60, point: 2,
+                description: 'Скорее всего промокнешь, вопрос только насколько сильно и как далеко ты к тому моменту заедешь'
+            },
+            {
+                max: 100, point: 1,
+                description: 'Вопрос не будет ли дождь, а когда именно и насколько сильный. Ответ: скоро и очень'
+            },
+        ]
+    },
+
+    visibility: {
+        weight: 1,
+        values: [
+            {
+                max: 100, point: 5,
+                description: 'Видимость отличная — горизонт далеко, дорога читается, всё под контролем'
+            },
+            {
+                max: 10, point: 4,
+                description: 'Видимость хорошая, едешь спокойно и всё успеваешь заметить вовремя'
+            },
+            {
+                max: 5, point: 3,
+                description: 'Немного мутновато — туман или дымка, но ямы и машины разглядеть ещё успеваешь'
+            },
+            {
+                max: 2, point: 2,
+                description: 'Видимость плохая, фонарь и мигалка обязательны — ты должен видеть и тебя должны видеть'
+            },
+            {
+                max: 1, point: 1,
+                description: 'Ты невидим, все вокруг невидимы, мир исчез в тумане. Это уже не прогулка, это приключение со знаком минус'
+            },
+        ]
+    },
+
+    humidity: {
+        weight: 1,
+        values: [
+            {
+                max: 60, point: 5,
+                description: 'Воздух такой, каким и должен быть — незаметный, лёгкий и совершенно не мешающий ехать'
+            },
+            {
+                max: 70, point: 4,
+                description: 'Немного влажновато, но вполне терпимо — почти не заметишь, если не знать'
+            },
+            {
+                max: 80, point: 3,
+                description: 'Липковато и душновато — пот никуда не испаряется, просто остаётся на тебе'
+            },
+            {
+                max: 90, point: 2,
+                description: 'Воздух как мокрое полотенце — дышать технически можно, но приятного мало'
+            },
+            {
+                max: 100, point: 1,
+                description: 'Ты едешь сквозь облако изнутри. Влажность такая, что непонятно где заканчиваешься ты и начинается воздух'
+            },
+        ]
+    },
+
+    uvIndex: {
+        weight: 1,
+        values: [
+            {
+                max: 2, point: 5,
+                description: 'УФ минимальный — можно вообще не думать о солнцезащите и просто наслаждаться поездкой'
+            },
+            {
+                max: 5, point: 4,
+                description: 'Умеренное солнце, крем не обязателен, но на длинной поездке лишним точно не будет'
+            },
+            {
+                max: 7, point: 3,
+                description: 'Солнце активное — если едешь больше часа, крем реально нужен, иначе вернёшься розовым'
+            },
+            {
+                max: 9, point: 2,
+                description: 'Сгоришь быстрее, чем доедешь до цели — крем, кепка, тень на остановках, это не шутка'
+            },
+            {
+                max: 11, point: 1,
+                description: 'Солнце сегодня агрессивно и совершенно не стесняется. Лучше выезжай рано утром или жди вечера'
+            },
+        ]
+    },
+
+} as const
+
+export const RESULT_CONDITIONS = [
+    {
+        max: 9,
+        title: 'Сиди дома',
+        description: 'Велосипед смотрит на тебя из угла и молча просит не надо'
+    },
+    {
+        max: 19,
+        title: 'Плохо',
+        description: 'Технически выехать можно, но ты же потом сам себя осудишь'
+    },
+    {
+        max: 29,
+        title: 'Не очень',
+        description: 'Поездка состоится, просто хорошей её назовёт только очень оптимистичный человек'
+    },
+    {
+        max: 39,
+        title: 'Так себе',
+        description: 'Погода не запрещает, но и особо не приглашает — решай на свой страх и риск'
+    },
+    {
+        max: 49,
+        title: 'Сойдёт',
+        description: 'Условия так себе, зато будет повод почувствовать себя настоящим героем'
+    },
+    {
+        max: 59,
+        title: 'Нормально',
+        description: 'Ничего выдающегося, но и жаловаться особо не на что — просто поедешь и приедешь'
+    },
+    {
+        max: 69,
+        title: 'Неплохо',
+        description: 'Не самый блестящий день, но велосипедисты и не в такие ездили'
+    },
+    {
+        max: 79,
+        title: 'Хорошо',
+        description: 'Приятная поездка почти гарантирована — почти, потому что это всё-таки погода'
+    },
+    {
+        max: 89,
+        title: 'Отлично',
+        description: 'Почти идеально, и этого более чем достаточно чтобы получить удовольствие'
+    },
+    {
+        max: 100,
+        title: 'Идеально',
+        description: 'Бросай всё, седлай велосипед — такие дни случаются реже чем хочется'
+    },
+]

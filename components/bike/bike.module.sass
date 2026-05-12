@@ -26,6 +26,8 @@
   border-radius: 100%
   width: 130px
   height: 130px
+  min-width: 130px
+  min-height: 130px
   display: flex
   flex-direction: column
   justify-content: center
@@ -71,6 +73,17 @@
   outline: 4px solid $black
   transform: translateX(-50%)
   @include transitionMixin()
+.main__markerValue
+  opacity: 0
+  position: absolute
+  bottom: -10px
+  left: 50%
+  transform: translate(-50%, 90%)
+  background: $white
+  border-radius: 6px
+  outline: 2px solid $black
+  padding: 3px
+  @include transitionMixin()
 
 .main__rangeBlock
   display: flex
@@ -92,3 +105,7 @@
   @include laptop
     line-height: 30px
 
+@include hover
+  .main__range:hover .main__markerValue
+    opacity: 1
+    transform: translate(-50%, 100%)

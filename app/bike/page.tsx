@@ -1,9 +1,9 @@
-import MainBike from "@/components/bike/main";
+import BikeWidget from "@/components/bike/widget";
 
 export default function BikePage() {
     return (
         <>
-            <MainBike />
+          <BikeWidget />
         </>
     )
 }

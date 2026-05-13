@@ -53,7 +53,7 @@ export interface Current {
 export interface Day {
     cloudcover: number
     conditions: string
-    datetime:string
+    datetime: string
     description: string
     dew: number
     feelslike: number
@@ -98,8 +98,8 @@ export interface Hour {
     precip: number
     precipprob: number
     preciptype: string[]
-    pressure : number
-    severerisk: number
+    pressure: number
+    severerisk?: number
     snow: number
     snowdepth: number
     solarenergy: number

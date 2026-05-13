@@ -79,7 +79,7 @@ export default function Search() {
                 </ul>
             )}
             {
-                !loading && query.length > 0 && results.length === 0 && (
+                !loading && query.length > 2 && (results?.length === 0 || !results) && (
                     <p className={stl.search__notFound}>Синоптики таких мест не&nbsp;знают</p>
                 )
             }

@@ -10,10 +10,9 @@ interface Props {
     value: number
     title: string
     subtitle: string
-    description: string
 }
 
-export default function MainBike({city, refresh, value, title, subtitle, description}: Props) {
+export default function MainBike({city, refresh, value, title, subtitle}: Props) {
 
     return (
         <section className={stl.main}>
@@ -44,7 +43,15 @@ export default function MainBike({city, refresh, value, title, subtitle, descrip
                     <p className={stl.main__value}>идеально</p>
                 </div>
             </div>
-            <p className={stl.main__description}>{description}</p>
+            <p className={stl.main__description}>
+                Оценка считается по шести параметрам: температура, ощущаемая температура, ветер, порывы, дождь и
+                влажность. Ветер, вероятность дождя и ощущаемая температура влияют на итог сильнее остальных — потому что <s>именно они чаще всего
+                портят поездку</s> мы так решили :-)
+                <br/> <br/>
+                {/*УФ и видимость в оценку не входят, но мы про них всё равно напоминаем — сгоревшая кожа и туман это отдельный вид приключений, который мы вам не желаем.*/}
+                {/*<br /> <br />*/}
+                100 — погода мечты, 0 — погода из кошмара. Всё что между — интерпретируй сам.
+            </p>
         </section>
     )
 }

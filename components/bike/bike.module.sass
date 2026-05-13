@@ -1,3 +1,8 @@
+.page
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 24px
+
 .main
   padding: 20px
   border: 4px $light-blue solid
@@ -7,7 +12,7 @@
   gap: 16px
   flex-direction: column
   position: relative
-  grid-column: span 6
+  grid-column: span 2
 
 .main__header
   display: flex
@@ -73,6 +78,7 @@
   outline: 4px solid $black
   transform: translateX(-50%)
   @include transitionMixin()
+
 .main__markerValue
   opacity: 0
   position: absolute
@@ -104,6 +110,95 @@
   @include font-label($black, 400, 32px)
   @include laptop
     line-height: 30px
+
+.card
+  position: relative
+  display: flex
+  flex-direction: column
+  gap: 16px
+  padding: 32px 24px 24px
+  border-radius: 16px
+  border: 2px solid $light-blue
+  @include transitionMixin(border)
+
+.card__title
+  position: absolute
+  top: 0
+  left: 30px
+  transform: translateY(-50%)
+  @include font-styles($gray, 18px, 400, 20px)
+  padding: 4px 8px
+  background: $white
+  outline: 2px solid $light-blue
+  border-radius: 12px
+  @include transitionMixin()
+
+.card__block
+  display: grid
+  grid-template-columns: 120px 1fr
+  justify-items: center
+  gap: 16px
+
+.card__value
+  white-space: nowrap
+  @include font-heading($black)
+  font-weight: 600
+
+.card__description
+  @include font-label($black)
+
+.card__tip
+  @include font-label($gray)
+
+@include laptop
+  .card
+    padding: 24px 16px 16px
+  .main__temp
+    @include font-styles($black, 70px, 500)
+  .main__icon
+    width: 80px
+    height: 80px
+    min-width: 80px
+    min-height: 80px
+  .main__iconBlock
+    width: 120px
+    height: 120px
+    min-width: 120px
+    min-height: 120px
+  .card__block
+    grid-template-columns: 100px 1fr
+
+@include tablet
+  .card
+    padding: 24px 16px 16px
+  .card__title
+    @include font-styles($gray, 16px, 400, 18px)
+  .main__temp
+    @include font-styles($black, 50px, 500)
+  .main__icon
+    width: 60px
+    height: 60px
+    min-width: 60px
+    min-height: 60px
+  .main__iconBlock
+    width: 100px
+    height: 100px
+    min-width: 100px
+    min-height: 100px
+  .card__block
+    grid-template-columns: 80px 1fr
+
+@include mobile
+  .page
+    grid-template-columns: 1fr
+  .main
+    grid-column: span 1
+  .main__block
+    flex-direction: column
+    align-items: center
+    justify-content: center
+  .main__temp, .main__condition
+    text-align: center
 
 @include hover
   .main__range:hover .main__markerValue

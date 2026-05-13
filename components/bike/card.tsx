@@ -1,0 +1,26 @@
+import stl from './bike.module.sass'
+
+interface Props {
+    title: string
+    value: string
+    description: string
+    tip?: string
+}
+
+export default function CardBike({title, value, description, tip}: Props) {
+    return (
+        <div className={stl.card}>
+            <p className={stl.card__title}>{title}</p>
+            <div className={stl.card__block}>
+                <p className={stl.card__value}>{value}</p>
+                <p className={stl.card__description}>{description}</p>
+            </div>
+
+            {
+                tip && (
+                    <i className={stl.card__tip}>{tip}</i>
+                )
+            }
+        </div>
+    )
+}

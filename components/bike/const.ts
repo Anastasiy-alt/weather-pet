@@ -1,6 +1,4 @@
-// weiaght -> (1, 2, 3) по степени важности (от менее к более), TD дать пользователю самому менять значение
-
-import {BikeAnalysis} from "@/types";
+import {BikeAnalysis, BikeValue, Hour} from "@/types";
 
 interface Bike {
     temperature: BikeAnalysis
@@ -15,10 +13,23 @@ interface Bike {
     daylight: BikeAnalysis
 }
 
-export const CLOTHING_ADVICE: {
-    max: number
-    advice: string
-}[] = [
+type DaylightState =
+    'night-before' | 'pre-dawn' | 'sunrise' | 'morning' |
+    'midday' | 'afternoon' | 'sunset' | 'dusk' | 'night'
+
+export type BikeAnalyzeResult = ReturnType<BikeAnalyze['init']>;
+
+export interface Result {
+    title: string
+    id: string
+    description: string
+    key: number | string
+    weight: number
+    point: number
+    keyProp: string
+}
+
+export const CLOTHING_ADVICE: { max: number, advice: string }[] = [
     {
         max: -10,
         advice: 'Доставай всё тёплое что есть — термобельё, флис, утеплённая куртка, балаклава, зимние перчатки. Это не велопрогулка, это экспедиция'
@@ -350,7 +361,6 @@ export const BIKE_CONDITIONS: Bike = {
     },
 } as const
 
-
 export const RESULT_CONDITIONS = [
     {
         max: 9,
@@ -403,3 +413,248 @@ export const RESULT_CONDITIONS = [
         description: 'Бросай всё, седлай велосипед — такие дни случаются реже чем хочется'
     },
 ]
+
+export class BikeAnalyze {
+    weather: Hour | null;
+    resultPercent: number;
+    windSpeed: number;
+    winGust: number;
+    resultArray: Result[];
+    sunset: number;
+    sunrise: number;
+    timeZone: string;
+    resultConditions: {
+        title: string;
+        description: string;
+    }
+
+    constructor() {
+        this.weather = null
+        this.resultPercent = 0
+        this.resultArray = []
+        this.resultConditions = {
+            title: '',
+            description: '',
+        }
+        this.windSpeed = 0
+        this.winGust = 0
+        this.sunrise = 0
+        this.sunset = 0
+        this.timeZone = ''
+    }
+
+    _getDaylightState(currentTime: Date, sunrise: Date, sunset: Date): DaylightState {
+        const now = currentTime.getTime()
+        const sunriseMs = sunrise.getTime()
+        const sunsetMs = sunset.getTime()
+        const dayLength = sunsetMs - sunriseMs
+
+        const minutesFromSunrise = (now - sunriseMs) / 60000
+        const minutesFromSunset = (now - sunsetMs) / 60000
+
+        if (minutesFromSunrise < -60) return 'night-before'
+        if (minutesFromSunrise < 0) return 'pre-dawn'
+        if (minutesFromSunrise < 60) return 'sunrise'
+        if (minutesFromSunset > 60) return 'night'
+        if (minutesFromSunset > 0) return 'dusk'
+        if (minutesFromSunset > -60) return 'sunset'
+
+        const midpoint = sunriseMs + dayLength / 2
+        const thirdOfDay = dayLength / 3
+
+        if (now < midpoint - thirdOfDay / 2) return 'morning'
+        if (now < midpoint + thirdOfDay / 2) return 'midday'
+        return 'afternoon'
+    }
+
+    _handleAnalise(data: BikeAnalysis, key?: number): {
+        point: number,
+        description: string,
+        key: number,
+        weight: number
+    } {
+        let res: { point: number, description: string, key: number, weight: number } = {
+            point: 0,
+            description: '',
+            key: 0,
+            weight: 0
+        }
+        if (!key) key = 0
+        data.values.sort((a, b) => a.point - b.point).forEach((i: BikeValue) => {
+            if (i.min && i.max) {
+                if (i.min <= key && i.max >= key) {
+                    res = {
+                        point: i.point,
+                        description: i.description,
+                        key: key,
+                        weight: data.weight
+                    }
+                }
+            } else if (i.max) {
+                if (i.max >= key) {
+                    res = {
+                        point: i.point,
+                        description: i.description,
+                        key: key,
+                        weight: data.weight
+                    }
+                }
+            } else if (i.state) {
+                res = {
+                    point: i.point,
+                    description: i.description,
+                    key: key,
+                    weight: data.weight
+                }
+            }
+        })
+        return res
+    }
+
+    _setWindParams() {
+        if (typeof this.weather?.windspeed === 'number') {
+            this.windSpeed = Math.round(this.weather?.windspeed * (1000 / 3600))
+            if (typeof this.weather?.windgust === 'number') {
+                this.winGust = Math.round(this.weather?.windgust * (1000 / 3600))
+            } else {
+                this.winGust = this.windSpeed
+            }
+        }
+    }
+
+    _setSunDay(): Result {
+        const now = new Date()
+        const nowTime = new Date(now.toLocaleString('en-US', {timeZone: this.timeZone}))
+        const state = this._getDaylightState(
+            nowTime,
+            new Date(this.sunrise * 1000),
+            new Date(this.sunset * 1000)
+        )
+        const daylightInfo: {
+            state?: string,
+            point: number,
+            description: string,
+        } = BIKE_CONDITIONS.daylight.values.find(v => v.state === state) ?? BIKE_CONDITIONS.daylight.values[0]
+        return {
+            id: 'daylight',
+            title: 'время',
+            keyProp: '',
+            key: new Intl.DateTimeFormat('ru-RU', {
+                hour: '2-digit',
+                minute: '2-digit',
+            }).format(nowTime),
+            weight: BIKE_CONDITIONS.daylight.weight,
+            ...daylightInfo,
+        }
+    }
+
+    _setFeelsAdvice(): Result {
+        const res = {
+            id: 'feelsLike',
+            title: 'ощущается',
+            keyProp: '°',
+            ...this._handleAnalise(BIKE_CONDITIONS.feelsLike, this.weather?.feelslike),
+        }
+        CLOTHING_ADVICE.sort((a: {
+            max: number
+            advice: string
+        }, b: {
+            max: number
+            advice: string
+        }): number => b.max - a.max).forEach((adv: {
+            max: number
+            advice: string
+        }) => {
+            if (adv.max >= res.key) {
+                res.description = adv.advice
+            }
+        });
+
+        return res
+    }
+
+    _resultCounter() {
+        let sum = 0
+        let sumWeight = 0
+        this.resultArray.forEach((i) => {
+            if (i.weight) {
+                if (i.point) sum = sum + (i.point * i.weight)
+                sumWeight = sumWeight + i.weight
+            }
+        })
+        this.resultPercent = Math.round((((sum / sumWeight) - 1) / 4) * 100)
+        this.resultConditions = RESULT_CONDITIONS.find(i => this.resultPercent <= i.max) ?? RESULT_CONDITIONS[RESULT_CONDITIONS.length - 1]
+    }
+
+    _dayAnalise() {
+        this._setWindParams();
+        this.resultArray.push({
+            id: 'temperature',
+            title: 'температура',
+            keyProp: '°',
+            ...this._handleAnalise(BIKE_CONDITIONS.temperature, this.weather?.temp),
+        })
+        this.resultArray.push(this._setFeelsAdvice())
+        this.resultArray.push({
+            id: 'windSpeed',
+            title: 'ветер',
+            keyProp: ' м/с',
+            ...this._handleAnalise(BIKE_CONDITIONS.windSpeed, this.windSpeed),
+        })
+        this.resultArray.push({
+            id: 'windGust',
+            title: 'порывы',
+            keyProp: ' м/с',
+            ...this._handleAnalise(BIKE_CONDITIONS.windGust, this.winGust),
+        })
+        this.resultArray.push({
+            id: 'precipProb',
+            title: 'осадки',
+            keyProp: '%',
+            ...this._handleAnalise(BIKE_CONDITIONS.precipProb, this.weather?.precipprob),
+        })
+
+        this.resultArray.push({
+            id: 'humidity',
+            title: 'влажность',
+            keyProp: '%',
+            ...this._handleAnalise(BIKE_CONDITIONS.humidity, this.weather?.humidity),
+        })
+        this.resultArray.push({
+            id: 'visibility',
+            title: 'видимость',
+            keyProp: ' км',
+            ...this._handleAnalise(BIKE_CONDITIONS.visibility, this.weather?.visibility),
+        })
+        this.resultArray.push({
+            id: 'uvIndex',
+            title: 'УФ-индекс',
+            keyProp: '',
+            ...this._handleAnalise(BIKE_CONDITIONS.uvIndex, this.weather?.uvindex),
+        })
+        this.resultArray.push({
+            id: 'cloudy',
+            title: 'облачность',
+            keyProp: '%',
+            ...this._handleAnalise(BIKE_CONDITIONS.cloudy, this.weather?.cloudcover),
+        })
+        if (this.sunrise && this.sunset) {
+            this.resultArray.push(this._setSunDay())
+        }
+        console.log(this.resultArray)
+    }
+
+    init(weather: Hour, sunrise: number, sunset: number, timezone: string) {
+        this.weather = weather
+        this.sunrise = sunrise
+        this.sunset = sunset
+        this.timeZone = timezone
+        this._dayAnalise()
+        this._resultCounter()
+        return {
+            percent: this.resultPercent,
+            conditions: this.resultConditions,
+            array: this.resultArray,
+        }
+    }
+}

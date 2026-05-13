@@ -1,7 +1,7 @@
 .page
   display: grid
   grid-template-columns: 1fr 1fr
-  gap: 24px
+  gap: 36px 24px
 
 .main
   padding: 20px
@@ -119,7 +119,16 @@
   padding: 32px 24px 24px
   border-radius: 16px
   border: 2px solid $light-blue
-  @include transitionMixin(border)
+  @include transitionMixin(border, background)
+
+.card_weight
+  border-color: $dark-blue
+  background: $light-blue
+
+  .card__title
+    background: $light-blue
+    outline-color: $dark-blue
+    color: $dark-blue
 
 .card__title
   position: absolute
@@ -131,13 +140,15 @@
   background: $white
   outline: 2px solid $light-blue
   border-radius: 12px
-  @include transitionMixin()
+  @include transitionMixin(outline, background, color)
 
 .card__block
   display: grid
   grid-template-columns: 120px 1fr
   justify-items: center
   gap: 16px
+  align-items: center
+  height: 100%
 
 .card__value
   white-space: nowrap
@@ -187,6 +198,8 @@
     min-height: 100px
   .card__block
     grid-template-columns: 80px 1fr
+  .page
+    gap: 24px
 
 @include mobile
   .page
@@ -199,8 +212,15 @@
     justify-content: center
   .main__temp, .main__condition
     text-align: center
+  .main__header
+    flex-direction: column-reverse
+    gap: 8px
+    justify-content: center
+    align-items: center
+  .main__rangeBlock
+    gap: 12px
 
 @include hover
-  .main__range:hover .main__markerValue
+  .main__rangeBlock:hover .main__markerValue
     opacity: 1
     transform: translate(-50%, 100%)

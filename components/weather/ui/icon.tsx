@@ -20,6 +20,7 @@ import ThunderRain from '@/assets/icons/weather/thunder-rain.svg'
 import ThunderShowersDay from '@/assets/icons/weather/thunder-showers-day.svg'
 import ThunderShowersNight from '@/assets/icons/weather/thunder-showers-night.svg'
 import Wind from '@/assets/icons/weather/wind.svg'
+import Bike from '@/assets/icons/bike.svg'
 
 const icons = {
     'clear-day': ClearDay,
@@ -43,7 +44,8 @@ const icons = {
     'thunder-showers-day': ThunderShowersDay,
     'thunder-showers-night': ThunderShowersNight,
     'wind': Wind,
-    'ice': Ice
+    'ice': Ice,
+    'bike': Bike,
 }
 
 export default function WeatherIcon({name, classCustom = ''} : {name: string, classCustom?: string}) {

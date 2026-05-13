@@ -10,10 +10,10 @@ import Location from "@/components/ui/location";
 
 interface MainProps {
     city: string
-    temp: number
+    temp: number | string
     icon: string
     conditions: string
-    feelslike: number
+    feelslike?: number
     datetime?: string
     alerts?: AlertType[]
     update: () => void
@@ -31,12 +31,18 @@ export default function Main({city, temp, icon, conditions, feelslike, datetime,
                             variant='btn'
                             action={update}/>
 
-                <p className={stl.widget__temp}>{temp > 0 && '+'}{temp}°
+                <p className={stl.widget__temp}>{(typeof temp === 'number' && temp > 0) && '+'}{temp}°
                     <WeatherIcon classCustom={`${stl.widget__icon} ${stl.widget__icon_mob}`} name={icon}/>
                 </p>
                 <WeatherIcon classCustom={`${stl.widget__icon} ${stl.widget__icon_desk}`} name={icon}/>
-                <p className={stl.widget__condition}>{conditions}, ощущается
-                    как {feelslike > 0 && '+'}{feelslike}°</p>
+                <p className={stl.widget__condition}>{conditions}
+                    {
+                        feelslike && <>
+                            , ощущается
+                            как {feelslike > 0 && '+'}{feelslike}°
+                        </>
+                    }
+                    </p>
                 {datetime &&
                     <p className={stl.widget__actual}>Данные актуальны
                         на {datetime.split(':')[0]}:{datetime.split(':')[1]}</p>

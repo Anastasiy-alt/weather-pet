@@ -13,7 +13,6 @@ export async function fetchLocation(lat?: number, lon?: number, address?: string
     );
 
     const data = await response.json();
-console.log(data, lat, lon, address);
     const geoObject =
         data.response.GeoObjectCollection.featureMember[0]
             ?.GeoObject;
@@ -33,7 +32,6 @@ console.log(data, lat, lon, address);
     );
     const point = geoObject.Point.pos.split(' ');
 
-console.log(point)
     if (!response.ok) throw new Error(`Ошибка локации: ${response.status}`);
     return {
         city: cityComponent?.name || '',

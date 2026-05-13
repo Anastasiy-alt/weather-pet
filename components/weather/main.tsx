@@ -37,7 +37,7 @@ export default function Main({city, temp, icon, conditions, feelslike, datetime,
                 <WeatherIcon classCustom={`${stl.widget__icon} ${stl.widget__icon_desk}`} name={icon}/>
                 <p className={stl.widget__condition}>{conditions}
                     {
-                        feelslike && <>
+                        typeof feelslike === 'number' && <>
                             , ощущается
                             как {feelslike > 0 && '+'}{feelslike}°
                         </>

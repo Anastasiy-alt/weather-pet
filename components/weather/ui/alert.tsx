@@ -1,12 +1,11 @@
 import {Alert as AlertType} from "@/types";
 import stl from './ui.module.sass'
-import {useRef} from "react";
 import AlertIcon from '@/assets/icons/alert.svg'
+import Accordion from '@/components/ui/accordion'
 
 export default function Alert({alert}: {
     alert: AlertType
 }) {
-    const alertEl = useRef<HTMLDivElement>(null)
     const endDate = new Date(alert.ends);
     const startDate = new Date(alert.onset);
     const formattedEnd = endDate.toLocaleDateString('ru-RU', {
@@ -31,22 +30,14 @@ export default function Alert({alert}: {
         minute: '2-digit',
     });
 
-    const openAlert = () => {
-        alertEl.current?.classList.toggle(stl.alert_open)
-    }
-
     return (
-        <div ref={alertEl} className={stl.alert} onClick={openAlert}>
-            <p className={stl.alert__title}>
-                <AlertIcon/>
-                {alert.headline}
-            </p>
+        <Accordion title={alert.headline} icon={<AlertIcon/>} color="var(--orange)">
             <div className={stl.alert__description}>
                 <p>{alert.description}</p>
                 <p className={stl.alert__period}>
                     Действует в период с {formattedStart} {formattedStartTime} по {formattedEnd} {formattedEndTime}
                 </p>
             </div>
-        </div>
+        </Accordion>
     )
 }

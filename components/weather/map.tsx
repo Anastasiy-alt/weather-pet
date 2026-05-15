@@ -4,8 +4,8 @@ import {useEffect, useState} from 'react'
 import * as ReactDOM from 'react-dom'
 import {ReactifiedModule} from '@yandex/ymaps3-types/reactify/reactify'
 import type {YMapLocationRequest} from '@yandex/ymaps3-types'
-import stl from './cards.module.sass'
-import {useTheme} from "@teispace/next-themes";
+import stl from './weather.module.sass'
+import {useTheme} from '@teispace/next-themes'
 
 declare global {
     interface Window {
@@ -37,7 +37,6 @@ export default function YMap({lat, lon, zoom = 13}: YMapProps) {
             setReactifiedApi(reactify.bindTo(React, ReactDOM).module(window.ymaps3))
         )
     }, [])
-
 
     if (!reactifiedApi) return null
 

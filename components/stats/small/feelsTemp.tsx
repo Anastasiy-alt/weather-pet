@@ -1,4 +1,4 @@
-import stl from './cards.module.sass'
+import stl from './small.module.sass'
 import Sun from '@/assets/icons/weather/clear-day.svg'
 import Cloud from '@/assets/icons/cloud.svg'
 
@@ -15,18 +15,12 @@ export default function TempFeels({fact, feels, small}: TempCardProps) {
                 <Sun className={stl.tempFeels__sun}/>
                 <Cloud className={stl.tempFeels__cloud}/>
             </div>
-            <p className={stl.card__title}>
-                Температура {fact}°
-            </p>
-            <p className={stl.card__subtitle}>
-                Ощущается как {feels}°
-            </p>
+            <p className={stl.card__title}>Температура {fact}°</p>
+            <p className={stl.card__subtitle}>Ощущается как {feels}°</p>
             <p className={stl.card__tag}>
                 {
                     feels === fact ?
-                        <>
-                            Ощущается как фактическая
-                        </>
+                        <>Ощущается как фактическая</>
                         : <>По ощущениям
                             {feels - fact > 0 ? <> теплее</> : <> холоднее</>}
                             на {(fact - feels).toFixed(1)}°

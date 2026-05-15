@@ -1,4 +1,5 @@
-import {ReactNode, useRef} from 'react'
+'use client'
+import {ReactNode, useState} from 'react'
 import stl from './ui.module.sass'
 
 interface AccordionProps {
@@ -9,18 +10,13 @@ interface AccordionProps {
 }
 
 export default function Accordion({title, icon, color, children}: AccordionProps) {
-    const ref = useRef<HTMLDivElement>(null)
-
-    const toggle = () => {
-        ref.current?.classList.toggle(stl.accordion_open)
-    }
+    const [open, setOpen] = useState(false)
 
     return (
         <div
-            ref={ref}
-            className={stl.accordion}
+            className={`${stl.accordion} ${open ? stl.accordion_open : ''}`}
             style={color ? {outline: `2px solid ${color}`} : undefined}
-            onClick={toggle}
+            onClick={() => setOpen(o => !o)}
         >
             <p className={stl.accordion__title}>
                 {icon}

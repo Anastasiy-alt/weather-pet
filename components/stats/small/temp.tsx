@@ -1,4 +1,4 @@
-import stl from './cards.module.sass'
+import stl from './small.module.sass'
 
 interface TempCardProps {
     tempmax: number
@@ -9,10 +9,8 @@ export default function TempRange({tempmax, tempmin}: TempCardProps) {
     return (
         <div className={`${stl.temp} ${stl.card}`}>
             <div className={`${stl.temp__icon} ${stl.card__icon}`}>
-                <div className={`${stl.temp__arrow} ${stl.temp__arrow_up}`}>
-                </div>
-                <div className={`${stl.temp__arrow} ${stl.temp__arrow_down}`}>
-                </div>
+                <div className={`${stl.temp__arrow} ${stl.temp__arrow_up}`}></div>
+                <div className={`${stl.temp__arrow} ${stl.temp__arrow_down}`}></div>
             </div>
             <p className={stl.card__title}>
                 Максимум {tempmax}°

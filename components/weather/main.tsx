@@ -1,8 +1,8 @@
 import stl from './weather.module.sass'
 import Button from "@/components/ui/button";
-import WeatherIcon from "@/components/weather/ui/icon";
-import {Alert as AlertType} from "@/types";
-import Alert from "@/components/weather/ui/alert";
+import WeatherIcon from '@/components/weather/icon'
+import {Alert as AlertType} from '@/types'
+import Alert from '@/components/weather/alert'
 import Modal from "@/components/ui/modal";
 import AlertIcon from '@/assets/icons/alert.svg'
 import {useState} from "react";

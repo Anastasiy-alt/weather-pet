@@ -1,7 +1,7 @@
-import stl from './weather.module.sass'
-import WeatherIcon from "@/components/weather/ui/icon";
-import RainAnimation, {RainAnimationRef} from "@/components/cards/anim/rain";
-import {useRef} from "react";
+import stl from './stats.module.sass'
+import WeatherIcon from '@/components/weather/icon'
+import RainAnimation, {RainAnimationRef} from './small/rain'
+import {useRef} from 'react'
 
 interface PrecipProps {
     precip: number
@@ -22,15 +22,7 @@ const NO_PRECIP_MESSAGES = [
     'Погода решила устроить себе сухой день — ни дождя, ни снега, просто тишина и сухость',
 ]
 
-const randomEmptyMsg = NO_PRECIP_MESSAGES[Math.floor(Math.random() * NO_PRECIP_MESSAGES.length)]
-
-export default function Precip({
-                                   precip,
-                                   precipprob,
-                                   snow,
-                                   snowdepth,
-                                   preciptype,
-                               }: PrecipProps) {
+export default function Precip({precip, precipprob, snow, snowdepth, preciptype}: PrecipProps) {
     const preciptypeTranslate: Record<string, string> = {
         rain: 'Дождь',
         snow: 'Снег',
@@ -38,21 +30,18 @@ export default function Precip({
         ice: 'Лёд',
     }
     const rainRef = useRef<RainAnimationRef>(null)
+    const [emptyMsg] = [NO_PRECIP_MESSAGES[Math.floor(Math.random() * NO_PRECIP_MESSAGES.length)]]
 
     return (
         <div className={`${stl.precip} ${stl.card} ${precipprob > 0 ? '' : stl.precip_sun}`}
              onMouseEnter={() => rainRef.current?.start()}
              onMouseLeave={() => rainRef.current?.stop()}>
             <RainAnimation ref={rainRef} probability={precipprob}/>
-            <p className={stl.precip__title}>Осадки
-            </p>
+            <p className={stl.precip__title}>Осадки</p>
             {
                 (precip > 0 || precipprob > 0 || snow > 0 || snowdepth > 0) ?
-
                     <div className={stl.precip__grid}>
-
-                        {
-                            precip > 0 &&
+                        {precip > 0 &&
                             <div className={stl.precip__item}>
                                 <p className={stl.precip__itemTitle}>Количество</p>
                                 <p className={stl.precip__itemValue}>{precip} <span>мм</span></p>
@@ -64,9 +53,7 @@ export default function Precip({
                                 <p className={stl.precip__itemValue}>{precipprob} <span>%</span></p>
                             </div>
                         }
-
                         {snow > 0 &&
-
                             <div className={stl.precip__item}>
                                 <p className={stl.precip__itemTitle}>Снег</p>
                                 <p className={stl.precip__itemValue}>{snow} <span>см</span></p>
@@ -78,14 +65,10 @@ export default function Precip({
                                 <p className={stl.precip__itemValue}>{snowdepth} <span>см</span></p>
                             </div>
                         }
-
                     </div>
                     :
-                    <div className={stl.precip__title}>
-                        {randomEmptyMsg}
-                    </div>
+                    <div className={stl.precip__title}>{emptyMsg}</div>
             }
-
             <div className={stl.precip__types}>
                 {preciptype?.map((item) => (
                     <div className={stl.precip__type} key={item}>

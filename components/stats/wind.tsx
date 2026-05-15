@@ -1,5 +1,6 @@
-import stl from './weather.module.sass'
+import stl from './stats.module.sass'
 import LocationIcon from '@/assets/icons/location.svg'
+import {WIND_DIRS, getWindDirection, convertWindSpeed} from '@/lib/weatherUtils'
 
 interface WindProps {
     dir: number
@@ -8,28 +9,17 @@ interface WindProps {
 }
 
 export default function Wind({dir, speed, gust}: WindProps) {
-    const dirs: string[] = ['С', 'ССВ', 'СВ', 'ВСВ', 'В', 'ВЮВ', 'ЮВ', 'ЮЮВ', 'Ю', 'ЮЮЗ', 'ЮЗ', 'ЗЮЗ', 'З', 'ЗСЗ', 'СЗ', 'ССЗ']
-
-    function getWindDirection(deg: number): string {
-        const index = Math.round(deg / 22.5) % 16
-        return dirs[index]
-    }
-
-    function convertSpeed(speed: number) {
-        return Math.round(speed * (1000 / 3600))
-    }
-
     const dirString = getWindDirection(dir)
-    const speedMeters = convertSpeed(speed)
-    const gustMeters = convertSpeed(gust ? gust : speed)
+    const speedMeters = convertWindSpeed(speed)
+    const gustMeters = convertWindSpeed(gust || speed)
 
     return (
         <div className={`${stl.wind} ${stl.card}`}>
             <div className={stl.wind__round}>
                 <div className={stl.wind__decoBlock}>
-                    {dirs.map((item, i) => (
+                    {WIND_DIRS.map((item, i) => (
                         <div className={stl.wind__deco} key={i}
-                             style={{'--i': i, '--total': dirs.length} as React.CSSProperties}/>
+                             style={{'--i': i, '--total': WIND_DIRS.length} as React.CSSProperties}/>
                     ))}
                 </div>
                 <LocationIcon className={stl.wind__arrow} style={{'--dir': dir + 'deg'} as React.CSSProperties}/>

@@ -1,9 +1,10 @@
-import {Area, AreaChart, ResponsiveContainer, XAxis} from 'recharts';
-import {Hour} from "@/types";
-import WeatherIcon from "@/components/weather/ui/icon";
-import stl from './day.module.sass'
-import {useEffect, useRef} from "react";
-import {useDayStore} from "@/store/day";
+import {Area, AreaChart, ResponsiveContainer, XAxis} from 'recharts'
+import {Hour} from '@/types'
+import WeatherIcon from '@/components/weather/icon'
+import stl from '@/components/day/day.module.sass'
+import {useEffect, useRef} from 'react'
+import {useDayStore} from '@/store/day'
+import {tempHue} from '@/lib/weatherUtils'
 
 interface TickProps {
     x: string | number
@@ -13,17 +14,7 @@ interface TickProps {
     }
 }
 
-function tempHue(t: number) {
-    if (t <= -10) return "var(--dark-blue)";
-    if (t <= 0) return "var(--blue)";
-    if (t <= 10) return "var(--light-blue)";
-    if (t <= 18) return "var(--green)";
-    if (t <= 25) return "var(--yellow)";
-    if (t <= 32) return "var(--orange)";
-    return "var(--red)";
-}
-export default function Recharts({data}: { data: Hour[] }) {
-
+export default function Chart({data}: { data: Hour[] }) {
     const chart = useRef<HTMLDivElement>(null)
     const {activeHourIndex, setActiveHourIndex} = useDayStore()
 
@@ -44,8 +35,8 @@ export default function Recharts({data}: { data: Hour[] }) {
     }
 
     function CustomDot({cx, cy, payload, index}: {
-        cx?: number | string;
-        cy?: number | string;
+        cx?: number | string
+        cy?: number | string
         payload?: { temp: number; value: string }
         index: number
     }) {
@@ -65,7 +56,7 @@ export default function Recharts({data}: { data: Hour[] }) {
 
     function setActiveDot(i: number | undefined) {
         chart.current?.querySelectorAll('.' + stl.chart__dot).forEach(el => el.classList.remove(stl.chart__dot_active))
-        if (typeof i === "number") {
+        if (typeof i === 'number') {
             chart.current?.querySelector(`#chart-dot-${i}`)?.classList.add(stl.chart__dot_active)
         }
     }
@@ -79,15 +70,10 @@ export default function Recharts({data}: { data: Hour[] }) {
             <ResponsiveContainer>
                 <AreaChart
                     data={data}
-                    margin={{
-                        top: 32,
-                        right: 32,
-                        left: 32,
-                        bottom: 0,
-                    }}
+                    margin={{top: 32, right: 32, left: 32, bottom: 0}}
                     onClick={(data) => {
                         const i = data.activeLabel
-                        if (typeof i === "number") setActiveHourIndex(i)
+                        if (typeof i === 'number') setActiveHourIndex(i)
                     }}
                 >
                     <defs>
@@ -96,30 +82,12 @@ export default function Recharts({data}: { data: Hour[] }) {
                             <stop offset="95%" stopColor="#4091c9" stopOpacity={0}/>
                         </linearGradient>
                     </defs>
-                    <XAxis
-                        xAxisId="icons"
-                        dataKey="icon"
-                        orientation="top"
-                        tick={IconTick}
-                        axisLine={false}
-                        tickLine={false}
-                        interval={0}
-                    />
-                    <XAxis
-                        xAxisId="time"
-                        dataKey="datetime"
-                        tick={TimeTick}
-                        axisLine={false}
-                        tickLine={false}
-                        interval={0}
-                    />
-                    <Area type="monotone"
-                          dot={CustomDot}
-                          activeDot={{className: 'chart__hover-dot'}}
-                          dataKey="temp"
-                          strokeWidth={3}
-                          stroke="#4091c9"
-                          fill="url(#colorTemp)"/>
+                    <XAxis xAxisId="icons" dataKey="icon" orientation="top" tick={IconTick} axisLine={false}
+                           tickLine={false} interval={0}/>
+                    <XAxis xAxisId="time" dataKey="datetime" tick={TimeTick} axisLine={false} tickLine={false}
+                           interval={0}/>
+                    <Area type="monotone" dot={CustomDot} activeDot={{className: 'chart__hover-dot'}} dataKey="temp"
+                          strokeWidth={3} stroke="#4091c9" fill="url(#colorTemp)"/>
                 </AreaChart>
             </ResponsiveContainer>
         </div>

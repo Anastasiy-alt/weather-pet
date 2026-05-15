@@ -1,4 +1,4 @@
-import stl from "./cards.module.sass";
+import stl from './small.module.sass'
 
 const VISIBILITY_LEVELS = [
     {max: 0.05, label: 'Густой туман', description: 'Руку протяни — и не видно', fog: 0.95},
@@ -11,7 +11,6 @@ const VISIBILITY_LEVELS = [
 ]
 
 export default function Visible({vis, small}: { vis: number, small?: boolean }) {
-
     function getVisibilityLevel(km: number) {
         return VISIBILITY_LEVELS.find(l => km <= l.max) ?? VISIBILITY_LEVELS[VISIBILITY_LEVELS.length - 1]
     }
@@ -25,7 +24,7 @@ export default function Visible({vis, small}: { vis: number, small?: boolean }) 
                 <div className={stl.visible__item}></div>
             </div>
             <p className={`${stl.visible__title} ${stl.card__title}`}>Видимость {vis}км</p>
-            <p className={stl.card__subtitle}> {level.label}</p>
+            <p className={stl.card__subtitle}>{level.label}</p>
             <p className={stl.card__tag}>{level.description}</p>
         </div>
     )

@@ -14,6 +14,12 @@ import {useBackHomeStore} from "@/store/backHome";
 import {useGeoStore} from "@/store/geolocation";
 import {usePathname} from "next/navigation";
 
+const NAV_LINKS = [
+    {href: '/about', label: 'О проекте'},
+    {href: '/bike', label: 'BIKE'},
+    {href: '/day', label: 'Погода на 15 дней'},
+]
+
 type Coords = { lat: number; lon: number }
 
 function coordsAreEqual(a: Coords, b: Coords, precision = 2): boolean {
@@ -77,29 +83,21 @@ export default function HeaderApp() {
                     </div>
                     <div className={stl.header__navOuter}>
                         <nav className={stl.header__nav}>
-                            <Link
-                                className={`${stl.header__link} ${pathname === '/about' ? stl.header__link_active : ''}`}
-                                href="/about">О проекте</Link>
-                            <Link
-                                className={`${stl.header__link} ${pathname === '/bike' ? stl.header__link_active : ''}`}
-                                href="/bike">BIKE</Link>
-                            <Link
-                                className={`${stl.header__link} ${pathname === '/day' ? stl.header__link_active : ''}`}
-                                href="/day">Погода на 15 дней</Link>
+                            {NAV_LINKS.map(({href, label}) => (
+                                <Link key={href}
+                                      className={`${stl.header__link} ${pathname === href ? stl.header__link_active : ''}`}
+                                      href={href}>{label}</Link>
+                            ))}
                         </nav>
                         <Link className={stl.header__searchIcon} href='/search'>
                             <IconSearch/>
                         </Link>
                         <Burger>
-                            <Link
-                                className={`${stl.header__link} ${pathname === '/about' ? stl.header__link_active : ''}`}
-                                href="/about">О проекте</Link>
-                            <Link
-                                className={`${stl.header__link} ${pathname === '/bike' ? stl.header__link_active : ''}`}
-                                href="/bike">BIKE</Link>
-                            <Link
-                                className={`${stl.header__link} ${pathname === '/day' ? stl.header__link_active : ''}`}
-                                href="/day">Погода на 15 дней</Link>
+                            {NAV_LINKS.map(({href, label}) => (
+                                <Link key={href}
+                                      className={`${stl.header__link} ${pathname === href ? stl.header__link_active : ''}`}
+                                      href={href}>{label}</Link>
+                            ))}
                         </Burger>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import {forwardRef, useImperativeHandle, useRef} from 'react'
-import stl from './ui.module.sass'
+import stl from './small.module.sass'
 import Sun from '@/assets/icons/weather/clear-day.svg'
 
 interface RainAnimationProps {
@@ -97,7 +97,6 @@ function RainAnimationComponent(
                     <Sun className={stl.rain__sun}/>
                     :
                     <canvas ref={canvasRef} className={stl.rain__canvas}/>
-
             }
         </div>
     )

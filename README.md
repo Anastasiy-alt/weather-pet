@@ -2,7 +2,9 @@
 
 Погодный pet-проект на Next.js. Показывает текущую погоду по геолокации, почасовой прогноз, детальную статистику и оценивает условия для велопрогулки.
 
-https://weather-pet-theta.vercel.app/
+Ссылка на проект - https://weather-pet-theta.vercel.app/
+
+Ссылка на кейс -https://roadmap.sh/projects/weather-app
 
 ## Стек
 

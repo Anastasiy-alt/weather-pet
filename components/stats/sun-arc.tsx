@@ -1,6 +1,6 @@
 'use client'
 
-import stl from './weather.module.sass'
+import stl from './stats.module.sass'
 import {useEffect, useState} from 'react'
 import Sun from '@/assets/icons/weather/clear-day.svg'
 
@@ -100,7 +100,6 @@ export default function SunArc({sunrise, sunset, sunriseEpoch, sunsetEpoch, now}
             {
                 !now &&
                 <Sun className={stl.sun__sunIcon}/>
-
             }
             <div className={stl.sun__text}>
                 <p>{sunrise.slice(0, 5)}</p>

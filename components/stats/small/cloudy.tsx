@@ -1,4 +1,4 @@
-import stl from './cards.module.sass'
+import stl from './small.module.sass'
 import Cloud from '@/assets/icons/weather/cloudy.svg'
 
 const CLOUD_LEVELS = {
@@ -21,7 +21,6 @@ export default function Cloudy({percent, small}: { percent: number, small?: bool
         return CLOUD_LEVELS[key] ?? CLOUD_LEVELS[100]
     }
 
-    const description: string = getCloudDescription(percent) ?? ''
     return (
         <div className={`${stl.cloud} ${stl.card} ${small ? stl.card_small : ''}`}>
             <div className={`${stl.cloud__block} ${stl.card__icon}`}>
@@ -31,7 +30,7 @@ export default function Cloudy({percent, small}: { percent: number, small?: bool
             <p className={`${stl.cloud__title} ${stl.card__title}`}>
                 Облачность <br/> {Math.round(percent)}%
             </p>
-            <p className={stl.card__tag}>{description}</p>
+            <p className={stl.card__tag}>{getCloudDescription(percent)}</p>
         </div>
     )
 }

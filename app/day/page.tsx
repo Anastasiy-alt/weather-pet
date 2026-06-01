@@ -1,7 +1,7 @@
 'use client'
 import {useWeatherStore} from '@/store/weather'
 import Loader from "@/components/ui/loader";
-import DayCard from "@/components/cards/day";
+import DayCard from '@/components/day/dayCard'
 import stl from './day.module.sass'
 import Location from "@/components/ui/location";
 

@@ -48,10 +48,8 @@ const icons = {
     'bike': Bike,
 }
 
-export default function WeatherIcon({name, classCustom = ''} : {name: string, classCustom?: string}) {
+export default function WeatherIcon({name, classCustom = ''}: { name: string, classCustom?: string }) {
     const Icon = icons[name as keyof typeof icons]
-    if (!Icon) {
-        return null
-    }
-    return <Icon className={classCustom}  />
+    if (!Icon) return null
+    return <Icon className={classCustom}/>
 }

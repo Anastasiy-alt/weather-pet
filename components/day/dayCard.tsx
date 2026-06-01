@@ -1,25 +1,10 @@
-import stl from './cards.module.sass'
-import {Day as DayType} from "@/types";
-import WeatherIcon from "@/components/weather/ui/icon";
+import stl from './day.module.sass'
+import {Day as DayType} from '@/types'
+import WeatherIcon from '@/components/weather/icon'
 import WindIcon from '@/assets/icons/location.svg'
 import HumidityIcon from '@/assets/icons/humidity.svg'
-import Link from "next/link";
-
-interface DayProps {
-    data: DayType
-    globalMin: number
-    globalMax: number
-}
-
-function tempHue(t: number) {
-    if (t <= -10) return "var(--dark-blue)";
-    if (t <= 0) return "var(--blue)";
-    if (t <= 10) return "var(--light-blue)";
-    if (t <= 18) return "var(--green)";
-    if (t <= 25) return "var(--yellow)";
-    if (t <= 32) return "var(--orange)";
-    return "var(--red)";
-}
+import Link from 'next/link'
+import {tempHue, convertWindSpeed} from '@/lib/weatherUtils'
 
 const iconDescriptions: Record<string, string> = {
     'clear-day': 'Солнечно и без сюрпризов — выходи смело',
@@ -46,8 +31,14 @@ const iconDescriptions: Record<string, string> = {
     'ice': 'Гололёд — ступай осторожно',
 }
 
+interface DayProps {
+    data: DayType
+    globalMin: number
+    globalMax: number
+}
+
 export default function DayCard({data, globalMin, globalMax}: DayProps) {
-    const date = new Date(data.datetime);
+    const date = new Date(data.datetime)
     const today = new Date()
     const minColor = tempHue(data.tempmin)
     const maxColor = tempHue(data.tempmax)
@@ -59,20 +50,13 @@ export default function DayCard({data, globalMin, globalMax}: DayProps) {
         date.getDate() === today.getDate() &&
         date.getMonth() === today.getMonth() &&
         date.getFullYear() === today.getFullYear()
-    const formattedDateWeek: () => string = () => {
+
+    const formattedDateWeek = () => {
         if (isToday) return 'Сегодня'
-        return date.toLocaleDateString('ru-RU', {
-            weekday: 'short',
-        })
+        return date.toLocaleDateString('ru-RU', {weekday: 'short'})
     }
 
-    const formattedDate = date.toLocaleDateString('ru-RU', {
-        month: 'long',
-        day: 'numeric',
-    });
-    const convertSpeed = () => {
-        return Math.round(data.windspeed * (1000 / 3600))
-    }
+    const formattedDate = date.toLocaleDateString('ru-RU', {month: 'long', day: 'numeric'})
 
     return (
         <Link href={`/day/${data.datetime}`} className={stl.day}>
@@ -88,7 +72,6 @@ export default function DayCard({data, globalMin, globalMax}: DayProps) {
                         <p className={stl.day__tempTitle}>{data.conditions}</p>
                         <p className={stl.day__tempSubtitle}>{iconDescriptions[data.icon]}</p>
                     </div>
-
                 </div>
                 <div className={stl.day__block}>
                     <p className={stl.day__blockSubtitle}>Влажность</p>
@@ -101,7 +84,7 @@ export default function DayCard({data, globalMin, globalMax}: DayProps) {
                     <p className={stl.day__blockTitle}>
                         <WindIcon style={{'--dir': data.winddir + 'deg'} as React.CSSProperties}
                                   className={`${stl.day__icon} ${stl.day__icon_wind}`}/>
-                        {convertSpeed()}м/с</p>
+                        {convertWindSpeed(data.windspeed)}м/с</p>
                 </div>
             </div>
             <hr className={stl.day__hr}/>
@@ -110,14 +93,12 @@ export default function DayCard({data, globalMin, globalMax}: DayProps) {
                     {data.tempmin > 0 ? `+${data.tempmin}` : data.tempmin}°
                 </p>
                 <div className={stl.tempRange__fill}>
-                    <div
-                        className={stl.tempRange__track}
-                        style={{
-                            left: `${minPct}%`,
-                            width: `${Math.max(4, maxPct - minPct)}%`,
-                            background: `linear-gradient(90deg, ${minColor}, ${maxColor})`
-                        }}
-                    />
+                    <div className={stl.tempRange__track}
+                         style={{
+                             left: `${minPct}%`,
+                             width: `${Math.max(4, maxPct - minPct)}%`,
+                             background: `linear-gradient(90deg, ${minColor}, ${maxColor})`
+                         }}/>
                 </div>
                 <p className={`${stl.tempRange__text} ${stl.tempRange__text_right}`} style={{color: maxColor}}>
                     {data.tempmax > 0 ? `+${data.tempmax}` : data.tempmax}°

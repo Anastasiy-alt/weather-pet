@@ -1,7 +1,7 @@
-import stl from "./cards.module.sass";
-import WeatherIcon from "@/components/weather/ui/icon";
-import RainAnimation, {RainAnimationRef} from '@/components/cards/anim/rain'
-import {useRef} from "react";
+import stl from './small.module.sass'
+import WeatherIcon from '@/components/weather/icon'
+import RainAnimation, {RainAnimationRef} from './rain'
+import {useRef} from 'react'
 
 const PRECIP_LABELS = {
     prob: {
@@ -34,7 +34,8 @@ const PRECIP_LABELS = {
 
 export default function PrecipSmall({precipprob, preciptype, small}: {
     precipprob: number,
-    preciptype: string[], small?: boolean
+    preciptype: string[],
+    small?: boolean
 }) {
     const rainRef = useRef<RainAnimationRef>(null)
     return (

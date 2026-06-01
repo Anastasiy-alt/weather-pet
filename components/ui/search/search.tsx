@@ -3,40 +3,17 @@
 import stl from './search.module.sass'
 import {useState} from 'react'
 import {useCitySearch} from '@/hooks/useSearch'
-import {useWeatherStore} from '@/store/weather'
-import {usePathname, useRouter} from "next/navigation";
-import {useSearchStore} from "@/store/search";
-import {useGeoStore} from "@/store/geolocation";
+import {useSelectCity} from '@/hooks/useSelectCity'
 import Link from "next/link";
 import SearchLoader from "@/components/ui/search/loader";
 
 export default function Search() {
     const [query, setQuery] = useState('')
     const {results, loading} = useCitySearch(query)
-    const load = useWeatherStore(s => s.load)
-    const {setSelect} = useSearchStore()
-    const router = useRouter()
-    const pathname = usePathname()
-    const {setLocation} = useGeoStore()
+    const selectCity = useSelectCity()
 
     async function handleSelect(city: string) {
-        const loc = await setSelect(city)
-        if (!loc) return
-        if (pathname === '/') {
-            const params = new URLSearchParams()
-
-            params.set('lat', loc.lat.toString())
-            params.set('lon', loc.lon.toString())
-
-            router.replace(`/?${params.toString()}`, {
-                scroll: false
-            })
-        }
-        await load(loc.lat, loc.lon)
-        setLocation({
-            lat: loc.lat,
-            lon: loc.lon
-        })
+        await selectCity(city)
         setQuery('')
     }
 

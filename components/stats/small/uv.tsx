@@ -1,4 +1,4 @@
-import stl from "./cards.module.sass";
+import stl from './small.module.sass'
 import Sun from '@/assets/icons/weather/clear-day.svg'
 
 const UV_LEVELS = {
@@ -14,7 +14,8 @@ const UV_LEVELS = {
     9: {label: 'Очень высокий', description: 'Лучше остаться в тени — солнце злое', color: 'var(--red)'},
     10: {label: 'Экстремальный', description: 'Солнце сегодня не шутит — береги кожу', color: 'var(--violet)'},
 } as const
-export default function UVindex({uv, small}: { uv: number , small?: boolean}) {
+
+export default function UVindex({uv, small}: { uv: number, small?: boolean }) {
     const level = UV_LEVELS[uv as keyof typeof UV_LEVELS] ?? {
         label: 'Экстремальный',
         description: 'Солнце сегодня не шутит — береги кожу',

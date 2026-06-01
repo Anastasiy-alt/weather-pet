@@ -1,5 +1,5 @@
-import stl from './cards.module.sass'
-import WeatherIcon from "@/components/weather/ui/icon";
+import stl from './small.module.sass'
+import WeatherIcon from '@/components/weather/icon'
 
 const iconQuotes: Record<string, string> = {
     'clear-day': 'Солнце сегодня расстаралось на полную',
@@ -25,13 +25,12 @@ const iconQuotes: Record<string, string> = {
     'wind': 'Ветрище — всё что не прибито будет унесено',
     'ice': 'Гололёд — сегодня все немного фигуристы',
 }
+
 export default function WeatherSmall({conditions, icon, small}: { conditions: string, icon: string, small?: boolean }) {
     return (
         <div className={`${stl.weather} ${stl.card} ${small ? stl.card_small : ''}`}>
             <WeatherIcon classCustom={stl.card__icon} name={icon}/>
-            <p className={`${stl.weather__title} ${stl.card__title}`}>
-                {conditions}
-            </p>
+            <p className={`${stl.weather__title} ${stl.card__title}`}>{conditions}</p>
             <p className={stl.card__tag}>{iconQuotes[icon]}</p>
         </div>
     )

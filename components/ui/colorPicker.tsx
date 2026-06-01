@@ -1,6 +1,6 @@
 'use client'
-import stl from './ui.module.sass'
 import {useTheme} from "@teispace/next-themes";
+import Toggle from "./toggle";
 
 
 export default function ColorPicker() {
@@ -9,12 +9,11 @@ export default function ColorPicker() {
         <>
             {
                 theme &&
-                <label className={stl.color}>
-                    <input checked={theme === 'dark'} id='color-picker' onChange={(value) => {
-                        setTheme(value.target.checked ? 'dark' : 'light')
-                    }} className={stl.color__input} type="checkbox"/>
-                    <span className={stl.color__check}></span>
-                </label>
+                <Toggle
+                    checked={theme === 'dark'}
+                    onChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+                    id="color-picker"
+                />
             }
         </>
     )

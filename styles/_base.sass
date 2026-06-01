@@ -38,6 +38,21 @@ body
   stroke-width: 3
   @include transitionMixin(r, fill)
 
+.chart__hover-dot-none
+  fill: transparent
+  stroke: transparent
+
+.recharts-tooltip-cursor
+  stroke: transparent
+
+.recharts-default-tooltip
+  background: $white !important
+  border: 1px solid $black !important
+  border-radius: 8px
+  .recharts-tooltip-label
+    color: $black
+
+
 :root
   --white: #fefdf8
   --light-blue: #9dcee2
